@@ -4,7 +4,7 @@
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\test-classes;C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\classes;C:\Users\jacks\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\jacks\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\jacks\.m2\repository\org\mariadb\jdbc\mariadb-java-client\2.7.3\mariadb-java-client-2.7.3.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\17.0.1\javafx-controls-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\17.0.1\javafx-controls-17.0.1-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\17.0.1\javafx-graphics-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\17.0.1\javafx-graphics-17.0.1-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\17.0.1\javafx-base-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\17.0.1\javafx-base-17.0.1-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\17.0.1\javafx-fxml-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\17.0.1\javafx-fxml-17.0.1-win.jar;"/>
+    <property name="java.class.path" value="C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\test-classes;C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\classes;C:\Users\jacks\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\jacks\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\jacks\.m2\repository\org\mariadb\jdbc\mariadb-java-client\2.7.3\mariadb-java-client-2.7.3.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\23\javafx-controls-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\23\javafx-controls-23-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\23\javafx-graphics-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\23\javafx-graphics-23-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\23\javafx-base-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\23\javafx-base-23-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\23\javafx-fxml-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\23\javafx-fxml-23-win.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CA"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\jacks\AppData\Local\Temp\surefire15067153195580215692\surefirebooter3666664092468843549.jar C:\Users\jacks\AppData\Local\Temp\surefire15067153195580215692 2025-02-13T01-24-17_878-jvmRun1 surefire7236532595283813884tmp surefire_010019252298636552735tmp"/>
+    <property name="sun.java.command" value="C:\Users\jacks\AppData\Local\Temp\surefire14671749924806850545\surefirebooter10446357577349087125.jar C:\Users\jacks\AppData\Local\Temp\surefire14671749924806850545 2025-02-13T01-46-14_595-jvmRun1 surefire5781994074793883540tmp surefire_010314463078040371848tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\test-classes;C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\classes;C:\Users\jacks\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\jacks\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\jacks\.m2\repository\org\mariadb\jdbc\mariadb-java-client\2.7.3\mariadb-java-client-2.7.3.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\17.0.1\javafx-controls-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\17.0.1\javafx-controls-17.0.1-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\17.0.1\javafx-graphics-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\17.0.1\javafx-graphics-17.0.1-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\17.0.1\javafx-base-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\17.0.1\javafx-base-17.0.1-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\17.0.1\javafx-fxml-17.0.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\17.0.1\javafx-fxml-17.0.1-win.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\test-classes;C:\Users\jacks\OneDrive\School\UNB\S2\CS2043\project\CS2043Project\main\target\classes;C:\Users\jacks\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\jacks\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\jacks\.m2\repository\org\mariadb\jdbc\mariadb-java-client\2.7.3\mariadb-java-client-2.7.3.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\23\javafx-controls-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\23\javafx-controls-23-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\23\javafx-graphics-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\23\javafx-graphics-23-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\23\javafx-base-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\23\javafx-base-23-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\23\javafx-fxml-23.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\23\javafx-fxml-23-win.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\jacks"/>
     <property name="user.language" value="en"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\jacks\AppData\Local\Temp\surefire15067153195580215692\surefirebooter3666664092468843549.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\jacks\AppData\Local\Temp\surefire14671749924806850545\surefirebooter10446357577349087125.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23+37-2369"/>
@@ -58,5 +58,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.tems.AppTest" time="0"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.tems.AppTest" time="0.004"/>
 </testsuite>
