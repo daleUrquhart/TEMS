@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="8Fel_0OjmHJxrBrbRgxx" name="Page-1">
+        <mxGraphModel dx="832" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="User types:&lt;br&gt;Auditionee &amp;amp;&amp;nbsp;Talent&lt;br/&gt;Recruiter" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Talent Recruiter&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Can post listings&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Listing&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Contains specific reqs and metrics for an available role&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-----------------------------&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Listing uses the following criteria:&amp;nbsp;voice&lt;br&gt;modulation, script timing, accent, physical similarity to start&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Maintains a running average of current applicant's scores. Highest scoring applicant gets the role, random selection in case of ties.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;The auditionee selected will be notified via their profile notificaitons&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="240" width="120" height="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Auditionee&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-- Can create their own profile&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-- Can view and apply for open listings they are eligable for&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-----------------------------&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Profile contains:&amp;nbsp;name, gender, year of experience to start&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="360" width="120" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Application&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Auditionee&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Talent Recruiter&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Role&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Score&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-----------------------------&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" width="120" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="General&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;-- Portable, Windows priority&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="600" width="120" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Criteria&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;0-100 scale, and a weight (may matter more in some applications than others)&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="720" width="120" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Listing Viewer&lt;br&gt;-----------------------------&lt;br&gt;Displays listings, listings can be sorted by genre, and gender role" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry y="430" width="120" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Auditionee Profile&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;View, update and delete their profiles, and has a notificaion bar showing updates on their listings (declined, accepted, under review)&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="430" width="120" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Gender&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;enum represention gender options for consistencey and data integrety&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="430" width="120" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Auditionee Viewer&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Talent recruiter can offer listing positions directly to an auditionee&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;TR can also delete an auditionee&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="430" width="120" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Displayable&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Interface that requires a class to have a method for building a JFX display of its instances&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="480" y="430" width="120" height="120" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
