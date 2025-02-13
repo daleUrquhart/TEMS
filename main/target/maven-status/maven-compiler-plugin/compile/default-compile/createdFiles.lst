@@ -1,2 +1,6 @@
+com\tems\Displayable.class
 com\tems\Gender.class
+com\tems\User.class
 com\tems\App.class
+com\tems\Auditionee.class
+com\tems\Criteria.class

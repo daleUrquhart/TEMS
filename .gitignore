@@ -1,3 +1,9 @@
+# Personal dev notes
+.notes
+
+# Enviorment variables
+.env
+
 # Compiled class file
 *.class
 
