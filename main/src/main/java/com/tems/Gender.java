@@ -1,5 +1,9 @@
 package com.tems;
 
+/**
+ * Represents gender options for users for data integrety and consistencey
+ * @author Dale Urquhart
+ */
 public enum Gender {
     MALE("Male"),
     FEMALE("Female"),
@@ -11,6 +15,9 @@ public enum Gender {
     TWO_SPIRIT("Two-Spirit"),
     OTHER("Other");
 
+    /**
+     * String representation of enum constant
+     */
     private final String displayName;
 
     /**
