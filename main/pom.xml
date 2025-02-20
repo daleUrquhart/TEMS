@@ -12,7 +12,7 @@
     <properties>
         <maven.compiler.source>23.0.0</maven.compiler.source>
         <maven.compiler.target>23.0.0</maven.compiler.target>
-        <!-- <java.version>23</java.version> -->
+        <java.version>23</java.version>
     </properties>
 
     <dependencies>
@@ -21,6 +21,23 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- BCrypt for password hashing -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <!-- Spring Framework -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.8.5</version> 
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

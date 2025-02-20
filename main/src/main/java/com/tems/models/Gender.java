@@ -1,4 +1,4 @@
-package com.tems;
+package com.tems.models;
 
 /**
  * Represents gender options for users for data integrety and consistencey

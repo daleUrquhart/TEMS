@@ -1,4 +1,4 @@
-package com.tems;
+package com.tems.models;
 
 /**
  * Manages criteria which may be needed for a Listing

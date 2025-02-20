@@ -1,4 +1,4 @@
-package com.tems;
+package com.tems.models;
 
 import javafx.scene.layout.HBox;
 
