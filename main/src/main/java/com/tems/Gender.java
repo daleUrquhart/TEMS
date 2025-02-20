@@ -18,7 +18,7 @@ public enum Gender {
     /**
      * String representation of enum constant
      */
-    private final String displayName;
+    private String displayName;
 
     /**
      * Constructor assigns the string version of the enum
