@@ -45,7 +45,7 @@ public class User {
     /**
      * Inserts a new user into the database.
      */
-    public static boolean createUser(String name, String email, String passwordHash, String role) {
+    public static int createUser(String name, String email, String passwordHash, String role) {
         String sql = "INSERT INTO Users (name, email, password_hash, role) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -56,13 +56,12 @@ public class User {
             stmt.setString(3, passwordHash);
             stmt.setString(4, role);
 
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(stmt.executeUpdate() > 0) return User.getUserByEmail(email).getUserId();
 
         } catch (SQLException e) {
             System.err.println("Error creating user: " + e.getMessage());
-            return false;
         }
+        return -1;
     }
  
     /**
