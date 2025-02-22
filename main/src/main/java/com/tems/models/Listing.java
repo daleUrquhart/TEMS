@@ -77,28 +77,25 @@ public class Listing {
         }
     }
 
-
-    /**
-     * Updates the user's information in the database based on the instance data.
-     */
     public boolean update() {
-        String sql = "UPDATE Users SET title = ?, description = ?";
-
+        String sql = "UPDATE Listing SET title = ?, description = ? WHERE listing_id = ?";
+    
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+    
             stmt.setString(1, getTitle());
-            stmt.setString(2, getDescription()); 
-
+            stmt.setString(2, getDescription());
+            stmt.setInt(3, getListingId()); 
+    
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
-
+    
         } catch (SQLException e) {
             System.err.println("Error updating listing: " + e.getMessage());
             return false;
         }
-    } 
-
+    }
+     
     /**
      * Gets all listings managed by the specified talent recruiter
      * @param id TR id to search listings by
@@ -114,7 +111,7 @@ public class Listing {
             stmt.setInt(1, recruiterId);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+                while (rs.next()) {
                     listings.add(new Listing(
                             rs.getInt("listing_id"),
                             rs.getInt("recruiter_id"),

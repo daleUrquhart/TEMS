@@ -1,7 +1,19 @@
 package com.tems.models; 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
+import com.tems.util.ConnectionManager;
+import com.tems.util.Env;
+
+/**
+ * Application model
+ * @author Dale Urquhart
+ */
 public class Application {
     private final int applicationId;
     private final int auditioneeId;
@@ -30,29 +42,93 @@ public class Application {
     public String getResume() { return resume; }
     public String getCoverLetter() { return coverLetter; }
 
-    // CRUD operations
     public void setStatus(String status) { this.status = status; }
 
-    public static boolean create(int auditionee_id, int listing_id, Timestamp submission_date, String status, String resume, String cover_letter) {
-        
+    // CRUD operations
+    public static boolean create(int auditionee_id, int listingId, String resume, String coverLetter) {
+        String sql = String.format("INSERT INTO Applications (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)", Env.AUDITIONEE_ID, Env.LISTING_ID, Env.RESUME, Env.COVER_LETTER, Env.STATUS);
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, auditionee_id);
+            stmt.setInt(2, listingId);
+            stmt.setString(3, resume);
+            stmt.setString(4, coverLetter); 
+            return stmt.executeUpdate() > 0;
+
+        } catch(SQLException e) {
+            System.err.println("Error creating applicaiton: "+e.getMessage());
+        }
         return false;
     } 
 
     public boolean update() {
+        String sql = String.format("UPDATE Applications SET %s = ? WHERE %s = ?", Env.STATUS, Env.APPLICATION_ID);
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, getStatus());
+            stmt.setInt(2, getApplicationId());
+            return stmt.executeUpdate() > 0;
+
+        } catch(SQLException e) {
+            System.err.println("Error updating applicaiton: "+e.getMessage());
+        }
         return false;
     }
 
-    public boolean getApplicationsByAudId() {
-        return false;
+    public static ArrayList<Application> getApplicationsByAudId(int auditioneeId) {
+        String sql = String.format("SELECT * FROM Applications WHERE %s = ?", Env.AUDITIONEE_ID);
+        ArrayList<Application> applications = new ArrayList<>();
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, auditioneeId);
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) applications.add( new Application(rs.getInt(Env.APPLICATION_ID), 
+                auditioneeId, rs.getInt(Env.LISTING_ID), rs.getTimestamp(Env.CREATED_AT), 
+                rs.getString(Env.STATUS), rs.getString(Env.RESUME), rs.getString(Env.COVER_LETTER)));
+            }
+        } catch(SQLException e) {
+            System.err.println("Error searching applicaiton by auditionee id: "+e.getMessage());
+        } 
+        return applications;
     }
 
-    public boolean getApplicationsByListingId() {
-        return false;
+    public static ArrayList<Application> getApplicationsByListingId(int listingId) {
+        String sql = String.format("SELECT * FROM Applications WHERE %s = ?", Env.LISTING_ID);
+        ArrayList<Application> applications = new ArrayList<>();
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, listingId);
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) applications.add( new Application(rs.getInt(Env.APPLICATION_ID), 
+                rs.getInt(Env.AUDITIONEE_ID), rs.getInt(Env.LISTING_ID), rs.getTimestamp(Env.CREATED_AT), 
+                rs.getString(Env.STATUS), rs.getString(Env.RESUME), rs.getString(Env.COVER_LETTER)));
+            }
+        } catch(SQLException e) {
+            System.err.println("Error searching applicaiton by listing id: "+e.getMessage());
+        } 
+        return applications;
     }
 
-    public boolean decline() {
-        return false;
+    public static boolean decline(int auditioneeId, int listingId) {
+        String sql = String.format("UPDATE Applications SET %s = ? WHERE %s = ? AND %s = ?", Env.STATUS, Env.AUDITIONEE_ID, Env.LISTING_ID);
+        
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setString(1, Env.DECLINED); 
+            stmt.setInt(2, auditioneeId);
+            stmt.setInt(3, listingId);
+    
+            return stmt.executeUpdate() > 0;
+    
+        } catch (SQLException e) {
+            System.err.println("Error declining application: " + e.getMessage());
+            return false;
+        }
     }
+    
 
     /**
      * Sum of scores for each criteria associated with the listing

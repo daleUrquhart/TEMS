@@ -21,4 +21,8 @@ public class Env {
     public static final String COVER_LETTER = dotenv.get("COVER_LETTER");
     public static final String STATUS = dotenv.get("STATUS");
     public static final String CREATED_AT = dotenv.get("CREATED_AT");
+    public static final String DECLINED = dotenv.get("DECLINED");
+    public static final String CRITERIA_TYPE = dotenv.get("CRITERIA_TYPE");
+    public static final String WEIGHT = dotenv.get("WEIGHT");
+    public static final String SCORE = dotenv.get("SCORE");
 }

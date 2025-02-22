@@ -60,17 +60,24 @@ CREATE TABLE Listings (
     listing_id INT AUTO_INCREMENT PRIMARY KEY,
     recruiter_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE,
     FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Criteria_Types (
+    criteria_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    criteria_type VARCHAR(255) UNIQUE NOT NULL
+);
+
 CREATE TABLE Criteria (
     criteria_id INT AUTO_INCREMENT PRIMARY KEY,
     listing_id INT NOT NULL,
-    criteria_name VARCHAR(255) NOT NULL,
-    weight INT NOT NULL CHECK (weight >= 0),
+    criteria_type_id INT NOT NULL,
+    score INT NOT NULL CHECK(score >= 0 AND score <= 100) DEFAULT 0,
+    weight INT NOT NULL CHECK (weight > 0) DEFAULT 1,
+    FOREIGN KEY (criteria_type_id) REFERENCES Criteria_Types(criteria_type_id) ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
 );
 
@@ -78,9 +85,9 @@ CREATE TABLE Applications (
     application_id INT AUTO_INCREMENT PRIMARY KEY,
     auditionee_id INT NOT NULL,
     listing_id INT NOT NULL,
-    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
-    resume TEXT,
+    resume TEXT NOT NULL,
     cover_letter TEXT,
     FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
