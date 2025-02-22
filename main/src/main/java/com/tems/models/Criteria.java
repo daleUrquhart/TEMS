@@ -1,76 +1,117 @@
 package com.tems.models;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.tems.util.ConnectionManager;
+
 /**
  * Manages criteria which may be needed for a Listing
  * @author Dale Urquhart
  */
 public class Criteria {
     
-    /**
-     * Weight the criteria has on the listing application
-     */
-    private int weight;
+    private String name;
+    private int weight; 
+    private final static int RANGE = 100;  
+    private final int criteriaId; 
+    private final int listingId;
 
-    /**
-     * Score range of the criteria
-     */
-    private final static int RANGE = 100;
-
-    /**
-     * Default weight value if not specified
-     */
-    private static final int DEFAULT_WEIGHT = 1;
-
-    /**
-     * Default constructor setting weight to its default value
-     */
-    public Criteria() {
-        weight = DEFAULT_WEIGHT;
-    }
-
-    /**
-     * Parametrized constructor
-     * @param weight Weight of the criteria
-     * @throws IllegalArgumentException If weight is < 0
-     */
-    public Criteria(int weight) throws IllegalArgumentException{
-        validateWeight(weight);
+    public Criteria(int criteriaId, String name, int weight, int listingId) {
+        this.name = name;
+        this.criteriaId = criteriaId;
         this.weight = weight;
+        this.listingId = listingId; 
+    } 
+
+    // Getters and setters
+    public int getListingId() { return listingId; }
+    public String getName() { return name; }
+    public int getWeight() { return weight; }
+    public int getRange() { return RANGE; }
+    public int getCriteriaId() { return criteriaId; }
+
+    public void setName(String name) { this.name = name; }
+    public void setWeight(int weight) { this.weight = weight; }
+
+    // CRUD Operations
+    public static boolean create(int listingId, String name, int weight) {
+        String sql = "INSERT INTO Criteria (listing_id, name, weight) VALUES (?, ?, ?)";
+
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            stmt.setInt(1, listingId);
+            stmt.setString(2, name);
+            stmt.setInt(3, weight);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch(SQLException e) {
+            System.err.println("Error creating criteria: " + e.getMessage());
+            return false;
+        }
     }
 
-    /**
-     * Gets the weight of the criteria
-     * @return Weight of the criteria
-     */
-    public int getWeight() {
-        return weight;
+    public boolean update() {
+        String sql = "UPDATE Criteria SET criteria_name = ?, weight = ? WHERE criteria_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             
+            stmt.setString(1, getName());
+            stmt.setInt(2, getWeight());
+            stmt.setInt(3, getCriteriaId());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch(SQLException e) {
+            System.err.println("Error updating criteria: " + e.getMessage());
+            return false;
+        }
     }
 
-    /**
-     * Gets the range of the criteria 
-     * @return Range of the criteria
-     */
-    public int getRange() {
-        return RANGE;
+    public boolean delete() {
+        String sql = "DELETE FROM Criteria WHERE criteria_id = ?";
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, getCriteriaId());
+
+            return stmt.executeUpdate() > 0;
+        } catch(SQLException e) {
+            System.err.println(String.format("Error deleting criteria with id %d: %s", getCriteriaId(), e.getMessage()));
+            return false;
+        }
     }
 
-    /**
-     * Updates the weight of the criteria
-     * @throws IllegalArgumentException If weight is < 0
-     */
-    public void updateWeight(int newWeight) throws IllegalArgumentException {
-        validateWeight(newWeight);
-        weight = newWeight;
-    }
-
-    /**
-     * Validates the weight of the criteria
-     * @param weight Weight to validate
-     * @throws IllegalArgumentException If weight is < 0
-     */
-    private static void validateWeight(int weight) throws IllegalArgumentException {
-        if(weight < 0) throw new IllegalArgumentException(String.format("%d is an invalid paramater for criteria weight.", weight));
-    }
+    public static ArrayList<Criteria> getCriteriaForListingId(int listingId) {
+        String sql = "SELECT * FROM Criteria WHERE listing_id = ?";
+        ArrayList<Criteria> criteria = new ArrayList<>();
+        
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, listingId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    criteria.add(new Criteria(
+                        rs.getInt("criteria_id"),
+                        rs.getString("name"), 
+                        rs.getInt("weight"),
+                        listingId
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching criteria for listing id " + listingId + ": " + e.getMessage());
+        }
+        
+        return criteria;
+    } 
 
     /**
      * String representation of the criteria for debugging

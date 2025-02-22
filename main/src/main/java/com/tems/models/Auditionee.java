@@ -30,25 +30,25 @@ public class Auditionee extends User {
 
     @Override 
     public boolean update() {
-        if(!super.update()) return false;
+        if (!super.update()) return false;
 
         String sql = "UPDATE Auditionees SET gender_id = ?, yoe = ? WHERE auditionee_id = ?";
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, getGender().getId());        
             stmt.setInt(2, getYOE());
+            stmt.setInt(3, getUserId());
 
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
-        }
         } catch (SQLException e) {
-            System.err.println("Error updating auditionee: " +e.getMessage());
+            System.err.println("Error updating auditionee: " + e.getMessage());
             return false;
         }
     }
  
     public static int create(String name, String email, String passwordHash, Gender gender, int yoe) {
-
         int userCreated = User.create(name, email, passwordHash, "auditionee");
     
         if (userCreated > 0) {
@@ -56,12 +56,13 @@ public class Auditionee extends User {
     
             try (Connection conn = ConnectionManager.getConnection()) {
                 User user = getUserByEmail(email); 
-    
                 try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                     stmt.setInt(1, user.getUserId());
                     stmt.setInt(2, gender.getId());
                     stmt.setInt(3, yoe);
-                    if(stmt.executeUpdate() > 0) return userCreated;
+                    if (stmt.executeUpdate() > 0) {
+                        return userCreated;
+                    }
                 }
             } catch (SQLException e) {
                 System.err.println("Error creating auditionee: " + e.getMessage());
