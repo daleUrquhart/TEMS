@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -17,13 +17,15 @@ public class UserTest {
     @Test
     public void createUserTest() {
         // Test creating a valid user, invalid role, 
-        boolean u1 = User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
-        boolean u2 = User.createUser("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
-        boolean u3 = User.createUser("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
+        int u1 = User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        int u2 = User.createUser("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
+        int u3 = User.createUser("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
 
-        assertTrue(u1);
-        assertFalse(u2);
-        assertFalse(u3); 
+        assertNotEquals(u1, -1);
+        assertEquals(u2, -1);
+        assertEquals(u3, -1); 
+
+        User.deleteUser(u1); 
     }
 
     @Test
@@ -38,7 +40,7 @@ public class UserTest {
     @Test
     public void updateUserTest() {
         // Create a user
-        boolean userCreated = User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
         //assertTrue(userCreated); 
 
         try {
