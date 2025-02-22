@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.tems.AuditioneeTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.03 s <<< FAILURE! - in com.tems.AuditioneeTest
-com.tems.AuditioneeTest.createAuditioneeTest  Time elapsed: 0.017 s  <<< ERROR!
-java.lang.Error: 
-Unresolved compilation problem: 
-
-	at com.tems.AuditioneeTest.createAuditioneeTest(AuditioneeTest.java:13)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.236 s - in com.tems.AuditioneeTest
