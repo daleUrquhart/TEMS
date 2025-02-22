@@ -4,11 +4,14 @@
 # Enviorment variables
 .env
 
-# Compiled class file
+# Compiled class files
 *.class
 
 # Log file
 *.log
+
+#VSCode cofig
+.vscode
 
 # BlueJ files
 *.ctxt

@@ -9,13 +9,28 @@ CREATE TABLE Genders (
 ); 
 
 
--- Stores an auditionee's preferrd gender roles they want to see
+-- Stores an auditionee's preferrd gender roles they want to see also used for listings
 CREATE TABLE AuditioneeGenderRoles (
     auditionee_id INT NOT NULL,
     gender_id INT NOT NULL,
-    PRIMARY KEY (auditionee_id, gender_role_id),
+    PRIMARY KEY (auditionee_id, gender_id),
     FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
     FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
+);
+
+-- Genres
+CREATE TABLE Genres (
+    genre_id INT AUTO_INCREMENT PRIMARY KEY,
+    genre_name VARCHAR UNIQUE NOT NULL
+);
+
+-- Stores an genre types for listings
+CREATE TABLE ListingGenres (
+    listing_id INT NOT NULL,
+    genre_id INT NOT NULL,
+    PRIMARY KEY (listing_id, genre_id),
+    FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
 );
 
 -- User
@@ -46,8 +61,6 @@ CREATE TABLE Listings (
     recruiter_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    genre ENUM('Action', 'Drama', 'Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Other') NOT NULL,
-    gender_id INT NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE,
     FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
@@ -56,12 +69,12 @@ CREATE TABLE Listings (
 CREATE TABLE Criteria (
     criteria_id INT AUTO_INCREMENT PRIMARY KEY,
     listing_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    criteria_name VARCHAR(255) NOT NULL,
     weight INT NOT NULL CHECK (weight >= 0),
     FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Applications (
+CREATE TABLE Applications ( 
     application_id INT AUTO_INCREMENT PRIMARY KEY,
     auditionee_id INT NOT NULL,
     listing_id INT NOT NULL,
@@ -73,6 +86,7 @@ CREATE TABLE Applications (
     FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
 );
 
+
 CREATE TABLE Scores (
     score_id INT AUTO_INCREMENT PRIMARY KEY,
     application_id INT NOT NULL,
@@ -80,7 +94,7 @@ CREATE TABLE Scores (
     score DECIMAL(5,2) CHECK (score >= 0 AND score <= 100),
     FOREIGN KEY (application_id) REFERENCES Applications(application_id) ON DELETE CASCADE,
     FOREIGN KEY (criteria_id) REFERENCES Criteria(criteria_id) ON DELETE CASCADE
-);
+); 
 
 CREATE TABLE Offers (
     offer_id INT AUTO_INCREMENT PRIMARY KEY,
