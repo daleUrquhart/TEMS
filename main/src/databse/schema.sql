@@ -1,4 +1,24 @@
+DROP DATABASE TEMS;
+CREATE DATABASE tems;
+USE tems;
 
+-- Gender stuff
+CREATE TABLE Genders (
+    gender_id INT AUTO_INCREMENT PRIMARY KEY,
+    gender_name VARCHAR(255) UNIQUE NOT NULL
+); 
+
+
+-- Stores an auditionee's preferrd gender roles they want to see
+CREATE TABLE AuditioneeGenderRoles (
+    auditionee_id INT NOT NULL,
+    gender_id INT NOT NULL,
+    PRIMARY KEY (auditionee_id, gender_role_id),
+    FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
+    FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
+);
+
+-- User
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -9,16 +29,15 @@ CREATE TABLE Users (
 
 CREATE TABLE Auditionees (
     auditionee_id INT PRIMARY KEY,
-    gender ENUM('Male', 'Female', 'Non-Binary', 'Other') NOT NULL,
+    gender_id INT NOT NULL,
     years_of_experience INT NOT NULL CHECK (years_of_experience >= 0),
-    preferred_roles ENUM('Male', 'Female', 'Non-binary', 'Transgender', 'Gender Fluid', 'Agender', 'Bigender', 'Two-Spirit', 'Other') NOT NULL,
-    FOREIGN KEY (auditionee_id) REFERENCES Users(user_id) ON DELETE CASCADE
+    FOREIGN KEY (auditionee_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
 );
 
 CREATE TABLE TalentRecruiters (
     recruiter_id INT PRIMARY KEY,
-    company VARCHAR(255),
-    role VARCHAR(255),
+    company VARCHAR(255), 
     FOREIGN KEY (recruiter_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
@@ -28,9 +47,10 @@ CREATE TABLE Listings (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     genre ENUM('Action', 'Drama', 'Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Other') NOT NULL,
-    gender ENUM('Male', 'Female', 'Non-binary', 'Transgender', 'Gender Fluid', 'Agender', 'Bigender', 'Two-Spirit', 'Other') NOT NULL,
+    gender_id INT NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE
+    FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE,
+    FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Criteria (
@@ -67,11 +87,13 @@ CREATE TABLE Offers (
     recruiter_id INT NOT NULL,
     auditionee_id INT NOT NULL,
     listing_id INT NOT NULL,
+    gender_id INT NOT NULL, 
     status ENUM('pending', 'accepted', 'declined') DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE,
     FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
-    FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
+    FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE,
+    FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Notifications (
