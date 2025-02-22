@@ -12,12 +12,44 @@ import com.tems.util.ConnectionManager;
  */
 public class Auditionee extends User {
 
-    public Auditionee(int id, String name, String email, String passwordHash, String role) {
+    private int yoe;
+    private Gender gender;
+
+    public Auditionee(int id, String name, String email, String passwordHash, String role, Gender gender, int yoe) {
         super(id, name, email, passwordHash, role);
+        this.yoe = yoe;
+        this.gender = gender;
     }
 
-    public static int createAuditionee(String name, String email, String passwordHash, Gender gender, int yoe) {
-        int userCreated = createUser(name, email, passwordHash, "auditionee");
+    //Getters and setters
+    public Gender getGender() { return gender; }
+    public int getYOE() { return yoe; }
+
+    public void setGender(Gender gender) { this.gender = gender; }
+    public void setYOE(int yoe) { this.yoe = yoe; }
+
+    @Override 
+    public boolean update() {
+        if(!super.update()) return false;
+
+        String sql = "UPDATE Auditionees SET gender_id = ?, yoe = ? WHERE auditionee_id = ?";
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, getGender().getId());        
+            stmt.setInt(2, getYOE());
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        }
+        } catch (SQLException e) {
+            System.err.println("Error updating auditionee: " +e.getMessage());
+            return false;
+        }
+    }
+ 
+    public static int create(String name, String email, String passwordHash, Gender gender, int yoe) {
+
+        int userCreated = User.create(name, email, passwordHash, "auditionee");
     
         if (userCreated > 0) {
             String sql = "INSERT INTO Auditionees (auditionee_id, gender_id, years_of_experience) VALUES (?, ?, ?)";
@@ -33,7 +65,7 @@ public class Auditionee extends User {
                 }
             } catch (SQLException e) {
                 System.err.println("Error creating auditionee: " + e.getMessage());
-                User.deleteUser(userCreated);
+                User.delete(userCreated);
             }
         } 
         return -1;  

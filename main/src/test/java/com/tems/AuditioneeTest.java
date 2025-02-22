@@ -10,7 +10,7 @@ public class AuditioneeTest {
     
     @Test 
     public void createAuditioneeTest() {
-        int status = Auditionee.createAuditionee("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+        int status = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
         assertNotEquals(status, -1);
     }
 }

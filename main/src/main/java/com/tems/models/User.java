@@ -40,12 +40,24 @@ public class User {
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public void setRole(String role) { this.role = role; }
 
-    // Database Operations
+    public static void deleteAllUsers() {
+        String sql = "DELETE FROM Users";  
+        try (Connection conn = ConnectionManager.getConnection();
+             Statement stmt = conn.createStatement()) {  
+             
+            stmt.execute(sql);
+            System.out.println("All users deleted successfully");
+            
+        } catch (SQLException e) {
+            System.err.println("Error resetting Users: " + e.getMessage());
+        }
+    }
+    
 
     /**
      * Inserts a new user into the database.
      */
-    public static int createUser(String name, String email, String passwordHash, String role) {
+    public static int create(String name, String email, String passwordHash, String role) {
         String sql = "INSERT INTO Users (name, email, password_hash, role) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -133,7 +145,7 @@ public class User {
     /**
      * Updates the user's information in the database based on the instance data.
      */
-    public boolean updateUser() {
+    public boolean update() {
         String sql = "UPDATE Users SET name = ?, email = ?, password_hash = ?, role = ? WHERE user_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -157,7 +169,7 @@ public class User {
     /**
      * Deletes a user by ID.
      */
-    public static boolean deleteUser(int userId) {
+    public static boolean delete(int userId) {
         String sql = "DELETE FROM Users WHERE user_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();

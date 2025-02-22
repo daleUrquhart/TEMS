@@ -2,6 +2,7 @@ package com.tems;
 
 import java.sql.SQLException;
 
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -14,24 +15,27 @@ import com.tems.models.User;
 
 public class UserTest {
     
+    @AfterEach
+    public void removeUsersCreated() { 
+        User.deleteAllUsers();
+    } 
+
     @Test
-    public void createUserTest() {
+    public void createTest() {
         // Test creating a valid user, invalid role, 
-        int u1 = User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
-        int u2 = User.createUser("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
-        int u3 = User.createUser("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
+        int u1 = User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        int u2 = User.create("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
+        int u3 = User.create("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
 
         assertNotEquals(u1, -1);
         assertEquals(u2, -1);
-        assertEquals(u3, -1); 
-
-        User.deleteUser(u1); 
+        assertEquals(u3, -1);  
     }
 
     @Test
     public void getUserByEmailTest() {
         // Ensure test user is present
-        User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
 
         assertDoesNotThrow(() -> User.getUserByEmail("doe@example.ca"));
         assertThrows(SQLException.class, () -> User.getUserByEmail("dne@example.ca"));
@@ -40,7 +44,7 @@ public class UserTest {
     @Test
     public void updateUserTest() {
         // Create a user
-        User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
         //assertTrue(userCreated); 
 
         try {
@@ -54,7 +58,7 @@ public class UserTest {
             u1.setRole("recruiter");
 
             // Perform update operation
-            boolean updated = u1.updateUser();
+            boolean updated = u1.update();
             assertTrue(updated); 
 
             // Verify the updated user details
@@ -70,7 +74,7 @@ public class UserTest {
     @Test
     public void getUserByIdTest() {
         // Ensure test user is present
-        User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
         try {
             User u = User.getUserByEmail("doe@example.ca");
             assertDoesNotThrow(() -> User.getUserById(u.getUserId()));
@@ -84,10 +88,10 @@ public class UserTest {
 
     @Test
     public void deleteUserTest() {
-        User.createUser("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
         try {
             User u = User.getUserByEmail("doe@example.ca");
-            User.deleteUser(u.getUserId());
+            User.delete(u.getUserId());
         } catch(SQLException e) {
             System.err.println("Failed to get test user by id: " + e.getMessage());
             fail();
