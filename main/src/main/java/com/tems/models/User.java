@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Optional;
 
 import com.tems.util.ConnectionManager;
 
@@ -65,39 +64,75 @@ public class User {
             return false;
         }
     }
-
+ 
     /**
      * Finds a user by email.
+     * @param email Email to search by
+     * @return User
+     * @throws SQLException if no user is found or there is a database issue.
      */
-    public static Optional<User> getUserByEmail(String email) {
+    public static User getUserByEmail(String email) throws SQLException {
         String sql = "SELECT * FROM Users WHERE email = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return Optional.of(new User(
+                    return new User(
                             rs.getInt("user_id"),
                             rs.getString("name"),
                             rs.getString("email"),
                             rs.getString("password_hash"),
                             rs.getString("role")
-                    ));
+                    );
+                } else {
+                    throw new SQLException("No user found with email: " + email);
                 }
             }
-
         } catch (SQLException e) {
             System.err.println("Error fetching user by email: " + e.getMessage());
+            throw e; 
         }
-
-        return Optional.empty();
     }
 
     /**
-     * Updates the user's information in the database.
+     * Finds a user by email.
+     * @param email Email to search by
+     * @return User
+     * @throws SQLException if no user is found or there is a database issue.
+     */
+    public static User getUserById(int id) throws SQLException {
+        String sql = "SELECT * FROM Users WHERE user_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new User(
+                            rs.getInt("user_id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password_hash"),
+                            rs.getString("role")
+                    );
+                } else {
+                    throw new SQLException("No user found with id: " + id);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching user by id: " + e.getMessage());
+            throw e; 
+        }
+    }
+
+    /**
+     * Updates the user's information in the database based on the instance data.
      */
     public boolean updateUser() {
         String sql = "UPDATE Users SET name = ?, email = ?, password_hash = ?, role = ? WHERE user_id = ?";
@@ -138,5 +173,13 @@ public class User {
             System.err.println("Error deleting user: " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * String repsentation of the user
+     */
+    @Override
+    public String toString() {
+        return String.format("id: %d\nname: %s\nemail: %s\npassword hash: %s\nrole: %s", getUserId(), getName(), getEmail(), getPasswordHash(), getRole());
     }
 }
