@@ -1,3 +1,4 @@
+
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -10,7 +11,7 @@ CREATE TABLE Auditionees (
     auditionee_id INT PRIMARY KEY,
     gender ENUM('Male', 'Female', 'Non-Binary', 'Other') NOT NULL,
     years_of_experience INT NOT NULL CHECK (years_of_experience >= 0),
-    preferred_roles SET('Male', 'Female', 'Non-Binary', 'Any') NOT NULL,
+    preferred_roles ENUM('Male', 'Female', 'Non-binary', 'Transgender', 'Gender Fluid', 'Agender', 'Bigender', 'Two-Spirit', 'Other') NOT NULL,
     FOREIGN KEY (auditionee_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
@@ -27,7 +28,7 @@ CREATE TABLE Listings (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     genre ENUM('Action', 'Drama', 'Comedy', 'Sci-Fi', 'Horror', 'Romance', 'Other') NOT NULL,
-    role_gender ENUM('Male', 'Female', 'Non-Binary', 'Any') NOT NULL,
+    gender ENUM('Male', 'Female', 'Non-binary', 'Transgender', 'Gender Fluid', 'Agender', 'Bigender', 'Two-Spirit', 'Other') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE
 );
@@ -81,3 +82,4 @@ CREATE TABLE Notifications (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
+
