@@ -37,25 +37,83 @@ public class Listing {
     public void setDescription(String description) { this.description = description; } 
 
     //CRUD operations
-    public static boolean create(int recruiterId, String title, String description, Timestamp createdAt, ArrayList<Gender> gender_roles, ArrayList<Genre> genres) { 
-        String sql = "INSERT INTO Listings (recruiter_id, title, description, created_at) VALUES (?, ?, ?, ?)";
+    public static int create(int recruiterId, String title, String description, ArrayList<Gender> genderRoles, ArrayList<Genre> genres, ArrayList<CriteriaType> criteria, int[] weights) {
+        String sqlListing = "INSERT INTO Listings (recruiter_id, title, description) VALUES (?, ?, ?)";
+        if(genres.isEmpty() || genderRoles.isEmpty() || criteria.isEmpty() || criteria.size() != weights.length) return -1; 
 
-        try (Connection conn = ConnectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = ConnectionManager.getConnection()) {
+            // Start transaction
+            conn.setAutoCommit(false);
+            
+            try (PreparedStatement stmtListing = conn.prepareStatement(sqlListing, Statement.RETURN_GENERATED_KEYS)) {
+                stmtListing.setInt(1, recruiterId);
+                stmtListing.setString(2, title);
+                stmtListing.setString(3, description);
+                
+                int affectedRows = stmtListing.executeUpdate();
+                if (affectedRows == 0) {
+                    conn.rollback();
+                    return -1;
+                }
+                
+                // Retrieve generated listing_id
+                int listingId;
+                try (ResultSet rs = stmtListing.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        listingId = rs.getInt(1);
+                    } else {
+                        conn.rollback();
+                        return -1;
+                    }
+                }
+                
+                // Insert into ListingGenderRoles for each gender role
+                String sqlGender = "INSERT INTO ListingGenderRoles (listing_id, gender_id) VALUES (?, ?)";
+                for (Gender gender : genderRoles) {
+                    try (PreparedStatement stmtGender = conn.prepareStatement(sqlGender)) {
+                        stmtGender.setInt(1, listingId);
+                        stmtGender.setInt(2, gender.getId());
+                        stmtGender.executeUpdate();
+                    }
+                }
+                
+                // Insert into ListingGenres for each genre
+                String sqlGenre = "INSERT INTO ListingGenres (listing_id, genre_id) VALUES (?, ?)";
+                for (Genre genre : genres) {
+                    try (PreparedStatement stmtGenre = conn.prepareStatement(sqlGenre)) {
+                        stmtGenre.setInt(1, listingId);
+                        stmtGenre.setInt(2, genre.getId());
+                        stmtGenre.executeUpdate();
+                    }
+                }
+                
+                // Insert into ListingCriteria for each criteria // TODO
+                String sqlCriteria = "INSERT INTO ListingCriteria (listing_id, criteria_id, weight) VALUES (?, ?, ?)";
+                for (int i = 0; i < criteria.size(); i++) {
+                    try (PreparedStatement stmtCriteria = conn.prepareStatement(sqlCriteria)) {
+                        stmtCriteria.setInt(1, listingId);
+                        stmtCriteria.setInt(2, criteria.get(i).getId());
+                        stmtCriteria.setInt(3, weights[i]); 
+                        stmtCriteria.executeUpdate();
+                    }
+                }
 
-            stmt.setInt(1, recruiterId);
-            stmt.setString(2, title);
-            stmt.setString(3, description);
-            stmt.setTimestamp(4, createdAt);
-
-            return stmt.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.err.println("Error creating listing: " + e.getMessage());
-        }
-        return false;
-    }
+                // If all inserts succeeded, commit the transaction                                             
+                conn.commit();                                  
  
+                return listingId;
+            } catch (SQLException e) {
+                System.err.println("Error creating listing or its associations: " + e.getMessage());
+                conn.rollback(); // Rollback if any error occurs
+                return -1;
+            } finally { 
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error with connection or transaction: " + e.getMessage());
+            return -1;
+        }
+    } 
 
     /**
      * Deletes a listing by ID.
@@ -78,7 +136,7 @@ public class Listing {
     }
 
     public boolean update() {
-        String sql = "UPDATE Listing SET title = ?, description = ? WHERE listing_id = ?";
+        String sql = "UPDATE Listings SET title = ?, description = ? WHERE listing_id = ?";
     
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -101,7 +159,7 @@ public class Listing {
      * @param id TR id to search listings by
      * @return 
      */
-    public static ArrayList<Listing> getListingsByTRId(int recruiterId) {
+    public static ArrayList<Listing> getByTRId(int recruiterId) {
         String sql = "SELECT * FROM listings WHERE recruiter_id = ?";
         ArrayList<Listing> listings = new ArrayList<>();
 
@@ -110,21 +168,82 @@ public class Listing {
 
             stmt.setInt(1, recruiterId);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    listings.add(new Listing(
-                            rs.getInt("listing_id"),
-                            rs.getInt("recruiter_id"),
-                            rs.getString("title"),
-                            rs.getString("description"), 
-                            rs.getTimestamp("created_at")
-                    ));
-                }
-            } 
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                listings.add(new Listing(
+                        rs.getInt("listing_id"),
+                        rs.getInt("recruiter_id"),
+                        rs.getString("title"),
+                        rs.getString("description"), 
+                        rs.getTimestamp("created_at")
+                ));
+            }  
         } catch (SQLException e) {
             System.err.println("Error fetching listing by TR id: " + e.getMessage());
         } 
 
         return listings;
     }  
+
+    public static void deleteAll() {
+        String sql = "DELETE FROM Listings";  
+        try (Connection conn = ConnectionManager.getConnection();
+             Statement stmt = conn.createStatement()) {  
+             
+            stmt.execute(sql); 
+            
+        } catch (SQLException e) {
+            System.err.println("Error resetting listings: " + e.getMessage());
+        }
+    }
+    
+    public static Listing getById(int id) {
+        String sql = "SELECT * FROM Listings WHERE listing_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Listing(
+                            rs.getInt("listing_id"),
+                            rs.getInt("recruiter_id"),
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getTimestamp("created_at")
+                    );
+                } else {
+                    throw new SQLException("No listing found with id: " + id);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching listing by id: " + e.getMessage()); 
+            return null;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        try {
+            String gendersString = "", genresString = "", criteriaString = "";
+            for(Gender g : Gender.getByListingId(getListingId())) { gendersString += g.toString(); }
+            for(Genre g : Genre.getByListingId(getListingId())) { genresString += g.toString(); }
+            for(Criteria c : Criteria.getByListingId(getListingId())) { criteriaString += c.toString(); }
+            return String.format("%s\n%s\nGender Roles:%s\nGenres:%s\nCriteria:%s\nManaging Recruiter:%s\nCreated At:%s",
+                getTitle(), getDescription(), gendersString, genresString, criteriaString, TalentRecruiter.getById(getRecruiterId()).toString(), getCreatedAt());
+    
+        } catch(IllegalArgumentException e) {
+            System.err.println("Error getting Listing.toString(): "+e.getMessage());
+            return null;
+        } catch(NullPointerException e) {
+            System.err.println("Null ptr exception (likely from TR Id which is: "+getRecruiterId()+"): "+e.getMessage());
+            return null;
+        } catch(SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
 }

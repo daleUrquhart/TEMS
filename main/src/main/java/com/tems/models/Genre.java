@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tems.util.ConnectionManager;
 
@@ -19,25 +20,27 @@ public enum Genre {
     HORROR("Horror"),
     ROMANCE("Romance"),
     OTHER("Other");
-
-    /**
-     * String representation of enum constant
-     */
+ 
     private final String displayName;
-
-    /**
-     * Constructor assigns the string version of the enum
-     * @param displayName Display name of the enum
-     */
+ 
     Genre(String displayName) {
         this.displayName = displayName;
     }
+ 
+    public String getDisplayName() {
+        return displayName;
+    }
+  
+    public static Genre fromString(String text) throws IllegalArgumentException{
+        for (Genre Genre : Genre.values()) {
+            if (Genre.displayName.equalsIgnoreCase(text)) {
+                return Genre;
+            }
+        }
+        throw new IllegalArgumentException("No Genre found with name: " + text);
+    }
 
-    /**
-     * Gets the Genres id of the Genre
-     * @param Genre
-     * @return
-     */
+    // CRUD Operations 
     public int getId() throws SQLException{
         String sql = "SELECT * FROM Genres WHERE genre_name = ?";
         String Genre_name = getDisplayName();
@@ -60,26 +63,45 @@ public enum Genre {
         }
     }
 
-    /**
-     * Gets the display name of the enum 
-     * @return Display name of the enum 
-     */
-    public String getDisplayName() {
-        return displayName;
-    }
- 
-    /**
-     * Gets enum constant from string value
-     * @param text String representation to find constant for
-     * @return Enum constant of string value
-     * @throws IllegalArgumentException For when String value has no asssociated constant
-     */
-    public static Genre fromString(String text) throws IllegalArgumentException{
-        for (Genre Genre : Genre.values()) {
-            if (Genre.displayName.equalsIgnoreCase(text)) {
-                return Genre;
+    public static ArrayList<Genre> getByListingId(int listingId) {
+        String sql = "SELECT * FROM ListingGenres WHERE listing_id = ?";
+        ArrayList<Genre> genres = new ArrayList<>();
+        
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, listingId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    genres.add(Genre.getById(rs.getInt("genre_id"))); 
+                }
             }
+            return genres;
+        } catch (SQLException e) {
+            System.err.println("Error fetching genre for listing id " + listingId + ": " + e.getMessage());
+        } 
+        return null;
+    } 
+
+    public static Genre getById(int id) {
+        String sql = "SELECT * FROM Genres WHERE genre_id = ?";
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                    return Genre.fromString(rs.getString("genre_name"));
+                }
+            }
+        } catch(SQLException e) {
+            System.err.println("Error getting genre by Id: "+e.getMessage());
         }
-        throw new IllegalArgumentException("No Genre found with name: " + text);
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return getDisplayName()+" ";
     }
 }

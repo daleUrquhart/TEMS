@@ -2,7 +2,8 @@ package com.tems.models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.SQLException; 
 
 import com.tems.util.ConnectionManager;
 
@@ -63,5 +64,38 @@ public class TalentRecruiter extends User{
             }
         } 
         return -1;  
-    }    
+    }   
+
+    public static TalentRecruiter getById(int id) throws SQLException { 
+        String sql = "SELECT * FROM TalentRecruiters WHERE recruiter_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    User temp = User.getById(id);
+                    return new TalentRecruiter(
+                            rs.getInt("recruiter_id"),
+                            temp.getName(),
+                            temp.getEmail(),
+                            temp.getPasswordHash(),
+                            temp.getRole(),
+                            rs.getString("company") 
+                    );
+                } else {
+                    throw new SQLException("No recruiter found with id: " + id);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching recruiter by id: " + e.getMessage());
+        }
+    } 
+
+    @Override
+    public String toString() {
+        return getName()+" from "+getCompany();
+    }
 }

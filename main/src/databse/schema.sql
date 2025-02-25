@@ -8,29 +8,10 @@ CREATE TABLE Genders (
     gender_name VARCHAR(255) UNIQUE NOT NULL
 ); 
 
-
--- Stores an auditionee's preferrd gender roles they want to see also used for listings
-CREATE TABLE AuditioneeGenderRoles (
-    auditionee_id INT NOT NULL,
-    gender_id INT NOT NULL,
-    PRIMARY KEY (auditionee_id, gender_id),
-    FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
-    FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
-);
-
 -- Genres
 CREATE TABLE Genres (
     genre_id INT AUTO_INCREMENT PRIMARY KEY,
-    genre_name VARCHAR UNIQUE NOT NULL
-);
-
--- Stores an genre types for listings
-CREATE TABLE ListingGenres (
-    listing_id INT NOT NULL,
-    genre_id INT NOT NULL,
-    PRIMARY KEY (listing_id, genre_id),
-    FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE,
-    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
+    genre_name VARCHAR(255) UNIQUE NOT NULL
 );
 
 -- User
@@ -62,22 +43,46 @@ CREATE TABLE Listings (
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE,
+    FOREIGN KEY (recruiter_id) REFERENCES TalentRecruiters(recruiter_id) ON DELETE CASCADE
+);
+
+-- Stores an auditionee's preferrd gender roles they want to see
+CREATE TABLE AuditioneeGenderRoles (
+    auditionee_id INT NOT NULL,
+    gender_id INT NOT NULL,
+    PRIMARY KEY (auditionee_id, gender_id),
+    FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
     FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Criteria_Types (
-    criteria_type_id INT AUTO_INCREMENT PRIMARY KEY,
-    criteria_type VARCHAR(255) UNIQUE NOT NULL
-);
+CREATE TABLE ListingGenderRoles (
+    listing_id INT NOT NULL,
+    gender_id INT NOT NULL,
+    PRIMARY KEY (listing_id, gender_id),
+    FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE,
+    FOREIGN KEY (gender_id) REFERENCES Genders(gender_id) ON DELETE CASCADE
+); 
+
+-- Stores an genre types for listings
+CREATE TABLE ListingGenres (
+    listing_id INT NOT NULL,
+    genre_id INT NOT NULL,
+    PRIMARY KEY (listing_id, genre_id),
+    FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id) ON DELETE CASCADE
+); 
 
 CREATE TABLE Criteria (
     criteria_id INT AUTO_INCREMENT PRIMARY KEY,
+    criteria_name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE ListingCriteria (
+    criteria_id INT NOT NULL,
     listing_id INT NOT NULL,
-    criteria_type_id INT NOT NULL,
-    score INT NOT NULL CHECK(score >= 0 AND score <= 100) DEFAULT 0,
-    weight INT NOT NULL CHECK (weight > 0) DEFAULT 1,
-    FOREIGN KEY (criteria_type_id) REFERENCES Criteria_Types(criteria_type_id) ON DELETE CASCADE,
+    weight INT NOT NULL DEFAULT 1 CHECK (weight > 0),
+    PRIMARY KEY (listing_id, criteria_id),
+    FOREIGN KEY (criteria_id) REFERENCES Criteria(criteria_id) ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
 );
 

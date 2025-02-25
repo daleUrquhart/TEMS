@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tems.util.ConnectionManager;
 
@@ -36,33 +37,6 @@ public enum Gender {
     }
 
     /**
-     * Gets the Genders id of the gender
-     * @param gender
-     * @return
-     */
-    public int getId() throws SQLException{
-        String sql = "SELECT * FROM Genders WHERE gender_name = ?";
-        String gender_name = getDisplayName();
-
-        try (Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, gender_name);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("gender_id");
-                } else {
-                    throw new SQLException("No user found with name: " + gender_name);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error fetching gender by name: " + e.getMessage());
-            throw e; 
-        }
-    }
-
-    /**
      * Gets the display name of the enum 
      * @return Display name of the enum 
      */
@@ -83,5 +57,75 @@ public enum Gender {
             }
         }
         throw new IllegalArgumentException("No gender found with name: " + text);
+    }
+
+    // CRUD Operations
+    /**
+     * Gets the Genders id of the gender
+     * @param gender
+     * @return
+     */
+    public int getId() {
+        String sql = "SELECT * FROM Genders WHERE gender_name = ?";
+        String gender_name = getDisplayName();
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, gender_name);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("gender_id");
+                } else {
+                    throw new SQLException("No gender found with name: " + gender_name);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching gender by name: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public static Gender getById(int id) { 
+        String sql = "SELECT * FROM Genders WHERE gender_id = ?";
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                    return Gender.fromString(rs.getString("gender_name"));
+                }
+            }
+        } catch(SQLException e) {
+            System.err.println("Error getting gender by Id: "+e.getMessage());
+        }
+        return null;
+    } 
+
+    public static ArrayList<Gender> getByListingId(int id) {
+        String sql = "SELECT * FROM ListingGenderRoles WHERE listing_id = ?";
+        ArrayList<Gender> genders = new ArrayList<>();
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) { 
+                    genders.add(Gender.getById(rs.getInt("gender_id"))); 
+                } 
+            }
+            return genders;
+        } catch (SQLException e) {
+            System.err.println("Error fetching gender by name: " + e.getMessage());
+            return null;
+        }
+    } 
+
+    @Override
+    public String toString() {
+        return getDisplayName()+" ";
     }
 }

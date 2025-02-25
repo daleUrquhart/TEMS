@@ -45,11 +45,11 @@ public class User {
         try (Connection conn = ConnectionManager.getConnection();
              Statement stmt = conn.createStatement()) {  
              
-            stmt.execute(sql);
-            System.out.println("All users deleted successfully");
+            stmt.execute(sql); 
             
         } catch (SQLException e) {
             System.err.println("Error resetting Users: " + e.getMessage());
+
         }
     }
     
@@ -115,7 +115,7 @@ public class User {
      * @return User
      * @throws SQLException if no user is found or there is a database issue.
      */
-    public static User getUserById(int id) throws SQLException {
+    public static User getById(int id) throws SQLException {
         String sql = "SELECT * FROM Users WHERE user_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();

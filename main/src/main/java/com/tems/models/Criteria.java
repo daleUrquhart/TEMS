@@ -15,42 +15,36 @@ import com.tems.util.Env;
  * @author Dale Urquhart
  */
 public class Criteria {
-    private CriteriaType criteriaType; 
+    private int criteriaTypeId; 
     private int weight; 
     private final static int RANGE = 100;  
-    private final int criteriaId; 
     private final int listingId;
-    private int score;
 
-    public Criteria(int criteriaId, String criteriaType, int weight, int listingId, int score) {
-        this.criteriaType = CriteriaType.fromString(criteriaType);
-        this.criteriaId = criteriaId;
-        this.weight = weight;
+    public Criteria(int criteriaTypeId, int listingId, int weight) {
+        this.criteriaTypeId = criteriaTypeId;
         this.listingId = listingId; 
-        this.score = score;
+        this.weight = weight;
     } 
 
     // Getters and setters
     public int getListingId() { return listingId; }
-    public CriteriaType getCriteriaType() { return criteriaType; }
+    public int  getCriteriaTypeId() { return criteriaTypeId; }
     public int getWeight() { return weight; }
     public int getRange() { return RANGE; }
-    public int getCriteriaId() { return criteriaId; }
-    public int getScore() { return score; }
 
-    public void setCriteriaType(CriteriaType criteriaType) { this.criteriaType = criteriaType; }
+    public void setCriteriaTypeId(int criteriaTypeId) { this.criteriaTypeId = criteriaTypeId; }
     public void setWeight(int weight) { this.weight = weight; }
-    public void setScore(int score) { this.score = score > -1 && score < RANGE ? score : 0; }
 
     // CRUD Operations
-    public static boolean create(int listingId, String criteriaType, int weight) {
-        String sql = "INSERT INTO Criteria (listing_id, criteriaType, weight) VALUES (?, ?, ?)";
+    // Create a ListingCriteria
+    public static boolean create(int listingId, int criteriaTypeId, int weight) {
+        String sql = "INSERT INTO ListingCriteria (listing_id, criteria_id, weight) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             stmt.setInt(1, listingId);
-            stmt.setString(2, criteriaType);
+            stmt.setInt(2, criteriaTypeId);
             stmt.setInt(3, weight);
 
             return stmt.executeUpdate() > 0;
@@ -61,16 +55,16 @@ public class Criteria {
         }
     }
 
+    // Update listing criteria
     public boolean update() {
-        String sql = String.format("UPDATE Criteria SET %s = ?, %s = ?, %s = ? WHERE %s = ?", Env.CRITERIA_TYPE, Env.WEIGHT, Env.SCORE, Env.CRITERIA_ID);
+        String sql = String.format("UPDATE ListingCriteria SET weight = ? WHERE listing_id = ? AND criteira_id = ?", Env.WEIGHT);
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
              
-            stmt.setString(1, getCriteriaType().getName());
             stmt.setInt(2, getWeight());
-            stmt.setInt(3, getCriteriaId());
-            stmt.setInt(4, getScore());
+            stmt.setInt(4, getListingId());
+            stmt.setInt(5, getCriteriaTypeId());
             return stmt.executeUpdate() > 0;
 
         } catch(SQLException e) {
@@ -79,21 +73,24 @@ public class Criteria {
         }
     }
 
+    // Delete a listing criteria
     public boolean delete() {
-        String sql = "DELETE FROM Criteria WHERE criteria_id = ?";
+        String sql = "DELETE FROM ListingCriteria WHERE criteria_id = ? AND listing_id = ?";
         try(Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, getCriteriaId());
+            stmt.setInt(1, getCriteriaTypeId());
+            stmt.setInt(2, getListingId());
 
             return stmt.executeUpdate() > 0;
         } catch(SQLException e) {
-            System.err.println(String.format("Error deleting criteria with id %d: %s", getCriteriaId(), e.getMessage()));
+            System.err.println(String.format("Error deleting criteria with id %d: %s", getCriteriaTypeId(), e.getMessage()));
             return false;
         }
     }
 
-    public static ArrayList<Criteria> getCriteriaForListingId(int listingId) {
-        String sql = "SELECT * FROM Criteria WHERE listing_id = ?";
+    // Gets All Listing criteria by a listing id
+    public static ArrayList<Criteria> getByListingId(int listingId) {
+        String sql = "SELECT * FROM ListingCriteria WHERE listing_id = ?";
         ArrayList<Criteria> criteria = new ArrayList<>();
         
         try (Connection conn = ConnectionManager.getConnection();
@@ -104,10 +101,8 @@ public class Criteria {
                 while (rs.next()) {
                     criteria.add(new Criteria(
                         rs.getInt("criteria_id"),
-                        rs.getString("criteriaType"), 
-                        rs.getInt("weight"),
-                        listingId,
-                        rs.getInt("score")
+                        rs.getInt("listing_id"), 
+                        rs.getInt("weight")
                     ));
                 }
             }
@@ -124,6 +119,6 @@ public class Criteria {
      */
     @Override 
     public String toString() {
-        return String.format("Criteria[Weight=%d, Range=%d]", getWeight(), getRange());
+        return String.format("Name: %s, Weight: %d, Range: %d ", CriteriaType.getById(getCriteriaTypeId()).getName(), getWeight(), getRange());
     }
 }

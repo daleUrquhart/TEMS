@@ -38,7 +38,8 @@ public class UserTest {
         User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
 
         assertDoesNotThrow(() -> User.getUserByEmail("doe@example.ca"));
-        assertThrows(SQLException.class, () -> User.getUserByEmail("dne@example.ca"));
+        SQLException thrown = assertThrows(SQLException.class, () -> User.getUserByEmail("dne@example.ca"));
+        assertEquals("User not found", thrown.getMessage());
     } 
 
     @Test
@@ -77,12 +78,14 @@ public class UserTest {
         User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
         try {
             User u = User.getUserByEmail("doe@example.ca");
-            assertDoesNotThrow(() -> User.getUserById(u.getUserId()));
-            assertThrows(SQLException.class, () -> User.getUserById(-1));
+            assertDoesNotThrow(() -> User.getById(u.getUserId()));
+            
         } catch(SQLException e) {
             System.err.println("Failed to get test user by id: " + e.getMessage());
             fail();
         }
+        SQLException thrown = assertThrows(SQLException.class, () -> User.getById(-1));
+        assertEquals("User not found", thrown.getMessage());
         
     } 
 

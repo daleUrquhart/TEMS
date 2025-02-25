@@ -3,7 +3,13 @@
 
 package com.tems.models;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.tems.util.ConnectionManager;
 
 public enum CriteriaType {
     PHYSICAL_APPEARANCE("Physical Appearance"),
@@ -62,4 +68,42 @@ public enum CriteriaType {
         }
         return criteriaNames;
     }
+
+    public int getId() {
+        String sql = "SELECT * FROM Criteria WHERE criteria_name = ?";
+        String criteria_name = getName();
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, criteria_name);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("criteria_id");
+                } else {
+                    throw new SQLException("No criteria found with name: " + criteria_name);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching criteria by name: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public static CriteriaType getById(int id) {
+        String sql = "SELECT * FROM Criteria WHERE criteria_id = ?";
+        try(Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                    return CriteriaType.fromString(rs.getString("criteria_name"));
+                }
+            }
+        } catch(SQLException e) {
+            System.err.println("Error getting criteria by Id: "+e.getMessage());
+        }
+        return null;
+    } 
 }

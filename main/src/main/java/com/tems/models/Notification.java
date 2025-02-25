@@ -83,5 +83,5 @@ public class Notification {
             System.err.println("Error updating notification: " + e.getMessage());
             return false;
         }
-    }
+    } 
 }

@@ -2,6 +2,7 @@ package com.tems.models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.tems.util.ConnectionManager;
@@ -70,5 +71,34 @@ public class Auditionee extends User {
             }
         } 
         return -1;  
+    }
+
+    public static Auditionee getById(int id) throws SQLException{ 
+        String sql = "SELECT * FROM Users WHERE user_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { //int id, String name, String email, String passwordHash, String role, Gender gender, int yoe
+                    return new Auditionee(
+                            rs.getInt("auditionee_id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password_hash"),
+                            rs.getString("role"),
+                            Gender.fromString(rs.getString("gender")),
+                            rs.getInt("years_of_experience")
+                    );
+                } else {
+                    throw new SQLException("No user found with id: " + id);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching user by id: " + e.getMessage());
+            throw e; 
+        }
     }
 }

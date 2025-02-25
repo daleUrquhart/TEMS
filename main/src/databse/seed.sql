@@ -20,7 +20,7 @@ INSERT INTO Genres (genre_name) VALUES
 ('Romance'), 
 ('Other');
 
-INSERT INTO criteria_type (criteria_type) VALUES 
+INSERT INTO criteria (criteria_name) VALUES 
 ('Physical Appearance'),
 ('Star Power & Marketability'),
 ('Language & Accent Requirements'),
