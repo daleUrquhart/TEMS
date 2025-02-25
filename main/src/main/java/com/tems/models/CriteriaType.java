@@ -69,19 +69,38 @@ public enum CriteriaType {
         return criteriaNames;
     }
 
-    public int getId() {
+    public static int getId(String criteriaName) {
         String sql = "SELECT * FROM Criteria WHERE criteria_name = ?";
-        String criteria_name = getName();
         try (Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, criteria_name);
+            
+            stmt.setString(1, criteriaName);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("criteria_id");
                 } else {
-                    throw new SQLException("No criteria found with name: " + criteria_name);
+                    throw new SQLException("No criteria found with name: " + criteriaName);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching criteria by name: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public int getId() {
+        String sql = "SELECT * FROM Criteria WHERE criteria_name = ?";
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            String criteriaName = getName();
+            stmt.setString(1, criteriaName);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("criteria_id");
+                } else {
+                    throw new SQLException("No criteria found with name: " + criteriaName);
                 }
             }
         } catch (SQLException e) {

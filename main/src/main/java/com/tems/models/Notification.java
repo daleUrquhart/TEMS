@@ -84,4 +84,9 @@ public class Notification {
             return false;
         }
     } 
+
+    @Override
+    public String toString() {
+        return "User: "+getUserId()+"\nMessage: "+getMessage();
+    }
 }

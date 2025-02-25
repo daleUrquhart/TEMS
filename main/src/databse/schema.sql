@@ -94,16 +94,16 @@ CREATE TABLE Applications (
     status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
     resume TEXT NOT NULL,
     cover_letter TEXT,
+    final_score INT DEFAULT 0 CHECK (final_score >= 0 AND final_score <= 100),
     FOREIGN KEY (auditionee_id) REFERENCES Auditionees(auditionee_id) ON DELETE CASCADE,
     FOREIGN KEY (listing_id) REFERENCES Listings(listing_id) ON DELETE CASCADE
 );
 
-
+-- Manages the score for a criteria_id present in the listing associated with the FK application_id
 CREATE TABLE Scores (
-    score_id INT AUTO_INCREMENT PRIMARY KEY,
     application_id INT NOT NULL,
     criteria_id INT NOT NULL,
-    score DECIMAL(5,2) CHECK (score >= 0 AND score <= 100),
+    score INT DEFAULT 0 CHECK (score >= 0 AND score <= 100),
     FOREIGN KEY (application_id) REFERENCES Applications(application_id) ON DELETE CASCADE,
     FOREIGN KEY (criteria_id) REFERENCES Criteria(criteria_id) ON DELETE CASCADE
 ); 
