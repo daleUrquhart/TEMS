@@ -47,12 +47,16 @@ public class Application {
 
     public void setFinalScore() throws SQLException { 
         int sum = 0;
+        int denom = 0;
+        int weight;
         try {
             ArrayList<Score> scores = Score.getByAppId(getApplicationId());
             for(Score s : scores) {
-                sum += s.getScore();
+                weight = Criteria.getByListingAndTypeId(getListingId(), s.getCriteriaId()).getWeight();
+                sum += s.getScore() * weight;
+                denom += weight;
             }
-            this.score = sum / scores.size();  
+            this.score = sum / denom;  
             update(); 
         } catch(SQLException e) {
             throw new SQLException("Error calculating final score for app. id: "+getApplicationId()+"\n\t"+e.getMessage());
@@ -159,6 +163,7 @@ public class Application {
             a.setStatus("accepted");
             a.update();   
             Notification.create(auditioneeId, "Congratulations, you were selected for the role:\n"+Listing.getById(listingId).toString());
+            
         } catch (SQLException e) {
             throw new SQLException("Error accepting application: " + e.getMessage());
         }

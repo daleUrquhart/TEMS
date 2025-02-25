@@ -113,6 +113,29 @@ public class Criteria {
         return criteria;
     } 
 
+    // Gets All Listing criteria by a listing id and criteria id
+    public static Criteria getByListingAndTypeId(int listingId, int criteriaTypeId) throws SQLException{
+        String sql = "SELECT * FROM ListingCriteria WHERE listing_id = ? AND criteria_id = ?";
+        
+        try (Connection conn = ConnectionManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, listingId);
+            stmt.setInt(2, criteriaTypeId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Criteria(
+                        rs.getInt("criteria_id"),
+                        rs.getInt("listing_id"), 
+                        rs.getInt("weight")
+                    );
+                } throw new SQLException("No results found for listing id " + listingId + " and type id : "+criteriaTypeId);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching criteria for listing id " + listingId + " and type id : "+criteriaTypeId + "\n\t: " + e.getMessage());
+        }
+    } 
+
     /**
      * String representation of the criteria for debugging
      * @return String representation of the criteria
