@@ -6,17 +6,11 @@ import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.tems.util.ConnectionManager;
 
 public class ConnectionManagerTest {
-
-    @BeforeAll
-    public static void setup() {
-        System.out.println("Initializing ConnectionManager tests");
-    }
 
     @Test
     public void testGetConnectionDoesNotThrow() {

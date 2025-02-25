@@ -14,12 +14,13 @@ import com.tems.models.Gender;
 import com.tems.models.Genre;
 import com.tems.models.Listing;
 import com.tems.models.TalentRecruiter;
+import com.tems.models.User;
 
 public class ListingTest {
     
     @AfterEach 
     public void removeUsersAndListingsCreated() { 
-        //User.deleteAllUsers(); 
+        User.deleteAllUsers(); 
     }  
 
     @Test 

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<suite name="MyTestSuite">
-  <test name="MyTest">
-    <classes>
-      <class name="com.example.MyTestClass" />
-    </classes>
-  </test>
-</suite>

@@ -1,5 +1,7 @@
 com\tems\GenderTest.class
+com\tems\ApplicationTest.class
 com\tems\TalentRecruiterTest.class
 com\tems\AuditioneeTest.class
 com\tems\ConnectionManagerTest.class
+com\tems\ListingTest.class
 com\tems\UserTest.class

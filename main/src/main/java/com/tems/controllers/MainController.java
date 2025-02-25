@@ -1,5 +1,10 @@
 package com.tems.controllers; 
 
-public class MainController {
-    
-}
+import javafx.fxml.FXML;
+
+public class MainController { 
+    @FXML
+    private void handleHelloClick() {
+        System.out.println("Hello, World!");
+    }
+} 

@@ -39,7 +39,7 @@ public class UserTest {
 
         assertDoesNotThrow(() -> User.getUserByEmail("doe@example.ca"));
         SQLException thrown = assertThrows(SQLException.class, () -> User.getUserByEmail("dne@example.ca"));
-        assertEquals("User not found", thrown.getMessage());
+        assertEquals("No user found with email: dne@example.ca", thrown.getMessage());
     } 
 
     @Test
@@ -85,7 +85,7 @@ public class UserTest {
             fail();
         }
         SQLException thrown = assertThrows(SQLException.class, () -> User.getById(-1));
-        assertEquals("User not found", thrown.getMessage());
+        assertEquals("No user found with id: -1", thrown.getMessage());
         
     } 
 

@@ -29,7 +29,7 @@ public class TalentRecruiterTest {
         assertNotEquals(status, -1);
         try {
             TalentRecruiter r = TalentRecruiter.getById(status);
-            assertEquals("Bob from Company 1", r.toString());
+            assertEquals("John from Company 1", r.toString());
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

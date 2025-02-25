@@ -3,6 +3,7 @@ package com.tems;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -16,8 +17,14 @@ import com.tems.models.Gender;
 import com.tems.models.Genre;
 import com.tems.models.Listing;
 import com.tems.models.TalentRecruiter;
+import com.tems.models.User;
 
 public class ApplicationTest {
+    
+    @AfterEach
+    public void removeUsersCreated() { 
+        User.deleteAllUsers();
+    } 
     
     @Test
     public void createTest() {

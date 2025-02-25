@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tems.controllers.MainController"
+            stylesheets="@styles.css">
+
+    <!-- Top Header -->
+    <top>
+        <Label text="Hello World App"
+               styleClass="header"/>
+    </top>
+
+    <!-- Center Button -->
+    <center>
+        <Button text="Click Me!"
+                onAction="#handleHelloClick"
+                styleClass="hello-button"/>
+    </center>
+
+</BorderPane>
