@@ -46,7 +46,7 @@ public class Application {
 
     // CRUD operations
     public static boolean create(int auditionee_id, int listingId, String resume, String coverLetter) {
-        String sql = String.format("INSERT INTO Applications (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)", Env.AUDITIONEE_ID, Env.LISTING_ID, Env.RESUME, Env.COVER_LETTER, Env.STATUS);
+        String sql = String.format("INSERT INTO Applications (%s, %s, %s, %s) VALUES (?, ?, ?, ?)", Env.AUDITIONEE_ID, Env.LISTING_ID, Env.RESUME, Env.COVER_LETTER);
         try(Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, auditionee_id);
