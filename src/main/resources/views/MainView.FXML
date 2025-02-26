@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tems.controllers.MainController">
+
+    <!-- Top Header -->
+    <top>
+        <Label text="Hello World App"
+               styleClass="header"/>
+    </top>
+
+    <!-- Center Button -->
+    <center>
+        <Button text="Click Me!"
+                onAction="#handleHelloClick"
+                styleClass="hello-button"/>
+    </center>
+
+</BorderPane>
