@@ -142,6 +142,36 @@ public class User {
         }
     }
 
+    public static User signIn(String email, String passwordHash) throws SQLException {
+        String sql = "SELECT * FROM Users WHERE email = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    if (rs.getString("password_hash").equals(passwordHash)) {
+                        return new User(
+                            rs.getInt("user_id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password_hash"),
+                            rs.getString("role")
+                        );
+                    } else {
+                        throw new SQLException("Incorrect password for user with email: " + email);
+                    } 
+                } else {
+                    throw new SQLException("No user found with email: " + email);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching user by email: "+ e.getMessage()); 
+        }
+    }
+
     /**
      * Updates the user's information in the database based on the instance data.
      */

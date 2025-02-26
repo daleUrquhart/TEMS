@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.Pos?>
+<?import com.jfoenix.controls.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.tems.controllers.MainController">
+            fx:controller="com.tems.controllers.MainController" 
+            fx:id="mainPane"
+            stylesheets="@/styles/styles.css">
 
     <!-- Top Header -->
     <top>
-        <Label text="Hello World App"
-               styleClass="header"/>
+        <Label text="TEMS" styleClass="header"/>
     </top>
 
-    <!-- Center Button -->
     <center>
-        <Button text="Click Me!"
-                onAction="#handleHelloClick"
-                styleClass="hello-button"/>
-    </center>
+        <VBox spacing="10" alignment="CENTER">
+            <JFXButton text="Sign Up" onAction="#loadSignUpView" styleClass="toggle-button"/>
+            <JFXButton text="Sign In" onAction="#loadSignInView" styleClass="toggle-button"/>
+        </VBox>
+    </center> 
 
 </BorderPane>

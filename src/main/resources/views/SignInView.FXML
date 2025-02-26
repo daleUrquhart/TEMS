@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Pos?>
+<?import com.jfoenix.controls.*?>
+ 
+<VBox 
+    spacing="15" 
+    alignment="CENTER" 
+    styleClass="sign-up-box" 
+    fx:controller="com.tems.controllers.SignInController" 
+    xmlns="http://javafx.com/javafx"
+    xmlns:jfx="http://javafx.com/javafx/8.0.0"
+    xmlns:fx="http://javafx.com/fxml" 
+    fx:id="mainBox"
+    stylesheets="@/styles/styles.css">
+
+    <Label text="Sign In" styleClass="sub-header"/>
+    
+    <JFXTextField promptText="Email" fx:id="emailField" styleClass="input-field"/>
+    <JFXPasswordField promptText="Password" fx:id="passwordField" styleClass="input-field"/>
+    
+    <JFXButton text="Sign In" onAction="#handleSignIn" styleClass="sign-up-button"/>
+</VBox>  
