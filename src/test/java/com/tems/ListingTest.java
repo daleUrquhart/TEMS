@@ -1,5 +1,6 @@
 package com.tems;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
@@ -7,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import com.tems.models.CriteriaType;
@@ -26,7 +28,13 @@ public class ListingTest {
     @Test 
     public void createTest() {
         // Load test data
-        int trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        int trId = -1;
+        try { 
+            trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         ArrayList<Gender> genders = new ArrayList<>();
         genders.add(Gender.MALE);
         ArrayList<Genre> genres = new ArrayList<>();
@@ -60,7 +68,13 @@ public class ListingTest {
 
     @Test
     public void updateTest() {
-        int trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        int trId = -1;
+        try { 
+            trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         assertNotEquals(-1, trId);
         
         ArrayList<Gender> genders = new ArrayList<>();
@@ -88,7 +102,13 @@ public class ListingTest {
     @Test
     public void getByTRIdTest() {
         // Build data
-        int trId = TalentRecruiter.create("Jane", "jane@recruiter.ca", "Pass", "Talent Co.");
+        int trId = -1;
+        try { 
+            trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         assertNotEquals(-1, trId);
         
         ArrayList<Gender> genders = new ArrayList<>();

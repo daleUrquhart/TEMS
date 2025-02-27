@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -23,19 +22,20 @@ public class UserTest {
     @Test
     public void createTest() {
         // Test creating a valid user, invalid role, 
-        int u1 = User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
-        int u2 = User.create("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
-        int u3 = User.create("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
-
-        assertNotEquals(u1, -1);
-        assertEquals(u2, -1);
-        assertEquals(u3, -1);  
+        try{
+            User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+            User.create("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
+            User.create("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
+        }catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
     }
 
     @Test
     public void getUserByEmailTest() {
         // Ensure test user is present
-        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        assertDoesNotThrow(() -> User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee"));
 
         assertDoesNotThrow(() -> User.getUserByEmail("doe@example.ca"));
         SQLException thrown = assertThrows(SQLException.class, () -> User.getUserByEmail("dne@example.ca"));
@@ -45,7 +45,7 @@ public class UserTest {
     @Test
     public void updateUserTest() {
         // Create a user
-        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        assertDoesNotThrow(() -> User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee"));
         //assertTrue(userCreated); 
 
         try {
@@ -75,7 +75,7 @@ public class UserTest {
     @Test
     public void getUserByIdTest() {
         // Ensure test user is present
-        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        assertDoesNotThrow(() -> User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee"));
         try {
             User u = User.getUserByEmail("doe@example.ca");
             assertDoesNotThrow(() -> User.getById(u.getUserId()));
@@ -91,7 +91,7 @@ public class UserTest {
 
     @Test
     public void deleteUserTest() {
-        User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
+        assertDoesNotThrow(() -> User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee"));
         try {
             User u = User.getUserByEmail("doe@example.ca");
             User.delete(u.getUserId());

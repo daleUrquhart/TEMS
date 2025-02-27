@@ -1,7 +1,7 @@
 package com.tems;
 
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertNotEquals; 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.Test;
 
 import com.tems.models.Auditionee;
@@ -17,7 +17,6 @@ public class AuditioneeTest {
 
     @Test 
     public void createAuditioneeTest() {
-        int status = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-        assertNotEquals(status, -1);
+        assertDoesNotThrow(() -> Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1));
     }
 }

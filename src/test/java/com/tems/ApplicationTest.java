@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -29,9 +28,14 @@ public class ApplicationTest {
     @Test
     public void createTest() {
         // Create sample auditionee, talent recruiter, and listing
-        int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-        int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-
+        int aId = -1, trId = -1;
+        try {
+            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         ArrayList<Gender> genders = new ArrayList<>();
         genders.add(Gender.MALE);
         ArrayList<Genre> genres = new ArrayList<>();
@@ -48,15 +52,25 @@ public class ApplicationTest {
 
         String resume = "My Resume";
         String coverLetter = "My Cover Letter";
-        assertDoesNotThrow(() -> Application.create(aId, lId, resume, coverLetter));
+        try {
+            Application.create(aId, lId, resume, coverLetter);
+        } catch(SQLException e) {
+            System.out.println("Error creating application"+e.getMessage());
+            fail();
+        }
     }
 
     @Test 
     public void getByAudTest() {
         // Create sample auditionee, talent recruiter, and listing
-        int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-        int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-
+        int aId = -1, trId = -1;
+        try {
+            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         ArrayList<Gender> genders = new ArrayList<>();
         genders.add(Gender.MALE);
         ArrayList<Genre> genres = new ArrayList<>();
@@ -88,9 +102,14 @@ public class ApplicationTest {
     @Test 
     public void declineAndAcceptTest() {
         // Create sample auditionee, talent recruiter, and listing
-        int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-        int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-
+        int aId = -1, trId = -1;
+        try {
+            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         ArrayList<Gender> genders = new ArrayList<>();
         genders.add(Gender.MALE);
         ArrayList<Genre> genres = new ArrayList<>();
@@ -126,9 +145,14 @@ public class ApplicationTest {
     @Test
     public void scoreTest() {
         // Create sample auditionee, talent recruiter, and listing
-        int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-        int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-
+        int aId = -1, trId = -1;
+        try {
+            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+        } catch(SQLException e) {
+            System.out.println("Error creating test user data" + e.getMessage());
+            fail();
+        }
         ArrayList<Gender> genders = new ArrayList<>();
         genders.add(Gender.MALE);
         ArrayList<Genre> genres = new ArrayList<>();
