@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.tems.util.ConnectionManager;
+import com.tems.util.PasswordManager;
 
 /**
  * User model
@@ -57,7 +58,7 @@ public class User {
     /**
      * Inserts a new user into the database.
      */
-    public static int create(String name, String email, String passwordHash, String role) {
+    public static int create(String name, String email, String passwordHash, String role) throws SQLException{
         String sql = "INSERT INTO Users (name, email, password_hash, role) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -69,11 +70,11 @@ public class User {
             stmt.setString(4, role);
 
             if(stmt.executeUpdate() > 0) return User.getUserByEmail(email).getUserId();
+            else throw new SQLException("No rows updated after creating user.");
 
         } catch (SQLException e) {
-            System.err.println("Error creating user: " + e.getMessage());
+            throw new SQLException("Error creating user: \n\t" + e.getMessage());
         }
-        return -1;
     }
  
     /**
@@ -148,11 +149,11 @@ public class User {
         try (Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, email);
+            stmt.setString(1, email); 
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    if (rs.getString("password_hash").equals(passwordHash)) {
+                    if (PasswordManager.verifyPassword(passwordHash, rs.getString("password_hash"))) {
                         return new User(
                             rs.getInt("user_id"),
                             rs.getString("name"),
@@ -161,14 +162,14 @@ public class User {
                             rs.getString("role")
                         );
                     } else {
-                        throw new SQLException("Incorrect password for user with email: " + email);
+                        throw new SQLException("Incorrect password for user with email: \n" + email + "(passsword hash = " + passwordHash + ")");
                     } 
                 } else {
-                    throw new SQLException("No user found with email: " + email);
+                    throw new SQLException("No user found with email: \n" + email);
                 }
             }
         } catch (SQLException e) {
-            throw new SQLException("Error fetching user by email: "+ e.getMessage()); 
+            throw new SQLException("Error fetching user by email: \n"+ e.getMessage()); 
         }
     }
 

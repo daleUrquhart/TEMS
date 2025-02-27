@@ -5,6 +5,7 @@ com\tems\util\PasswordManager.class
 com\tems\models\CriteriaType.class
 com\tems\controllers\SignInController.class
 com\tems\models\Score.class
+com\tems\controllers\TalentRecruiterHomeController.class
 com\tems\util\Env.class
 com\tems\models\Notification.class
 com\tems\models\User.class
@@ -13,6 +14,8 @@ com\tems\Main.class
 com\tems\models\Criteria.class
 com\tems\models\TalentRecruiter.class
 com\tems\models\Gender.class
+com\tems\controllers\BaseController.class
 com\tems\util\ConnectionManager.class
+com\tems\controllers\AuditioneeHomeController.class
 com\tems\models\Auditionee.class
 com\tems\controllers\SignUpController.class

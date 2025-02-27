@@ -43,10 +43,9 @@ public class TalentRecruiter extends User{
         } 
     }
  
-    public static int create(String name, String email, String passwordHash, String company) {
-        int userCreated = User.create(name, email, passwordHash, "recruiter");
-    
-        if (userCreated > 0) {
+    public static int create(String name, String email, String passwordHash, String company) throws SQLException {
+        try {
+            int userCreated = User.create(name, email, passwordHash, "recruiter");
             String sql = "INSERT INTO TalentRecruiters (recruiter_id, company) VALUES (?, ?)";
     
             try (Connection conn = ConnectionManager.getConnection()) {
@@ -57,13 +56,15 @@ public class TalentRecruiter extends User{
                     stmt.setString(2, company);
     
                     if(stmt.executeUpdate() > 0) return userCreated;
+                    throw new SQLException("No rows affected upon creating recruiter");
                 }
             } catch (SQLException e) {
-                System.err.println("Error creating recruiter: " + e.getMessage());
                 delete(userCreated); 
+                throw new SQLException("Error creating recruiter: \n\t" + e.getMessage());
             }
-        } 
-        return -1;  
+        } catch (SQLException e) { 
+            throw new SQLException("Error creating user: \n\t" + e.getMessage());
+        }
     }   
 
     public static TalentRecruiter getById(int id) throws SQLException { 

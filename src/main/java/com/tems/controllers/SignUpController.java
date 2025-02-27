@@ -1,16 +1,24 @@
 package com.tems.controllers;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import com.tems.models.Auditionee;
 import com.tems.models.Gender;
 import com.tems.util.PasswordManager;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 @SuppressWarnings("unused") 
-public class SignUpController extends MainController{  
+public class SignUpController implements BaseController{  
+
+    private MainController mainController;
 
     @FXML
     private TextField nameField;
@@ -27,6 +35,9 @@ public class SignUpController extends MainController{
     @FXML
     private TextField yoeField;  
 
+    @FXML 
+    private VBox mainBox;
+
     @FXML
     public void initialize() {
         // Populate the ComboBox with the Gender enum values
@@ -34,32 +45,78 @@ public class SignUpController extends MainController{
     }
 
     @FXML
+    private void handleHomeView() {
+        mainController.loadMainView();
+    }
+
+    @FXML
     private void handleSignUp() {
         // Get values from the input fields
         String username = nameField.getText(); 
-        String password = passwordField.getText(); 
-        String email = emailField.getText(); 
+        String password = passwordField.getText();  
         Gender gender = genderComboBox.getValue();
         int yoe;
+        String email = emailField.getText(); 
+
+        // Validation
+        if (email.isEmpty() || username.isEmpty() || password.isEmpty()){
+            mainController.showErrorAlert("Invalid Input", "Cannot have empty fields.");
+            clearFields();
+
+            return;
+        }
+        if (email.contains("@" ) == false || email.contains(".") == false){
+            mainController.showErrorAlert("Invalid Input", "Must be a valid email address.");
+            emailField.clear();
+            return;
+            
+        }
         try {
             yoe = Integer.parseInt(yoeField.getText());
         } catch(NumberFormatException e) {
             //alert the user that the years of experience must be a number
-            showErrorAlert("Invalid Input", "Years of experience must be a valid number.");
+            mainController.showErrorAlert("Invalid Input", "Years of experience must be a valid number.");
             yoeField.clear();
             return;
-        }
-
-        // Print inputs
-        System.out.println("Username: " + username);
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
-        System.out.println(gender.getDisplayName());
-        System.out.println(yoe);
-
+        } 
 
         // Create a new Auditionee with the gathered information and redirect to auditionee role home page
-        Auditionee.create(username, email, PasswordManager.hashPassword(password), gender, yoe);
+        try {
+            int id = Auditionee.create(username, email, PasswordManager.hashPassword(password), gender, yoe);
+            loadAudHomeView("/views/AuditioneeHomeView.fxml", id);
+        } catch (SQLException e) {
+            mainController.showErrorAlert("Error", "An error occurred while signing up: \n\t"+e.getMessage());
+            clearFields();
+        }
+    }
+    
+    void loadAudHomeView(String fxmlPath, int id) { 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            VBox view = loader.load();
+
+            // Set the loaded view into the center of the BorderPane
+            BorderPane mainPane = (BorderPane) mainBox.getScene().getRoot();
+            AuditioneeHomeController controller = loader.getController();
+            controller.setUserData(id);
+            mainPane.setCenter(view);
+
+        } catch (IOException e) { 
+            e.printStackTrace();
+            mainController.showErrorAlert("Error", "An error occurred while loading the view.\n\t"+e.getMessage());
+        }
     }
 
+    private void clearFields() {
+        emailField.clear();
+        nameField.clear();
+        passwordField.clear();
+        yoeField.clear();
+        genderComboBox.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 }

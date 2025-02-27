@@ -26,9 +26,7 @@ public class Main extends Application {
             // Show
             primaryStage.show();
         } catch (IOException e) {
-            System.out.println("Error in main entry point: ");
-
-            e.printStackTrace();
+            System.out.println("Error in main entry point: "); 
 
             System.out.println("End of main entry point stack trace.\n");
             System.exit(1); 

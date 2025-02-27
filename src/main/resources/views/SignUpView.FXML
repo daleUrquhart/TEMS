@@ -25,4 +25,5 @@
     <JFXPasswordField promptText="Password" fx:id="passwordField" styleClass="input-field"/>
     
     <JFXButton text="Sign Up" onAction="#handleSignUp" styleClass="sign-in-button"/>
+    <JFXButton text="Return To Main Page" onAction="#handleHomeView" styleClass="toggle-button"/>
 </VBox> 

@@ -16,8 +16,8 @@ public class Auditionee extends User {
     private int yoe;
     private Gender gender;
 
-    public Auditionee(int id, String name, String email, String passwordHash, String role, Gender gender, int yoe) {
-        super(id, name, email, passwordHash, role);
+    public Auditionee(int id, String name, String email, String passwordHash, Gender gender, int yoe) {
+        super(id, name, email, passwordHash, "auditionee");
         this.yoe = yoe;
         this.gender = gender;
     }
@@ -49,10 +49,9 @@ public class Auditionee extends User {
         }
     }
  
-    public static int create(String name, String email, String passwordHash, Gender gender, int yoe) {
-        int userCreated = User.create(name, email, passwordHash, "auditionee");
-    
-        if (userCreated > 0) {
+    public static int create(String name, String email, String passwordHash, Gender gender, int yoe) throws SQLException{
+        try {
+            int userCreated = User.create(name, email, passwordHash, "auditionee");
             String sql = "INSERT INTO Auditionees (auditionee_id, gender_id, years_of_experience) VALUES (?, ?, ?)";
     
             try (Connection conn = ConnectionManager.getConnection()) {
@@ -63,42 +62,51 @@ public class Auditionee extends User {
                     stmt.setInt(3, yoe);
                     if (stmt.executeUpdate() > 0) {
                         return userCreated;
-                    }
+                    } else throw new SQLException("No rows updated after creating auditionee.");
+                } catch (SQLException e) { 
+                    throw new SQLException("Error creating auditionee: \n\t" + e.getMessage());
                 }
             } catch (SQLException e) {
-                System.err.println("Error creating auditionee: " + e.getMessage());
                 User.delete(userCreated);
+                throw new SQLException("Error with database operation for creating auditionee: \n\t" + e.getMessage());
             }
-        } 
-        return -1;  
+        } catch (SQLException e) {
+            throw new SQLException("Error creating user: \n\t" + e.getMessage());
+        }
     }
 
     public static Auditionee getById(int id) throws SQLException{ 
-        String sql = "SELECT * FROM Users WHERE user_id = ?";
+        try {
+            // Get the user of id: id and make sure it is an auditionee
+            User u = User.getById(id);
+            if(!u.getRole().equals("auditionee")) throw new SQLException(String.format("User with id: %d is not an auditionee.", id));
+            
+            // Try getting the auditionee with id: id
+            String sql = "SELECT * FROM Auditionees WHERE auditionee_id = ?";
+            try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        try (Connection conn = ConnectionManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, id);
 
-            stmt.setInt(1, id);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) { //int id, String name, String email, String passwordHash, String role, Gender gender, int yoe
-                    return new Auditionee(
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) { //int id, String name, String email, String passwordHash, String role, Gender gender, int yoe
+                        return new Auditionee(
                             rs.getInt("auditionee_id"),
-                            rs.getString("name"),
-                            rs.getString("email"),
-                            rs.getString("password_hash"),
-                            rs.getString("role"),
-                            Gender.fromString(rs.getString("gender")),
+                            u.getName(),
+                            u.getEmail(),
+                            u.getPasswordHash(),
+                            Gender.getById(rs.getInt("gender_id")),
                             rs.getInt("years_of_experience")
-                    );
-                } else {
-                    throw new SQLException("No user found with id: " + id);
+                        );
+                    } else throw new SQLException("No auditionee found with id: " + id);
+                } catch(SQLException e) {
+                    throw new SQLException("Error fetching auditionee by id: \n\t" + e.getMessage());
                 }
+            } catch (SQLException e) { 
+                throw new SQLException("Error establishing connection: \n\t" + e.getMessage()); 
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching user by id: " + e.getMessage());
-            throw e; 
-        }
+            throw new SQLException("Error fetching user by id: \n\t" + e.getMessage()); 
+        } 
     }
 }
