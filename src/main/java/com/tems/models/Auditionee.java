@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tems.util.ConnectionManager;
 
@@ -47,6 +48,24 @@ public class Auditionee extends User {
         }
     }
  
+    public ArrayList<Gender> getGenderRoles() throws SQLException {
+        String sql = "SELECT * FROM AuditioneeGenderRoles WHERE auditionee_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ArrayList<Gender> genders = new ArrayList<>();
+            stmt.setInt(1, getUserId());
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                genders.add(Gender.getById(rs.getInt("gender_id")));
+            } 
+            return genders; 
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching AuditioneeGenderRoles by auditionee id: \n\t" + e.getMessage()); 
+        } 
+    }
+
     public static int create(String name, String email, String passwordHash, Gender gender, int yoe) throws SQLException{
         try {
             int userCreated = User.create(name, email, passwordHash, "auditionee");

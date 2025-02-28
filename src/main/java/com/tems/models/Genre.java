@@ -63,6 +63,23 @@ public enum Genre {
         }
     }
 
+    public static ArrayList<Genre> getAll() throws SQLException {
+        String sql = "SELECT * FROM Genres";
+        ArrayList<Genre> genres = new ArrayList<>();
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) { 
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                genres.add(Genre.getById(rs.getInt("genre_id")));
+            } 
+            return genres;
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching gender by name: " + e.getMessage());
+        }
+    }
+
     public static ArrayList<Genre> getByListingId(int listingId) {
         String sql = "SELECT * FROM ListingGenres WHERE listing_id = ?";
         ArrayList<Genre> genres = new ArrayList<>();

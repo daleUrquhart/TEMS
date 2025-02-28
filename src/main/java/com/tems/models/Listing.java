@@ -223,6 +223,33 @@ public class Listing {
 
     }
 
+    public static ArrayList<Listing> getByGenders(ArrayList<Gender> genders) throws SQLException {
+        String sql = "SELECT * FROM ListingGenderRoles WHERE gender_id = ?";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ArrayList<Listing> listings = new ArrayList<>();
+            for(Gender gender : genders) {
+                stmt.setInt(1, gender.getId());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        listings.add(Listing.getById(rs.getInt("listing_id")));
+                    } else {
+                        throw new SQLException("No listing found with id: " + gender.getId());
+                    }
+                } catch (SQLException e) {
+                    throw new SQLException("Querying ListingGenres listing by id: \n\t" + e.getMessage()); 
+                }
+            }
+            return listings;
+            
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching listing by id: \n\t" + e.getMessage()); 
+        }
+
+    }
+
     @Override
     public String toString() {
         try {

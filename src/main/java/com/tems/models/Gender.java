@@ -86,6 +86,23 @@ public enum Gender {
         }
     }
 
+    public static ArrayList<Gender> getAll() throws SQLException {
+        String sql = "SELECT * FROM Genders";
+        ArrayList<Gender> genders = new ArrayList<>();
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) { 
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                genders.add(Gender.getById(rs.getInt("gender_id")));
+            } 
+            return genders;
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching gender by name: " + e.getMessage());
+        }
+    }
+
     public static Gender getById(int id) { 
         String sql = "SELECT * FROM Genders WHERE gender_id = ?";
         try(Connection conn = ConnectionManager.getConnection();
