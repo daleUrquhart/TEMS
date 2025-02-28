@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Pos.*?>
 <?import com.jfoenix.controls.*?>
+<?import org.controlsfx.control.CheckComboBox?>
  
 <VBox 
     spacing="15" 
@@ -16,11 +17,13 @@
     fx:id="mainBox"
     stylesheets="@/styles/styles.css"> 
  
+    <!-- Filter options -->
     <HBox> 
-        <ListView fx:id="genreListView" prefHeight="200.0" prefWidth="250.0"/>
+        <CheckComboBox fx:id="genreComboBox"/>
         <JFXButton text="Update Filters" onAction="#updateFilters" styleClass="toggle-button"/>
     </HBox>
-
+    <!-- Listings -->
+    <VBox fx:id="listingBox" spacing="10" alignment="TOP_LEFT" styleClass="aud-listing-box">
     
-
+    </VBox> 
 </VBox> 
