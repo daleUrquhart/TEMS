@@ -22,7 +22,11 @@ public class ApplicationTest {
     
     @AfterEach
     public void removeUsersCreated() { 
-        User.deleteAllUsers();
+        try{User.deleteAllUsers();}
+        catch(SQLException e) {
+            System.out.println("Error deleting test user data" + e.getMessage());
+            fail();
+        }
     } 
     
     @Test

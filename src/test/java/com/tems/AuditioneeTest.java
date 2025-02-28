@@ -1,7 +1,10 @@
 package com.tems;
 
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import com.tems.models.Auditionee;
@@ -12,8 +15,12 @@ public class AuditioneeTest {
     
     @AfterEach
     public void removeUsersCreated() { 
-        User.deleteAllUsers();
-    }
+        try{User.deleteAllUsers();}
+        catch(SQLException e) {
+            System.out.println("Error deleting test user data" + e.getMessage());
+            fail();
+        }
+    } 
 
     @Test 
     public void createAuditioneeTest() {

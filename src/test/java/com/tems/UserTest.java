@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,11 @@ public class UserTest {
     
     @AfterEach
     public void removeUsersCreated() { 
-        User.deleteAllUsers();
+        try{User.deleteAllUsers();}
+        catch(SQLException e) {
+            System.out.println("Error deleting test user data" + e.getMessage());
+            fail();
+        }
     } 
 
     @Test
@@ -59,8 +62,7 @@ public class UserTest {
             u1.setRole("recruiter");
 
             // Perform update operation
-            boolean updated = u1.update();
-            assertTrue(updated); 
+            u1.update();
 
             // Verify the updated user details
             User updatedUser = User.getUserByEmail("james_doe@example.ca");
