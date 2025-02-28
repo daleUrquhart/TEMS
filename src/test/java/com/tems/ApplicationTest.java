@@ -32,31 +32,25 @@ public class ApplicationTest {
     @Test
     public void createTest() {
         // Create sample auditionee, talent recruiter, and listing
-        int aId = -1, trId = -1;
         try {
-            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-        } catch(SQLException e) {
-            System.out.println("Error creating test user data" + e.getMessage());
-            fail();
-        }
-        ArrayList<Gender> genders = new ArrayList<>();
-        genders.add(Gender.MALE);
-        ArrayList<Genre> genres = new ArrayList<>();
-        genres.add(Genre.ACTION);  
-        ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-        int[] weights = new int[]{1};
-        criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
-        // Valid Listing
-        int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
-        
-        assertNotEquals(-1, aId);
-        assertNotEquals(-1, trId);
-        assertNotEquals(-1, lId);
+            int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+            int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+            ArrayList<Gender> genders = new ArrayList<>();
+            genders.add(Gender.MALE);
+            ArrayList<Genre> genres = new ArrayList<>();
+            genres.add(Genre.ACTION);  
+            ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
+            int[] weights = new int[]{1};
+            criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
+            // Valid Listing
+            int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
+            
+            assertNotEquals(-1, aId);
+            assertNotEquals(-1, trId);
+            assertNotEquals(-1, lId);
 
-        String resume = "My Resume";
-        String coverLetter = "My Cover Letter";
-        try {
+            String resume = "My Resume";
+            String coverLetter = "My Cover Letter";
             Application.create(aId, lId, resume, coverLetter);
         } catch(SQLException e) {
             System.out.println("Error creating application"+e.getMessage());
