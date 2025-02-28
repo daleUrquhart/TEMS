@@ -1,0 +1,436 @@
+<mxfile host="65bd71144e">
+    <diagram id="dGkA9S3g0HyvajRlpVei" name="Page-1">
+        <mxGraphModel dx="2930" dy="2508" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="&amp;lt;C&amp;gt; TalentRecruiter&amp;nbsp;&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;hr&gt;- company: String&lt;br&gt;&lt;hr&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getCompany(): String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setCompany(String): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ update(): void&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ create(String, String, String, String): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getById(int): TalentRecruiter&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ toString(): String&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="920" y="-640" width="230" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&amp;lt;C&amp;gt; Auditionee&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;hr&gt;- gender: Gender&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- yoe: int&lt;br&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getGender(): Gender&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getYOE(): int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setGender(Gender): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setYOE(int): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ create(String, String, String, Gender, int): int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getById(int): Auditionee&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry y="-640" width="290" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&amp;lt;C&amp;gt; Application&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;hr&gt;- APPLICATION_ID: int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- AUDITIONEE_ID: int&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- LISTING_ID: int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- CREATED_AT: Timestamp&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- RESUME: String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- COVER_LETTER: String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- status: String&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getApplicationId(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getAuditioneeId(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getListingId(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getCreatedAt(): Timestamp&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getResume(): String&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getCoverLetter(): String&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getStatus(): String&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getFinalScore(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ setStatus(String): void&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setFinalScore(): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ create(int, int, String, String): int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ update(): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getByAudId(int): ArrayList&amp;lt;Application&amp;gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getByListingId(int): ArrayList&amp;lt;Application&amp;gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ decline(int, int): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ accept(int, int): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getById(int): Application&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;scrollbar-color: light-dark(#e2e2e2, #4b4b4b)&lt;br/&gt;&#x9;&#x9;&#x9;&#x9;&#x9;light-dark(#fbfbfb, var(--dark-panel-color));&quot;&gt;+ getById(int, int): Application&lt;/div&gt;&lt;div style=&quot;scrollbar-color: light-dark(#e2e2e2, #4b4b4b)&lt;br/&gt;&#x9;&#x9;&#x9;&#x9;&#x9;light-dark(#fbfbfb, var(--dark-panel-color));&quot;&gt;+ score(int, int): void&lt;/div&gt;&lt;div style=&quot;scrollbar-color: light-dark(#e2e2e2, #4b4b4b)&lt;br/&gt;&#x9;&#x9;&#x9;&#x9;&#x9;light-dark(#fbfbfb, var(--dark-panel-color));&quot;&gt;+ delete(int): void&lt;/div&gt;&lt;div style=&quot;scrollbar-color: light-dark(#e2e2e2, #4b4b4b)&lt;br/&gt;&#x9;&#x9;&#x9;&#x9;&#x9;light-dark(#fbfbfb, var(--dark-panel-color));&quot;&gt;+ toString(): String&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="635" y="-640" width="240" height="460" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&amp;lt;E&amp;gt; Gender&lt;br&gt;-----------------------------&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;MALE&amp;nbsp;&lt;br&gt;FEMALE&amp;nbsp;&lt;br&gt;NON_BINARY&amp;nbsp;&lt;br&gt;TRANSGENDER&amp;nbsp;&lt;br&gt;GENDER_FLUID&amp;nbsp;&lt;br&gt;AGENDER&amp;nbsp;&lt;br&gt;BIGENDER&amp;nbsp;&lt;br&gt;TWO_SPIRIT&amp;nbsp;&lt;br&gt;OTHER&amp;nbsp;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="-1030" width="120" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&amp;lt;C&amp;gt; Listing&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;hr&gt;- LISTING_ID: int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- RECRUITER_ID: int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- CREATED_AT: Timestamp&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;- title: String&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- description: String&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getListingId(): int&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getRecruiterId(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getCreatedAt(): Timestamp&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getTitle(): String&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getDescription(): String&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ setTitle(String): void&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ setDescription(String): void&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ create(int, String, String, ArrayList&amp;lt;Gender&amp;gt;, ArrayList&amp;lt;Genre&amp;gt;, ArrayList&amp;lt;CriteriaType&amp;gt;, int[]): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ delete(int): void&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getByTRId(int): ArrayList&amp;lt;Listing&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ update(): void&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ deleteAll(): void&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getById(int): void&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ toString(): String&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="-1030" width="540" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&amp;lt;C&amp;gt; Criteria&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;hr&gt;- CRITERIA_TYPE_ID: int&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;- LISTING_ID: int&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;- RANGE: int&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;- weight: int&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;hr&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getCriteriaTypeId(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getListingId(): int&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getWeight(): int&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ getRange(): int&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ setWeight(int): void&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ create(int, int, int): void&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ update(): void&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ delete(): void&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ getByListingId(int): ArrayList&amp;lt;Criteria&amp;gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ getByListingAndTypeId(int, int): Criteria&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;+ toString(): String&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="-1030" width="240" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&amp;lt;A&amp;gt; User&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;hr&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- USER_ID: int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- name: String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- email: String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- passwordHash: String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;- role: String&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;hr&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;+ getName(): String&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getUserID(): int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getEmail(): String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getPasswordHash(): String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getRole(): String&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setName(String): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setEmail(String): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setPasswordHash(String): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ setRole(String): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ deleteAllUsers(): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ create(String, String, String, String): int&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getUserByEmail(String): User&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ getById(int): User&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ signIn(String, String): User&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ update(): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ delete(int): void&lt;/div&gt;&lt;div style=&quot;&quot;&gt;+ toString(): String&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="340" y="-640" width="250" height="377.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Notification&lt;div&gt;&lt;hr&gt;- NOTIFICATION_ID: int&lt;/div&gt;&lt;div&gt;- USER_ID: int&lt;/div&gt;&lt;div&gt;- CREATED_AT: Timestamp&lt;/div&gt;&lt;div&gt;- MESSAGE: String&lt;/div&gt;&lt;div&gt;- isRead: boolean&lt;/div&gt;&lt;div&gt;&lt;hr&gt;+ getNotificationId(): int&lt;/div&gt;&lt;div&gt;+ getUserid(): int&lt;/div&gt;&lt;div&gt;+ getCreatedAt(): Timestamp&lt;/div&gt;&lt;div&gt;+ getMessage(): String&lt;/div&gt;&lt;div&gt;+ getIsRead(): boolean&lt;/div&gt;&lt;div&gt;+ setIsRead(boolean): void&lt;/div&gt;&lt;div&gt;+ create(int, String): void&lt;/div&gt;&lt;div&gt;+ delete(): void&lt;/div&gt;&lt;div&gt;+ update(): void&lt;/div&gt;&lt;div&gt;+ toString(): String&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="1200" y="-640" width="170" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="&amp;lt;E&amp;gt; CriteriaType&lt;div&gt;&lt;hr&gt;PHYSICAL_APPEARANCE&lt;/div&gt;&lt;div&gt;STAR_POWER&lt;/div&gt;&lt;div&gt;LANGUAGE_ACCENT&lt;/div&gt;&lt;div&gt;SCRIPT_TIMING&lt;/div&gt;&lt;div&gt;VOICE_MODULATION&lt;/div&gt;&lt;div&gt;ACTING_SKILLS&lt;/div&gt;&lt;div&gt;EMOTIONAL_RANGE&lt;/div&gt;&lt;div&gt;COMEDIC_TIMING&lt;/div&gt;&lt;div&gt;SCREEN_PRESENCE&lt;/div&gt;&lt;div&gt;CHARISMA&lt;/div&gt;&lt;div&gt;REHEARSAL_ABILITY&lt;br&gt;RELIABILITY&lt;/div&gt;&lt;div&gt;PUNCTUALITY&lt;/div&gt;&lt;div&gt;AVAILABILITY&lt;/div&gt;&lt;div&gt;TEAMWORK&lt;/div&gt;&lt;div&gt;ACTION_SCENE_ABILITY&lt;/div&gt;&lt;div&gt;DANCE_SKILLS&lt;/div&gt;&lt;div&gt;COMBAT_SKILLS&lt;br&gt;SINGING_ABILITY&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="-1030" width="160" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="&amp;lt;C&amp;gt; Score&lt;div&gt;&lt;hr&gt;- APPLICATION_ID: int&lt;/div&gt;&lt;div&gt;- CRITERIA_ID: int&lt;/div&gt;&lt;div&gt;- SCORE: int&lt;/div&gt;&lt;div&gt;&lt;hr&gt;+ getApplicationId(): int&lt;/div&gt;&lt;div&gt;+ getCriteriaId(): int&lt;/div&gt;&lt;div&gt;+ getScore(): int&lt;/div&gt;&lt;div&gt;+ create(int, int): void&lt;/div&gt;&lt;div&gt;+ delete(int, int): void&lt;/div&gt;&lt;div&gt;+ setScore(int, int, int): void&lt;/div&gt;&lt;div&gt;+ getByAppId(int): ArrayList&amp;lt;Score&amp;gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry y="-1030" width="210" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Model Classes&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="780" y="-1100" width="180" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Database Entity Relationship Diagram&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="-600" y="20" width="430" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="&amp;lt;E&amp;gt; Genre&lt;div&gt;&lt;hr&gt;ACTION&lt;br&gt;DRAMA&lt;br&gt;COMEDY&lt;br&gt;SCIFI&lt;/div&gt;&lt;div&gt;HORROR&lt;br&gt;ROMANCE&lt;br&gt;OTHER&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="720" y="-1030" width="70" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;View - Controller Relation Diagram&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="635" y="20" width="390" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="60" target="61">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="60" target="67">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="60" target="81">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" style="edgeStyle=none;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="60" target="84">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="149" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="60" target="147">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="AuditioneeHomeView&lt;div&gt;AuditioneeHomeController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="425" y="270" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="AuditioneeListingView&lt;div&gt;AuditioneeListingController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="495" y="430" width="195" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="62" target="64">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="62" target="63">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="MainView&lt;div&gt;MainController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="770" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" style="edgeStyle=none;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="63" target="60">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="63" target="65">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="SignInView&lt;div&gt;SignInController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1080" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="64" target="60">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="SignUpView&lt;div&gt;SignUpController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="455" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="65" target="66">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="65" target="68">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="65" target="79">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" style="edgeStyle=none;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="65" target="84">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="65" target="147">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="TalentRecruiterHomeView&lt;div&gt;TalentRecruiterHomeController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1040" y="270" width="205" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="TalentRecruiterListingView&lt;div&gt;TalentRecruiterListingController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="940" y="430" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="ApplicationView&lt;div&gt;ApplicationController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="430" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="AuditioneeView&lt;div&gt;AuditioneeController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1160" y="430" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="CreateListingView&lt;div&gt;CreateListingController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1325" y="430" width="165" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="CreateApplicationView&lt;div&gt;CreateApplicationController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="430" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" value="NotificationView&lt;div&gt;NotificationController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="430" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="Genders&lt;div&gt;&lt;hr&gt;PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;gender_id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;gender_name&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-550" y="70" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;Genres&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;hr style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;PK&lt;/span&gt;&lt;span style=&quot;background-color: transparent; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;genre_id&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;genre_name&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-850" y="70" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="Users&lt;div&gt;&lt;hr&gt;PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;user_id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;name&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;email&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;password_hash&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;role&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-140" y="70" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="Auditionees&lt;div&gt;&lt;hr&gt;PK, FK1&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;auditionee_id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&#x9;&lt;/span&gt;years_of_experience&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#484848&quot;&gt;FK2&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;gender_id&lt;/font&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-365" y="250" width="170" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;TalentRecruiters&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;hr style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;PK, FK1&lt;/span&gt;&lt;span style=&quot;background-color: transparent; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;recruiter_id&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;company&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-140" y="260" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="Listings&lt;div&gt;&lt;hr&gt;PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;listing_id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;title&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;description&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;created_at&lt;br&gt;&lt;/div&gt;&lt;div&gt;FK1&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;recruiter_id&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-485" y="490" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" value="AuditioneeGenderRoles&lt;div&gt;&lt;hr&gt;FK1, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;auditionee_id&lt;/div&gt;&lt;div&gt;FK2, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;gender_id&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-360" y="75" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=ERzeroToMany;startFill=0;endArrow=ERmandOne;endFill=0;" edge="1" parent="1" source="94" target="92">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="ListingGenderRoles&lt;div&gt;&lt;hr&gt;FK1, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;listing_id&lt;/div&gt;&lt;div&gt;FK2, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;gender_id&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-550" y="215" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="ListingGenres&lt;div&gt;&lt;hr&gt;FK1, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;listing_id&lt;/div&gt;&lt;div&gt;FK2, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;genre_id&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-850" y="210" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;Criteria&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;hr style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;PK&lt;/span&gt;&lt;span style=&quot;background-color: transparent; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;criteria_id&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;criteria_name&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-695" y="70" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="ListingCriteria&lt;div&gt;&lt;hr&gt;FK1, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;listing_id&lt;/div&gt;&lt;div&gt;FK2, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;criteria_id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;weight&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-695" y="210" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="Applications&lt;div&gt;&lt;hr&gt;PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;application_id&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;status&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;resume&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;cover_letter&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;created_at&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;final_score&lt;br&gt;&lt;/div&gt;&lt;div&gt;FK1&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;auditionee_id&lt;/div&gt;&lt;div&gt;FK2&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;listing_id&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="-340" y="660" width="120" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;Scores&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;hr style=&quot;text-align: left;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;FK1, PK&lt;/span&gt;&lt;span style=&quot;background-color: transparent; white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;application_id&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;FK2, PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;criteria_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;score&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-725" y="700" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="Notifications&lt;div&gt;&lt;hr&gt;PK&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;notification_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;message&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;is_read&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;created_at&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;FK1&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;user_id&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="70" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" style="edgeStyle=none;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;startArrow=ERzeroToMany;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="97" target="92">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-458" y="290" as="sourcePoint"/>
+                        <mxPoint x="-415" y="500" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="103" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=ERzeroToMany;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="95" target="92">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-448" y="300" as="sourcePoint"/>
+                        <mxPoint x="-405" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="104" style="edgeStyle=none;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;startArrow=ERzeroToMany;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="91" target="92">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-438" y="310" as="sourcePoint"/>
+                        <mxPoint x="-395" y="520" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="106" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="96" target="97">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-608" y="160" as="sourcePoint"/>
+                        <mxPoint x="-565" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="107" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="88" target="95">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-760" y="160" as="sourcePoint"/>
+                        <mxPoint x="-760" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="108" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="87" target="94">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-540" y="135" as="sourcePoint"/>
+                        <mxPoint x="-540" y="205" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="109" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="93" target="87">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-380.83" y="130" as="sourcePoint"/>
+                        <mxPoint x="-380.83" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="110" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="93" target="90">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-490" y="120" as="sourcePoint"/>
+                        <mxPoint x="-490" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="111" style="edgeStyle=none;html=1;entryX=0.7;entryY=1.002;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" edge="1" parent="1" source="90" target="87">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-230" y="120" as="sourcePoint"/>
+                        <mxPoint x="-300" y="120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="113" style="edgeStyle=none;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="90" target="89">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-312" y="260" as="sourcePoint"/>
+                        <mxPoint x="-456" y="160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="114" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="91" target="89">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-227" y="260" as="sourcePoint"/>
+                        <mxPoint x="-70" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="116" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="89" target="100">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-217" y="270" as="sourcePoint"/>
+                        <mxPoint x="-60" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="117" style="edgeStyle=none;html=1;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.081;exitY=0.006;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="99" target="96">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-710" y="690" as="sourcePoint"/>
+                        <mxPoint x="-710" y="170" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-710" y="180"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="118" style="edgeStyle=none;html=1;startArrow=ERzeroToMany;startFill=0;endArrow=ERmandOne;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="99" target="98">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-510" y="840" as="sourcePoint"/>
+                        <mxPoint x="-510" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="119" style="edgeStyle=none;html=1;startArrow=ERmandOne;startFill=0;endArrow=ERmandOne;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="98" target="90">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-615" y="720" as="sourcePoint"/>
+                        <mxPoint x="-615" y="310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="121" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;TEMS - Talent Evaluation Management Software&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="-675" y="-1100" width="500" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;Design Overview&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="-850" y="-1020" width="190" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;The design approach for this software will implement a model-view-controller (MVC) design&lt;/font&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;allowing for a seamless seperation of concern in development. This approach will have&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;model classes manage CRUD operations to the database, view files willl be FXML, a JavaFX&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;HTML-like file allowing GUI design to be the focus of the file, seperating backend logic. The&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;controller classes communicate between user actions performed on the view files to connect to&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;the models managing CRUD operations in the database.&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;The view component will implement a&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;SPA style design so constant displays like the header and footer will be the same accross all views&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;only having the center update when switching views this practice allows for faster loading times&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;switching views.&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;The decision for using MariaDB for storing application data stems from the need for up-to-date&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;information accross several application processes running concurrently. Additionally MariaDB gives&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;an extra layer of data security and integrity.&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="-850" y="-980" width="640" height="270" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;Glossary&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="-850" y="-650" width="110" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="" style="shape=table;startSize=0;container=1;collapsible=0;childLayout=tableLayout;fontSize=16;" vertex="1" parent="1">
+                    <mxGeometry x="-845" y="-590" width="645" height="384" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry width="645" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="130" value="Term" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="129">
+                    <mxGeometry width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="131" value="Definetion&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="129">
+                    <mxGeometry x="215" width="430" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="132" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="129">
+                    <mxGeometry x="430" width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="133" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="40" width="645" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="134" value="Application" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="133">
+                    <mxGeometry width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="135" value="Application made to a listing submitted by an auditionee." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="133">
+                    <mxGeometry x="215" width="430" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="136" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="133">
+                    <mxGeometry x="430" width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="153" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="80" width="645" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" value="Auditionee" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="153">
+                    <mxGeometry width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="155" value="A user on the platform who can apply to listings." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="153">
+                    <mxGeometry x="215" width="430" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="156" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="153">
+                    <mxGeometry x="430" width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="157" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="120" width="645" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="158" value="Criteria" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="157">
+                    <mxGeometry width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="159" value="Criteria applied to listings on what is desired with different weights based on importance." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="157">
+                    <mxGeometry x="215" width="430" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="160" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="157">
+                    <mxGeometry x="430" width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="161" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="160" width="645" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="162" value="Listing" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="161">
+                    <mxGeometry width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="163" value="Listing made by a talent recruiter that auditionees can apply for." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="161">
+                    <mxGeometry x="215" width="430" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="164" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="161">
+                    <mxGeometry x="430" width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="165" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="200" width="645" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="166" value="Notification" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="165">
+                    <mxGeometry width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="167" value="System message sent to selected auditionees." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="165">
+                    <mxGeometry x="215" width="430" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="168" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="165">
+                    <mxGeometry x="430" width="215" height="40" as="geometry">
+                        <mxRectangle width="215" height="40" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="169" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="240" width="645" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="170" value="Talent Recruiter" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="169">
+                    <mxGeometry width="215" height="80" as="geometry">
+                        <mxRectangle width="215" height="80" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="171" value="&lt;p data-pm-slice=&quot;1 1 []&quot; data-prosemirror-node-block=&quot;true&quot; data-prosemirror-node-name=&quot;paragraph&quot; data-prosemirror-content-type=&quot;node&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;A user on the platform who can create listings and send offers to auditionees who apply to them based on their scores.&lt;/font&gt;&lt;br&gt;&lt;/p&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="169">
+                    <mxGeometry x="215" width="430" height="80" as="geometry">
+                        <mxRectangle width="215" height="80" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="172" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="169">
+                    <mxGeometry x="430" width="215" height="80" as="geometry">
+                        <mxRectangle width="215" height="80" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="173" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" vertex="1" parent="128">
+                    <mxGeometry y="320" width="645" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="174" value="Score" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" parent="173">
+                    <mxGeometry width="215" height="64" as="geometry">
+                        <mxRectangle width="215" height="64" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="175" value="Score applied to an auditionee&#39;s application to a listing submitted by the managing recruiter." style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rowspan=1;colspan=2;" vertex="1" parent="173">
+                    <mxGeometry x="215" width="430" height="64" as="geometry">
+                        <mxRectangle width="215" height="64" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="176" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;" vertex="1" visible="0" parent="173">
+                    <mxGeometry x="430" width="215" height="64" as="geometry">
+                        <mxRectangle width="215" height="64" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="145" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;Sample Views&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="780" y="590" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="147" value="EditProfileView&lt;div&gt;EditProfileController.java&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="725" y="310" width="210" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
