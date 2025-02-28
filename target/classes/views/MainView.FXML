@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Pos?>
 <?import com.jfoenix.controls.*?>
-
+<?import javafx.scene.image.*?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.tems.controllers.MainController" 
@@ -16,6 +16,8 @@
     <top>
         <HBox alignment="CENTER" prefHeight="80" styleClass="header-container">
             <Label text="TEMS" styleClass="header"/>
+            <ImageView fx:id="imageView" onMouseClicked="#loadMainView" fitHeight="75.0" fitWidth="75.0" preserveRatio="true" />
+
         </HBox>
     </top>
 

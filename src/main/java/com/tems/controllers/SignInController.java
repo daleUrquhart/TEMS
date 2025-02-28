@@ -33,12 +33,7 @@ public class SignInController implements BaseController {
         String password = passwordField.getText();
         try {
             User u = User.signIn(email, password);
-            switch (u.getRole()) {
-                case "auditionee" -> mainController.loadAudHomeView(u.getUserId());
-                case "recruiter" -> mainController.loadTRHomeView(u.getUserId());
-                default -> { // Load admin home
-                }
-            } 
+            mainController.loadHomeView(u.getUserId());
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "An error occurred while signing in. \n"+e.getMessage());
             emailField.clear();

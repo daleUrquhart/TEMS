@@ -8,42 +8,28 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
 @SuppressWarnings("unused") 
-public class AuditioneeHomeController implements BaseController {
-    private Auditionee auditionee; 
+public class AuditioneeHomeController implements BaseController { 
     private MainController mainController; 
-
+    private int id;
     @FXML 
     private VBox mainBox; 
 
     @FXML 
     private void viewApplications() {
-        mainController.loadApplicationsView(auditionee.getUserId());
+        mainController.loadApplicationsView(id);
     }
 
     @FXML
-    private void viewListings() {
-        mainController.loadAudListingView(auditionee.getUserId());
-    }
+    private void viewListings() {mainController.loadAudListingView(id);}
 
     @FXML
-    private void viewNotifications() {
-
-    }
-
-    /**
-     * Edit / delete user's profile
-     */
+    private void viewNotifications() { mainController.loadNotificationsView(id); }
+ 
     @FXML 
-    private void editProfile() {
-
-    }
+    private void editProfile() { mainController.loadEditProfileView(id); }
 
     public void setUserData(int id) {
-        try {
-            this.auditionee = Auditionee.getById(id);
-        } catch (SQLException e) { 
-            mainController.showErrorAlert("Error", "An error occurred while loading the user data. \n"+e.getMessage());
-        } 
+        this.id = id;
     } 
 
 

@@ -2,8 +2,10 @@ package com.tems.models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import com.tems.util.ConnectionManager;
 
@@ -49,6 +51,26 @@ public class Notification {
         }
     }
 
+    public static ArrayList<Notification> getByUserId(int id) throws SQLException{
+        String sql = "SELECT * FROM Notifications WHERE user_id = ?";
+        ArrayList<Notification> notifs = new ArrayList<>();
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) { 
+                    notifs.add(new Notification(rs.getInt("notification_id"), rs.getInt("user_id"), rs.getString("message"), rs.getBoolean("is_read"), rs.getTimestamp("created_at"))); 
+                } 
+            }
+            return notifs;
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching gender by name: " + e.getMessage());
+        }
+    }
+ 
     public static void delete(int notificationId) throws SQLException{
         String sql = "DELETE FROM Notification WHERE notification_id = ?";
 

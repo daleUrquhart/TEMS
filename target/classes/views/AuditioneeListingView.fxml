@@ -26,4 +26,5 @@
     <VBox fx:id="listingBox" spacing="10" alignment="TOP_LEFT" styleClass="aud-listing-box">
     
     </VBox> 
+    <JFXButton text="Return To Home Page" onAction="#handleHomeView" styleClass="toggle-button"/>
 </VBox> 

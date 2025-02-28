@@ -11,8 +11,12 @@ import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
 import com.jfoenix.controls.*;
+
 import org.controlsfx.control.CheckComboBox;
+
+import com.tems.models.User;
 
 import javafx.scene.layout.HBox;
 
@@ -20,6 +24,7 @@ import javafx.scene.layout.HBox;
 public class ListingController implements BaseController {
     private Auditionee auditionee;
     private TalentRecruiter recruiter;
+    private int id;
 
     private MainController mainController;
 
@@ -38,6 +43,10 @@ public class ListingController implements BaseController {
         
     }
 
+    @FXML 
+    private void handleHomeView() {
+        mainController.loadHomeView(id);
+    }
     
 
     // Talent Recruiter methods
@@ -45,25 +54,30 @@ public class ListingController implements BaseController {
 
     // General
     public void setUserData(int id) { 
+        this.id = id;
         try {
-            this.auditionee = Auditionee.getById(id);
-            // Load genres into genre filter
-            ObservableList<Genre> genres = FXCollections.observableArrayList(Genre.getAll());
-            genreComboBox.getItems().setAll(genres);
+            if(User.getById(id).getRole().equals("auditionee")) {
+                this.auditionee = Auditionee.getById(id);
+                // Load genres into genre filter
+                ObservableList<Genre> genres = FXCollections.observableArrayList(Genre.getAll());
+                genreComboBox.getItems().setAll(genres);
 
-            // Load roles compatable with auditionee's preferred gender roles
-            HBox lBox;
-            Label info;
-            JFXButton apply;
+                // Load roles compatable with auditionee's preferred gender roles
+                HBox lBox;
+                Label info;
+                JFXButton apply;
 
-            for(Listing listing : Listing.getByGenders(auditionee.getGenderRoles())) {
-                lBox = new HBox();
-                info = new Label(listing.toString());
-                apply = new JFXButton("Apply");
-                apply.onMouseClickedProperty().set(eh -> mainController.loadApplicationView(auditionee.getUserId(), listing.getListingId()));
-                lBox.getChildren().addAll(info, apply); 
-                listingBox.getChildren().add(lBox);
-            } 
+                for(Listing listing : Listing.getByGenders(auditionee.getGenderRoles())) {
+                    lBox = new HBox();
+                    info = new Label(listing.toString());
+                    apply = new JFXButton("Apply");
+                    apply.onMouseClickedProperty().set(eh -> mainController.loadApplicationView(auditionee.getUserId(), listing.getListingId()));
+                    lBox.getChildren().addAll(info, apply); 
+                    listingBox.getChildren().add(lBox);
+                } 
+            } else {
+                //TR
+            }
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "Error loading Listings View: \n\t" + e.getMessage());
         }

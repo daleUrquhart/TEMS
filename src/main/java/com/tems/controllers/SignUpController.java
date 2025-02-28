@@ -80,7 +80,7 @@ public class SignUpController implements BaseController{
         // Create a new Auditionee with the gathered information and redirect to auditionee role home page
         try {
             int id = Auditionee.create(username, email, PasswordManager.hashPassword(password), gender, yoe);
-            mainController.loadAudHomeView(id);
+            mainController.loadHomeView(id);
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "An error occurred while signing up: \n\t"+e.getMessage());
             clearFields();

@@ -11,7 +11,7 @@ public class ApplicationController implements BaseController {
     private int aId;
     private int lId; 
     private MainController mainController;  
- 
+    
     @FXML private TextField resumeField;
     @FXML private TextField coverLetterField;
 
@@ -21,7 +21,7 @@ public class ApplicationController implements BaseController {
         try {
             int appId = Application.create(aId, lId, resume, coverLetter);
             mainController.showErrorAlert("Success", "Application created succcessfully");
-            mainController.loadAudHomeView(aId);
+            mainController.loadHomeView(aId);
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "Error creating application:\n\t" + e.getMessage());
         }

@@ -32,13 +32,12 @@ public class Auditionee extends User {
 
     @Override 
     public void update() throws SQLException{
-        String sql = "UPDATE Auditionees SET gender_id = ?, yoe = ? WHERE auditionee_id = ?";
+        String sql = "UPDATE Auditionees SET gender_id = ?, years_of_experience = ? WHERE auditionee_id = ?";
         try (Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            super.update();
-
+            super.update(); 
             stmt.setInt(1, getGender().getId());        
-            stmt.setInt(2, getYOE());
+            stmt.setInt(2, getYOE()); 
             stmt.setInt(3, getUserId());
 
             int affectedRows = stmt.executeUpdate();
