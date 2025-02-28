@@ -17,7 +17,7 @@ public class AuditioneeHomeController implements BaseController {
 
     @FXML 
     private void viewApplications() {
-
+        mainController.loadApplicationsView(auditionee.getUserId());
     }
 
     @FXML
@@ -41,8 +41,7 @@ public class AuditioneeHomeController implements BaseController {
     public void setUserData(int id) {
         try {
             this.auditionee = Auditionee.getById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) { 
             mainController.showErrorAlert("Error", "An error occurred while loading the user data. \n"+e.getMessage());
         } 
     } 

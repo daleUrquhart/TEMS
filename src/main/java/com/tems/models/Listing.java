@@ -257,18 +257,16 @@ public class Listing {
             for(Gender g : Gender.getByListingId(getListingId())) { gendersString += g.toString(); }
             for(Genre g : Genre.getByListingId(getListingId())) { genresString += g.toString(); }
             for(Criteria c : Criteria.getByListingId(getListingId())) { criteriaString += c.toString(); }
-            return String.format("%s\n%s\nGender Roles:%s\nGenres:%s\nCriteria:%s\nManaging Recruiter:%s\nCreated At:%s",
+            return String.format("%s\n%s\nGender Roles: %s\nGenres: %s\nCriteria: %s\nManaging Recruiter: %s\nCreated At: %s",
                 getTitle(), getDescription(), gendersString, genresString, criteriaString, TalentRecruiter.getById(getRecruiterId()).toString(), getCreatedAt());
     
         } catch(IllegalArgumentException e) {
             System.err.println("Error getting Listing.toString(): "+e.getMessage());
-            return null;
         } catch(NullPointerException e) {
             System.err.println("Null ptr exception (likely from TR Id which is: "+getRecruiterId()+"): "+e.getMessage());
-            return null;
         } catch(SQLException e) {
             System.err.println(e.getMessage());
-            return null;
         }
+        return null;
     }
 }

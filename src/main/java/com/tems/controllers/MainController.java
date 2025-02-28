@@ -29,16 +29,13 @@ public class MainController implements BaseController {
             
             
             
-            if (view instanceof VBox v) {
-                mainPane.setCenter(v);  
-            } 
-            else if (view instanceof BorderPane v) {   
-                mainPane.getScene().setRoot(v); 
-                //((MainController)controller).setMainPane(v);
-            } 
+            switch (view) {
+                case VBox v -> mainPane.setCenter(v);
+                case BorderPane v -> mainPane.getScene().setRoot(v);  
+                default -> {}
+            }
             return controller;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) { 
             showErrorAlert("Error", "An error occurred while loading the view.\n" + e.getMessage());
             return mainController; 
         }
@@ -59,27 +56,37 @@ public class MainController implements BaseController {
     private void loadSignInView() {
         loadView("/views/SignInView.fxml");
     }
-
-    @FXML
+ 
     void loadAudHomeView(int id) { 
         String fxmlPath = "/views/AuditioneeHomeView.fxml"; 
         AuditioneeHomeController controller = (AuditioneeHomeController) loadView(fxmlPath);
         controller.setUserData(id);
     }
-
-    @FXML
+ 
     void loadTRHomeView(int id) { 
         String fxmlPath = "/views/TalentRecruiterHomeView.fxml";
         TalentRecruiterHomeController controller = (TalentRecruiterHomeController) loadView(fxmlPath);
         controller.setUserData(id); 
     } 
-
-    @FXML
+ 
     void loadAudListingView(int id) {
         String fxmlPath = "/views/AuditioneeListingView.fxml";
         ListingController controller = (ListingController) loadView(fxmlPath);
         controller.setUserData(id); 
     }
+ 
+    void loadApplicationView(int uId, int lId) {
+        String fxmlPath = "/views/ApplicationView.fxml";
+        ApplicationController controller = (ApplicationController) loadView(fxmlPath);
+        controller.setUserData(uId, lId);
+    }
+ 
+    void loadApplicationsView(int uId) {
+        String fxmlPath = "/views/ApplicationsView.fxml";
+        ApplicationsController controller = (ApplicationsController) loadView(fxmlPath);
+        controller.setUserData(uId);
+    }
+
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = this;

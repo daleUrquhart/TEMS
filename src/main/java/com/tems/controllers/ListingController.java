@@ -11,7 +11,10 @@ import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import com.jfoenix.controls.*;
 import org.controlsfx.control.CheckComboBox;
+
+import javafx.scene.layout.HBox;
 
 @SuppressWarnings("unused") 
 public class ListingController implements BaseController {
@@ -49,9 +52,17 @@ public class ListingController implements BaseController {
             genreComboBox.getItems().setAll(genres);
 
             // Load roles compatable with auditionee's preferred gender roles
+            HBox lBox;
+            Label info;
+            JFXButton apply;
+
             for(Listing listing : Listing.getByGenders(auditionee.getGenderRoles())) {
-                listingBox.getChildren().add(new Label(listing.toString()));
-                // Add listing data for auditionee here TODO implement getGenderRoles first
+                lBox = new HBox();
+                info = new Label(listing.toString());
+                apply = new JFXButton("Apply");
+                apply.onMouseClickedProperty().set(eh -> mainController.loadApplicationView(auditionee.getUserId(), listing.getListingId()));
+                lBox.getChildren().addAll(info, apply); 
+                listingBox.getChildren().add(lBox);
             } 
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "Error loading Listings View: \n\t" + e.getMessage());
