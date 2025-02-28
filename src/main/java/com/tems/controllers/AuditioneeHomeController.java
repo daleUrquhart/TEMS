@@ -1,13 +1,10 @@
 package com.tems.controllers;
-
-import java.io.IOException;
+ 
 import java.sql.SQLException;
 
 import com.tems.models.Auditionee;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
+import javafx.fxml.FXML; 
 import javafx.scene.layout.VBox;
 
 @SuppressWarnings("unused") 
@@ -21,6 +18,11 @@ public class AuditioneeHomeController implements BaseController {
     @FXML 
     private void viewApplications() {
 
+    }
+
+    @FXML
+    private void viewListings() {
+        mainController.loadAudListingView(auditionee.getUserId());
     }
 
     @FXML
@@ -43,26 +45,8 @@ public class AuditioneeHomeController implements BaseController {
             e.printStackTrace();
             mainController.showErrorAlert("Error", "An error occurred while loading the user data. \n"+e.getMessage());
         } 
-    }
+    } 
 
-    // In MainController or SignInController 
-    @FXML
-    private void viewListings() { 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AuditioneeListingView.fxml"));
-            VBox view = loader.load();
-
-            // Set the loaded view into the center of the BorderPane
-            BorderPane mainPane = (BorderPane) mainBox.getScene().getRoot();
-            ListingController controller = loader.getController();
-            controller.setUserData(auditionee);
-            mainPane.setCenter(view);
-
-        } catch (IOException e) { 
-            e.printStackTrace();
-            mainController.showErrorAlert("Error", "An error occurred while loading the view.\n\t"+e.getMessage());
-        }
-    }
 
 
     @Override

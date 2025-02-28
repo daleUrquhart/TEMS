@@ -1,11 +1,17 @@
 package com.tems.controllers;
 
-import com.tems.models.Auditionee;
+import java.sql.SQLException;
+
+import com.tems.models.Auditionee; 
 import com.tems.models.Genre;
+import com.tems.models.Listing;
 import com.tems.models.TalentRecruiter;
 
+import javafx.collections.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import org.controlsfx.control.CheckComboBox;
 
 @SuppressWarnings("unused") 
 public class ListingController implements BaseController {
@@ -15,21 +21,14 @@ public class ListingController implements BaseController {
     private MainController mainController;
 
     @FXML
-    private ListView<Genre> genreListView;
+    private CheckComboBox<Genre> genreComboBox;
  
-    // Auditionee methods
     @FXML
-    public void initialize() {
-        // Populate the ComboBox with the Gender enum values
+    private VBox listingBox;
 
-        //genreListView.().addAll(Gender.values());
-        if (auditionee != null) {
-            //genreListView.getItems().addAll(auditionee.getGenres());
-
-        } else if(recruiter != null) {
-            
-        }
-    }
+    // Auditionee methods 
+    @FXML
+    public void initialize() {}
 
     @FXML
     private void updateFilters() {
@@ -42,13 +41,22 @@ public class ListingController implements BaseController {
 
 
     // General
-    public void setUserData(Auditionee user) { 
-        this.auditionee = user; 
-    }
+    public void setUserData(int id) { 
+        try {
+            this.auditionee = Auditionee.getById(id);
+            // Load genres into genre filter
+            ObservableList<Genre> genres = FXCollections.observableArrayList(Genre.getAll());
+            genreComboBox.getItems().setAll(genres);
 
-    public void setUserData(TalentRecruiter user) {
-        this.recruiter = user;
-    }
+            // Load roles compatable with auditionee's preferred gender roles
+            for(Listing listing : Listing.getByGenders(auditionee.getGenderRoles())) {
+                listingBox.getChildren().add(new Label(listing.toString()));
+                // Add listing data for auditionee here TODO implement getGenderRoles first
+            } 
+        } catch (SQLException e) {
+            mainController.showErrorAlert("Error", "Error loading Listings View: \n\t" + e.getMessage());
+        }
+    } 
 
     @Override
     public void setMainController(MainController mainController) {

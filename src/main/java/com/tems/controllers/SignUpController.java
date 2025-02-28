@@ -1,18 +1,15 @@
 package com.tems.controllers;
-
-import java.io.IOException;
+ 
 import java.sql.SQLException;
 
 import com.tems.models.Auditionee;
 import com.tems.models.Gender;
 import com.tems.util.PasswordManager;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML; 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TextField; 
 import javafx.scene.layout.VBox;
 
 @SuppressWarnings("unused") 
@@ -83,29 +80,12 @@ public class SignUpController implements BaseController{
         // Create a new Auditionee with the gathered information and redirect to auditionee role home page
         try {
             int id = Auditionee.create(username, email, PasswordManager.hashPassword(password), gender, yoe);
-            loadAudHomeView("/views/AuditioneeHomeView.fxml", id);
+            mainController.loadAudHomeView(id);
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "An error occurred while signing up: \n\t"+e.getMessage());
             clearFields();
         }
-    }
-    
-    void loadAudHomeView(String fxmlPath, int id) { 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            VBox view = loader.load();
-
-            // Set the loaded view into the center of the BorderPane
-            BorderPane mainPane = (BorderPane) mainBox.getScene().getRoot();
-            AuditioneeHomeController controller = loader.getController();
-            controller.setUserData(id);
-            mainPane.setCenter(view);
-
-        } catch (IOException e) { 
-            e.printStackTrace();
-            mainController.showErrorAlert("Error", "An error occurred while loading the view.\n\t"+e.getMessage());
-        }
-    }
+    } 
 
     private void clearFields() {
         emailField.clear();

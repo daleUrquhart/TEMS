@@ -11,54 +11,42 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 @SuppressWarnings("unused") 
-public class MainController { 
+public class MainController implements BaseController { 
 
-    @FXML private BorderPane mainPane;  // Universal BorderPane 
+    @FXML private BorderPane mainPane;  
+    @FXML private MainController mainController;
 
-    // Generic method to load views dynamically
-    private void loadView(String fxmlPath) {
+    public BorderPane getMainPane() {
+        return mainPane;
+    }
+ 
+    private Object loadView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Object view = loader.load(); 
-
-            // Get the controller from the loaded FXML
-            Object controller = loader.getController();
+            Object view = loader.load();  
+            BaseController controller = loader.getController(); 
+            controller.setMainController(this); 
             
-            // If the loaded controller extends BaseController, set its main controller
-            if (controller instanceof BaseController baseController) baseController.setMainController(this);
-
-            // Set the mainPane's new content based on the loaded view type
-            if (view instanceof VBox) {
-                // Subview case 
-                mainPane.setCenter((VBox) view);
-            } else if (view instanceof BorderPane) {
-                // Main view case (replace full scene root)
-                mainPane.getScene().setRoot((BorderPane) view); 
-                if (controller instanceof MainController) {
-                    ((MainController) controller).setMainPane((BorderPane) view);
-                }
-            } else {
-                // Unsupported layout case
-                throw new IllegalStateException("Unsupported layout type: " + view.getClass().getSimpleName());
-            }
-
-            // Update MainController reference to ensure it's always managing the current view
-            if (controller instanceof MainController mainController) mainController.setMainPane(mainPane); // Pass mainPane reference if needed
-
+            
+            
+            if (view instanceof VBox v) {
+                mainPane.setCenter(v);  
+            } 
+            else if (view instanceof BorderPane v) {   
+                mainPane.getScene().setRoot(v); 
+                //((MainController)controller).setMainPane(v);
+            } 
+            return controller;
         } catch (IOException e) {
             e.printStackTrace();
             showErrorAlert("Error", "An error occurred while loading the view.\n" + e.getMessage());
+            return mainController; 
         }
-    }
-
-    // Setter method to update mainPane reference
-    public void setMainPane(BorderPane mainPane) {
-        this.mainPane = mainPane;
-    }
+    } 
 
     // Load main view
-    public void loadMainView() {
-        
+    @FXML
+    public void loadMainView() { 
         loadView("/views/MainView.fxml");
     }
 
@@ -72,6 +60,31 @@ public class MainController {
         loadView("/views/SignInView.fxml");
     }
 
+    @FXML
+    void loadAudHomeView(int id) { 
+        String fxmlPath = "/views/AuditioneeHomeView.fxml"; 
+        AuditioneeHomeController controller = (AuditioneeHomeController) loadView(fxmlPath);
+        controller.setUserData(id);
+    }
+
+    @FXML
+    void loadTRHomeView(int id) { 
+        String fxmlPath = "/views/TalentRecruiterHomeView.fxml";
+        TalentRecruiterHomeController controller = (TalentRecruiterHomeController) loadView(fxmlPath);
+        controller.setUserData(id); 
+    } 
+
+    @FXML
+    void loadAudListingView(int id) {
+        String fxmlPath = "/views/AuditioneeListingView.fxml";
+        ListingController controller = (ListingController) loadView(fxmlPath);
+        controller.setUserData(id); 
+    }
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = this;
+    }
+    
     // Display error alerts
     public void showErrorAlert(String title, String message) {
         Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
