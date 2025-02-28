@@ -21,6 +21,12 @@
     </properties>
 
     <dependencies>
+        <!-- ControlsFX for additional UI components -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.0</version> <!-- Check for latest version -->
+        </dependency>
         <!-- JUnit 5 for Unit Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
