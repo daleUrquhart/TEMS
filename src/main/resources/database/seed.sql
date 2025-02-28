@@ -1,4 +1,4 @@
--- Mostly constant data
+-- Genders
 INSERT INTO Genders (gender_name) VALUES 
 ('Male'), 
 ('Female'), 
@@ -10,7 +10,7 @@ INSERT INTO Genders (gender_name) VALUES
 ('Bigender'), 
 ('Two-Spirit');
 
-
+-- Genres
 INSERT INTO Genres (genre_name) VALUES 
 ('Action'),
 ('Drama'), 
@@ -20,6 +20,7 @@ INSERT INTO Genres (genre_name) VALUES
 ('Romance'), 
 ('Other');
 
+-- CriteriaTypes
 INSERT INTO criteria (criteria_name) VALUES 
 ('Physical Appearance'),
 ('Star Power & Marketability'),
