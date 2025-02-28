@@ -10,9 +10,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import com.tems.models.User;
+import com.tems.util.SampleData;
 
 public class UserTest {
     
+    /*
     @AfterEach
     public void removeUsersCreated() { 
         try{User.deleteAllUsers();}
@@ -21,6 +23,12 @@ public class UserTest {
             fail();
         }
     } 
+     */
+
+    @Test
+    public void loadData() {
+        SampleData.load();
+    }
 
     @Test
     public void createTest() {
