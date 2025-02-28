@@ -13,7 +13,7 @@ import com.tems.util.ConnectionManager;
  */
 public class TalentRecruiter extends User{ 
 
-    private final String company;
+    private String company;
     public TalentRecruiter(int trId, String name, String email, String passwordHash, String role, String company) {
         super(trId, name, email, passwordHash, role); 
         this.company = company;
@@ -23,9 +23,13 @@ public class TalentRecruiter extends User{
         return company;
     }
 
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     @Override
-    public boolean update() {
-        if(!super.update()) return false;
+    public void update() throws SQLException{
+        super.update();
         String sql = "UPDATE TalentRecruiters SET company = ? WHERE recruiter_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -35,11 +39,10 @@ public class TalentRecruiter extends User{
             stmt.setInt(2, getUserId());  
 
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("No rows updated for updating recruiter with id " + getUserId());
 
         } catch (SQLException e) {
-            System.err.println("Error updating recruiter: " + e.getMessage());
-            return false;
+            throw new SQLException("Error updating recruiter: \n\t" + e.getMessage());
         } 
     }
  
@@ -79,12 +82,12 @@ public class TalentRecruiter extends User{
                 if (rs.next()) {
                     User temp = User.getById(id);
                     return new TalentRecruiter(
-                            rs.getInt("recruiter_id"),
-                            temp.getName(),
-                            temp.getEmail(),
-                            temp.getPasswordHash(),
-                            temp.getRole(),
-                            rs.getString("company") 
+                        rs.getInt("recruiter_id"),
+                        temp.getName(),
+                        temp.getEmail(),
+                        temp.getPasswordHash(),
+                        temp.getRole(),
+                        rs.getString("company") 
                     );
                 } else {
                     throw new SQLException("No recruiter found with id: " + id);

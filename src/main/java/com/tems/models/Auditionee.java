@@ -30,22 +30,20 @@ public class Auditionee extends User {
     public void setYOE(int yoe) { this.yoe = yoe; }
 
     @Override 
-    public boolean update() {
-        if (!super.update()) return false;
-
+    public void update() throws SQLException{
         String sql = "UPDATE Auditionees SET gender_id = ?, yoe = ? WHERE auditionee_id = ?";
         try (Connection conn = ConnectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            super.update();
 
             stmt.setInt(1, getGender().getId());        
             stmt.setInt(2, getYOE());
             stmt.setInt(3, getUserId());
 
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("No rows updated for updating auditionee with id " + getUserId());
         } catch (SQLException e) {
-            System.err.println("Error updating auditionee: " + e.getMessage());
-            return false;
+            throw new SQLException("Error updating auditionee: \n\t" + e.getMessage());
         }
     }
  

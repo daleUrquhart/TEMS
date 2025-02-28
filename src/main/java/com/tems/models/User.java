@@ -14,7 +14,7 @@ import com.tems.util.PasswordManager;
  * @author Dale Urquhart
  */
 public class User {
-    private final int userId;
+    private final int USER_ID;
     private String name;
     private String email;
     private String passwordHash;
@@ -22,7 +22,7 @@ public class User {
 
     // Constructor
     public User(int userId, String name, String email, String passwordHash, String role) {
-        this.userId = userId;
+        this.USER_ID = userId;
         this.name = name;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -30,7 +30,7 @@ public class User {
     }
 
     // Getters and Setters
-    public int getUserId() { return userId; }
+    public int getUserId() { return USER_ID; }
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPasswordHash() { return passwordHash; }
@@ -41,7 +41,7 @@ public class User {
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public void setRole(String role) { this.role = role; }
 
-    public static void deleteAllUsers() {
+    public static void deleteAllUsers() throws SQLException{
         String sql = "DELETE FROM Users";  
         try (Connection conn = ConnectionManager.getConnection();
              Statement stmt = conn.createStatement()) {  
@@ -49,11 +49,9 @@ public class User {
             stmt.execute(sql); 
             
         } catch (SQLException e) {
-            System.err.println("Error resetting Users: " + e.getMessage());
-
+            throw new SQLException("Error resetting Users: \n\t" + e.getMessage());
         }
     }
-    
 
     /**
      * Inserts a new user into the database.
@@ -176,31 +174,30 @@ public class User {
     /**
      * Updates the user's information in the database based on the instance data.
      */
-    public boolean update() {
+    public void update() throws SQLException{
         String sql = "UPDATE Users SET name = ?, email = ?, password_hash = ?, role = ? WHERE user_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, passwordHash);
-            stmt.setString(4, role);
-            stmt.setInt(5, userId);
+            stmt.setString(1, getName());
+            stmt.setString(2, getEmail());
+            stmt.setString(3, getPasswordHash());
+            stmt.setString(4, getRole());
+            stmt.setInt(5, getUserId());
 
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("No rows updated for updating user with id " + getUserId());
 
         } catch (SQLException e) {
-            System.err.println("Error updating user: " + e.getMessage());
-            return false;
+            throw new SQLException("Error updating user: " + e.getMessage());
         }
     }
 
     /**
      * Deletes a user by ID.
      */
-    public static boolean delete(int userId) {
+    public static void delete(int userId) throws SQLException{
         String sql = "DELETE FROM Users WHERE user_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -209,11 +206,10 @@ public class User {
             stmt.setInt(1, userId);
 
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("No rows changed on deleting user with id " + userId);
 
         } catch (SQLException e) {
-            System.err.println("Error deleting user: " + e.getMessage());
-            return false;
+            throw new SQLException("Error deleting user: " + e.getMessage());
         }
     }
 

@@ -9,31 +9,31 @@ import com.tems.util.ConnectionManager;
 
 public class Notification {
     
-    private final int notificationId;
-    private final int userId;
-    private final String message;
+    private final int NOTIFICATION_ID;
+    private final int USER_ID;
+    private final String MESSAGE;
     private boolean isRead;
-    private final Timestamp createdAt;
+    private final Timestamp CREATED_AT;
 
     public Notification(int notificationId, int userId, String message, boolean isRead, Timestamp createdAt) {
-        this.notificationId = notificationId;
-        this.userId = userId;
-        this.message = message;
+        this.NOTIFICATION_ID = notificationId;
+        this.USER_ID = userId;
+        this.MESSAGE = message;
         this.isRead = isRead;
-        this.createdAt = createdAt;
+        this.CREATED_AT = createdAt;
     }
 
     // Getters and setters
-    public int getNotificaitonId() { return notificationId; }
-    public int getUserId() { return userId; }
-    public String getMessage() { return message; }
+    public int getNotificaitonId() { return NOTIFICATION_ID; }
+    public int getUserId() { return USER_ID; }
+    public String getMessage() { return MESSAGE; }
     public boolean getIsRead() { return isRead; }
-    public Timestamp getCreatedAt() { return createdAt; }
+    public Timestamp getCreatedAt() { return CREATED_AT; }
 
     public void setIsRead(boolean isRead) { this.isRead = isRead; }
     
     // CRUD Operations
-    public static boolean create(int userId, String message) { 
+    public static void create(int userId, String message) throws SQLException { 
         String sql = "INSERT INTO Notification (user_id, message) VALUES (?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -42,15 +42,14 @@ public class Notification {
             stmt.setInt(1, userId);
             stmt.setString(2, message); 
 
-            return stmt.executeUpdate() > 0;
+            if(stmt.executeUpdate() == 0) throw new SQLException ("Creating notification failed, no rows affected.");
 
         } catch (SQLException e) {
-            System.err.println("Error creating notification: " + e.getMessage());
+            throw new SQLException("Error creating notification: \n\t" + e.getMessage());
         }
-        return false;
     }
 
-    public static boolean delete(int notificationId) {
+    public static void delete(int notificationId) throws SQLException{
         String sql = "DELETE FROM Notification WHERE notification_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -59,15 +58,14 @@ public class Notification {
             stmt.setInt(1, notificationId);
 
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("Deleting notification failed, no rows affected.");
 
         } catch (SQLException e) {
-            System.err.println("Error deleting notification: " + e.getMessage());
-            return false;
+            throw new SQLException("Error deleting notification: \n\t" + e.getMessage());
         }
     }
 
-    public boolean update() {
+    public void update() throws SQLException {
         String sql = "UPDATE Notification SET is_read = ? WHERE notification_id = ?";
     
         try (Connection conn = ConnectionManager.getConnection();
@@ -77,11 +75,10 @@ public class Notification {
             stmt.setInt(1, getNotificaitonId()); 
             
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("Updating notification failed, no rows affected.");
     
         } catch (SQLException e) {
-            System.err.println("Error updating notification: " + e.getMessage());
-            return false;
+            throw new SQLException("Error updating notification: \n\t" + e.getMessage());
         }
     } 
 

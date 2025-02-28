@@ -9,19 +9,19 @@ import java.util.ArrayList;
 import com.tems.util.ConnectionManager;
 
 public class Score {
-    private final int applicationId;
-    private final int criteriaId;
-    private final int score;
+    private final int APPLICATION_ID;
+    private final int CRITERIA_ID;
+    private final int SCORE;
 
-    public Score(int applicationId, int criteriaId, int score) {
-        this.applicationId = applicationId;
-        this.criteriaId = criteriaId;
-        this.score = score;
+    public Score(int APPLICATION_ID, int criteriaId, int score) {
+        this.APPLICATION_ID = APPLICATION_ID;
+        this.CRITERIA_ID = criteriaId;
+        this.SCORE = score;
     }
 
-    public int applicationId() { return applicationId; }
-    public int getCriteriaId() { return criteriaId; } 
-    public int getScore() { return score; } 
+    public int getApplicationId() { return APPLICATION_ID; }
+    public int getCriteriaId() { return CRITERIA_ID; } 
+    public int getScore() { return SCORE; } 
 
     //CRUD operations
     public static void create(int applicationId, int criteriaId) {

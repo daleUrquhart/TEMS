@@ -16,33 +16,33 @@ import com.tems.util.Env;
  * @author Dale Urquhart
  */
 public class Application {
-    private final int applicationId;
-    private final int auditioneeId;
-    private final int listing_id;
-    private final Timestamp submission_date;
+    private final int APPLICATION_ID;
+    private final int AUDITIONEE_ID;
+    private final int LISTING_ID;
+    private final Timestamp CREATED_AT;
     private String status;
-    private final String resume;
-    private final String coverLetter;
+    private final String RESUME;
+    private final String COVER_LETTER;
     private int score;
 
     public Application(int applicationId, int auditionee_id, int listing_id, Timestamp submission_date, String status, String resume, String cover_letter) {
-        this.applicationId = applicationId;
-        this.auditioneeId = auditionee_id;
-        this.listing_id = listing_id;
-        this.submission_date = submission_date;
+        this.APPLICATION_ID = applicationId;
+        this.AUDITIONEE_ID = auditionee_id;
+        this.LISTING_ID = listing_id;
+        this.CREATED_AT = submission_date;
         this.status = status;
-        this.resume = resume;
-        this.coverLetter = cover_letter;
+        this.RESUME = resume;
+        this.COVER_LETTER = cover_letter;
     }
 
     // Getters and setters
-    public int getApplicationId() { return applicationId; }
-    public int getAuditioneeId() { return auditioneeId; }
-    public int getListingId() { return listing_id; }
-    public Timestamp getSubmissionDate() { return submission_date; }
+    public int getApplicationId() { return APPLICATION_ID; }
+    public int getAuditioneeId() { return AUDITIONEE_ID; }
+    public int getListingId() { return LISTING_ID; }
+    public Timestamp getSubmissionDate() { return CREATED_AT; }
     public String getStatus() { return status; }
-    public String getResume() { return resume; }
-    public String getCoverLetter() { return coverLetter; }
+    public String getResume() { return RESUME; }
+    public String getCoverLetter() { return COVER_LETTER; }
     public int getFinalScore() { return score; }
 
     public void setFinalScore() throws SQLException { 
@@ -87,7 +87,7 @@ public class Application {
                 }
 
                 return applicationId;
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 Application.delete(applicationId);
                 throw new SQLException("Error creating scores for applciation");
             }

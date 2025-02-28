@@ -12,26 +12,27 @@ import com.tems.util.ConnectionManager;
 
 public class Listing {
     
-    private final int listingId;
-    private final int recruiterId;
+    private final int LISTING_ID;
+    private final int RECRUITER_ID;
+    private final Timestamp CREATED_AT;
     private String title;
     private String description;
-    private final Timestamp createdAt;
+    
 
     public Listing(int listingId, int recruiterId, String title, String description, Timestamp createdAt) {
-        this.listingId = listingId;
-        this.recruiterId = recruiterId;
+        this.LISTING_ID = listingId;
+        this.RECRUITER_ID = recruiterId;
         this.title = title;
         this.description = description;
-        this.createdAt = createdAt;
+        this.CREATED_AT = createdAt;
     }
 
     // Getters and setters
-    public int getListingId() { return listingId; }
-    public int getRecruiterId() { return recruiterId; }
+    public int getListingId() { return LISTING_ID; }
+    public int getRecruiterId() { return RECRUITER_ID; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
-    public Timestamp getCreatedAt() { return createdAt; }
+    public Timestamp getCreatedAt() { return CREATED_AT; }
 
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; } 
@@ -87,7 +88,7 @@ public class Listing {
                     }
                 }
                 
-                // Insert into ListingCriteria for each criteria // TODO
+                // Insert into ListingCriteria for each criteria 
                 String sqlCriteria = "INSERT INTO ListingCriteria (listing_id, criteria_id, weight) VALUES (?, ?, ?)";
                 for (int i = 0; i < criteria.size(); i++) {
                     try (PreparedStatement stmtCriteria = conn.prepareStatement(sqlCriteria)) {
@@ -118,7 +119,7 @@ public class Listing {
     /**
      * Deletes a listing by ID.
      */
-    public static boolean delete(int listingId) {
+    public static void delete(int listingId) throws SQLException {
         String sql = "DELETE FROM Listings WHERE listing_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -127,15 +128,14 @@ public class Listing {
             stmt.setInt(1, listingId);
 
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("No rows changed on deleting listing with id " + listingId);
 
         } catch (SQLException e) {
-            System.err.println("Error deleting listing: " + e.getMessage());
-            return false;
+            throw new SQLException("Error deleting listing: \n\t" + e.getMessage());
         }
     }
 
-    public boolean update() {
+    public void update() throws SQLException{
         String sql = "UPDATE Listings SET title = ?, description = ? WHERE listing_id = ?";
     
         try (Connection conn = ConnectionManager.getConnection();
@@ -146,11 +146,10 @@ public class Listing {
             stmt.setInt(3, getListingId()); 
     
             int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+            if(affectedRows == 0) throw new SQLException("No rows updated for updating listing with id " + getListingId());
     
         } catch (SQLException e) {
-            System.err.println("Error updating listing: " + e.getMessage());
-            return false;
+            throw new SQLException("Error updating listing: \n\t" + e.getMessage());
         }
     }
      
@@ -159,7 +158,7 @@ public class Listing {
      * @param id TR id to search listings by
      * @return 
      */
-    public static ArrayList<Listing> getByTRId(int recruiterId) {
+    public static ArrayList<Listing> getByTRId(int recruiterId) throws SQLException{
         String sql = "SELECT * FROM listings WHERE recruiter_id = ?";
         ArrayList<Listing> listings = new ArrayList<>();
 
@@ -179,13 +178,13 @@ public class Listing {
                 ));
             }  
         } catch (SQLException e) {
-            System.err.println("Error fetching listing by TR id: " + e.getMessage());
+            throw new SQLException("Error fetching listing by TR id: \n\t" + e.getMessage());
         } 
 
         return listings;
     }  
 
-    public static void deleteAll() {
+    public static void deleteAll() throws SQLException{
         String sql = "DELETE FROM Listings";  
         try (Connection conn = ConnectionManager.getConnection();
              Statement stmt = conn.createStatement()) {  
@@ -193,11 +192,11 @@ public class Listing {
             stmt.execute(sql); 
             
         } catch (SQLException e) {
-            System.err.println("Error resetting listings: " + e.getMessage());
+            throw new SQLException("Error resetting listings: \n\t" + e.getMessage());
         }
     }
     
-    public static Listing getById(int id) {
+    public static Listing getById(int id) throws SQLException {
         String sql = "SELECT * FROM Listings WHERE listing_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -219,8 +218,7 @@ public class Listing {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching listing by id: " + e.getMessage()); 
-            return null;
+            throw new SQLException("Error fetching listing by id: \n\t" + e.getMessage()); 
         }
 
     }

@@ -15,29 +15,28 @@ import com.tems.util.Env;
  * @author Dale Urquhart
  */
 public class Criteria {
-    private int criteriaTypeId; 
+    private final int CRITERIA_TYPE_ID; 
     private int weight; 
     private final static int RANGE = 100;  
-    private final int listingId;
+    private final int LISTING_ID;
 
     public Criteria(int criteriaTypeId, int listingId, int weight) {
-        this.criteriaTypeId = criteriaTypeId;
-        this.listingId = listingId; 
+        this.CRITERIA_TYPE_ID = criteriaTypeId;
+        this.LISTING_ID = listingId; 
         this.weight = weight;
     } 
 
     // Getters and setters
-    public int getListingId() { return listingId; }
-    public int  getCriteriaTypeId() { return criteriaTypeId; }
+    public int getListingId() { return LISTING_ID; }
+    public int  getCriteriaTypeId() { return CRITERIA_TYPE_ID; }
     public int getWeight() { return weight; }
     public int getRange() { return RANGE; }
 
-    public void setCriteriaTypeId(int criteriaTypeId) { this.criteriaTypeId = criteriaTypeId; }
     public void setWeight(int weight) { this.weight = weight; }
 
     // CRUD Operations
     // Create a ListingCriteria
-    public static boolean create(int listingId, int criteriaTypeId, int weight) {
+    public static void create(int listingId, int criteriaTypeId, int weight) throws SQLException{
         String sql = "INSERT INTO ListingCriteria (listing_id, criteria_id, weight) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -47,16 +46,15 @@ public class Criteria {
             stmt.setInt(2, criteriaTypeId);
             stmt.setInt(3, weight);
 
-            return stmt.executeUpdate() > 0;
+            if(stmt.executeUpdate() == 0) throw new SQLException("No rows updated for creating criteria with listing id " + listingId + " and criteria id of "+criteriaTypeId);
 
         } catch(SQLException e) {
-            System.err.println("Error creating criteria: " + e.getMessage());
-            return false;
+            throw new SQLException("Error creating criteria: \n\t" + e.getMessage());
         }
     }
 
     // Update listing criteria
-    public boolean update() {
+    public void update() throws SQLException {
         String sql = String.format("UPDATE ListingCriteria SET weight = ? WHERE listing_id = ? AND criteira_id = ?", Env.WEIGHT);
 
         try (Connection conn = ConnectionManager.getConnection();
@@ -65,31 +63,29 @@ public class Criteria {
             stmt.setInt(2, getWeight());
             stmt.setInt(4, getListingId());
             stmt.setInt(5, getCriteriaTypeId());
-            return stmt.executeUpdate() > 0;
+            if(stmt.executeUpdate() == 0) throw new SQLException("No rows updated for updating criteria with listing id " + getListingId() + " and criteria id of "+getCriteriaTypeId());
 
         } catch(SQLException e) {
-            System.err.println("Error updating criteria: " + e.getMessage());
-            return false;
+            throw new SQLException("Error updating criteria: \n\t" + e.getMessage());
         }
     }
 
     // Delete a listing criteria
-    public boolean delete() {
+    public void delete() throws SQLException {
         String sql = "DELETE FROM ListingCriteria WHERE criteria_id = ? AND listing_id = ?";
         try(Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, getCriteriaTypeId());
             stmt.setInt(2, getListingId());
 
-            return stmt.executeUpdate() > 0;
+            if(stmt.executeUpdate() == 0) throw new SQLException(String.format("No rows updated for deleting criteria with id %d", getCriteriaTypeId()));
         } catch(SQLException e) {
-            System.err.println(String.format("Error deleting criteria with id %d: %s", getCriteriaTypeId(), e.getMessage()));
-            return false;
+            throw new SQLException(String.format("Error deleting criteria with id %d: %s", getCriteriaTypeId(), e.getMessage()));
         }
     }
 
     // Gets All Listing criteria by a listing id
-    public static ArrayList<Criteria> getByListingId(int listingId) {
+    public static ArrayList<Criteria> getByListingId(int listingId) throws SQLException { 
         String sql = "SELECT * FROM ListingCriteria WHERE listing_id = ?";
         ArrayList<Criteria> criteria = new ArrayList<>();
         
@@ -105,13 +101,12 @@ public class Criteria {
                         rs.getInt("weight")
                     ));
                 }
+                return criteria;
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching criteria for listing id " + listingId + ": " + e.getMessage());
+            throw new SQLException("Error fetching criteria for listing id " + listingId + ": \n\t" + e.getMessage());
         }
-        
-        return criteria;
-    } 
+    }
 
     // Gets All Listing criteria by a listing id and criteria id
     public static Criteria getByListingAndTypeId(int listingId, int criteriaTypeId) throws SQLException{
