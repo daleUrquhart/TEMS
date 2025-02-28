@@ -1,7 +1,3 @@
-DROP DATABASE TEMS;
-CREATE DATABASE tems;
-USE tems;
-
 -- Gender stuff
 CREATE TABLE Genders (
     gender_id INT AUTO_INCREMENT PRIMARY KEY,
