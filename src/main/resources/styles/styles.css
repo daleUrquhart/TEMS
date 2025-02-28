@@ -1,14 +1,17 @@
 /* Header styling */
+/* Styles for HBox container */
+.header-container {
+    -fx-background-color: #2C3E50;
+    -fx-alignment: center;
+}
+
+/* Styles for Label */
 .header {
     -fx-font-size: 32px;
     -fx-font-weight: bold;
-    -fx-padding: 20px;
-    -fx-background-color: #2C3E50; 
-    -fx-text-fill: white; 
-    -fx-alignment: center;
-    -fx-pref-height: 80px;
-    -fx-pref-width: 100%;
+    -fx-text-fill: white;
 }
+
 
 /* Sub-header (Sign-in label) */
 .sub-header {

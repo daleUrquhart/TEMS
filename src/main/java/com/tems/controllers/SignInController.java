@@ -69,10 +69,11 @@ public class SignInController implements BaseController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             VBox view = loader.load();
+            AuditioneeHomeController controller = loader.getController(); 
+            controller.setMainController(mainController);
 
             // Set the loaded view into the center of the BorderPane
-            BorderPane mainPane = (BorderPane) mainBox.getScene().getRoot();
-            AuditioneeHomeController controller = loader.getController();
+            BorderPane mainPane = (BorderPane) mainBox.getScene().getRoot(); 
             controller.setUserData(id);
             mainPane.setCenter(view);
 
