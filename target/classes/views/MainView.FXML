@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Pos?>
 <?import com.jfoenix.controls.*?>
@@ -14,7 +14,9 @@
 
     <!-- Top Header -->
     <top>
-        <Label text="TEMS" styleClass="header"/>
+        <HBox alignment="CENTER" prefHeight="80" styleClass="header-container">
+            <Label text="TEMS" styleClass="header"/>
+        </HBox>
     </top>
 
     <center>
