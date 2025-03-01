@@ -5,7 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.tems.util.ConnectionManager;
 import com.tems.util.Env;
@@ -85,9 +86,9 @@ public class Criteria {
     }
 
     // Gets All Listing criteria by a listing id
-    public static ArrayList<Criteria> getByListingId(int listingId) throws SQLException { 
+    public static Map<CriteriaType, Integer> getByListingId(int listingId) throws SQLException { 
         String sql = "SELECT * FROM ListingCriteria WHERE listing_id = ?";
-        ArrayList<Criteria> criteria = new ArrayList<>();
+        Map<CriteriaType, Integer> criteria = new HashMap<>();
         
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -95,11 +96,8 @@ public class Criteria {
             stmt.setInt(1, listingId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    criteria.add(new Criteria(
-                        rs.getInt("criteria_id"),
-                        rs.getInt("listing_id"), 
-                        rs.getInt("weight")
-                    ));
+                    int cId = rs.getInt("criteria_id");
+                    criteria.put(CriteriaType.getById(cId), rs.getInt("weight"));
                 }
                 return criteria;
             }

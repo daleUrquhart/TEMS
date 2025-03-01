@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.tems.util.ConnectionManager;
 
@@ -80,7 +81,7 @@ public enum Genre {
         }
     }
 
-    public static ArrayList<Genre> getByListingId(int listingId) {
+    public static List<Genre> getByListingId(int listingId) {
         String sql = "SELECT * FROM ListingGenres WHERE listing_id = ?";
         ArrayList<Genre> genres = new ArrayList<>();
         

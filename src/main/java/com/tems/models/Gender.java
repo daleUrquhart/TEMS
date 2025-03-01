@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.tems.util.ConnectionManager;
 
@@ -120,7 +121,7 @@ public enum Gender {
         return null;
     } 
 
-    public static ArrayList<Gender> getByListingId(int id) {
+    public static List<Gender> getByListingId(int id) {
         String sql = "SELECT * FROM ListingGenderRoles WHERE listing_id = ?";
         ArrayList<Gender> genders = new ArrayList<>();
 

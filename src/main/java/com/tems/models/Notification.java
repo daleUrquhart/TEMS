@@ -36,7 +36,7 @@ public class Notification {
     
     // CRUD Operations
     public static void create(int userId, String message) throws SQLException { 
-        String sql = "INSERT INTO Notification (user_id, message) VALUES (?, ?)";
+        String sql = "INSERT INTO Notifications (user_id, message) VALUES (?, ?)";
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -72,7 +72,7 @@ public class Notification {
     }
  
     public static void delete(int notificationId) throws SQLException{
-        String sql = "DELETE FROM Notification WHERE notification_id = ?";
+        String sql = "DELETE FROM Notifications WHERE notification_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -88,7 +88,7 @@ public class Notification {
     }
 
     public void update() throws SQLException {
-        String sql = "UPDATE Notification SET is_read = ? WHERE notification_id = ?";
+        String sql = "UPDATE Notifications SET is_read = ? WHERE notification_id = ?";
     
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

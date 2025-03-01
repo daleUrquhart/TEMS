@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
  
 import com.tems.util.ConnectionManager;
 import com.tems.util.Env;
@@ -45,17 +47,18 @@ public class Application {
     public String getCoverLetter() { return COVER_LETTER; }
     public int getFinalScore() { return score; }
 
-    public void setFinalScore() throws SQLException { 
+    public void setFinalScore(List<Criteria> criteria, int[] scores) throws SQLException { 
         int sum = 0;
         int denom = 0;
         int weight;
         try {
-            ArrayList<Score> scores = Score.getByAppId(getApplicationId());
-            for(Score s : scores) {
-                weight = Criteria.getByListingAndTypeId(getListingId(), s.getCriteriaId()).getWeight();
-                sum += s.getScore() * weight;
+            for(int i = 0; i < scores.length; i++) {
+                int s = scores[i];
+                Criteria c = criteria.get(i);
+                weight = Criteria.getByListingAndTypeId(getListingId(), c.getCriteriaTypeId()).getWeight();
+                sum += s * weight;
                 denom += weight;
-            }
+            } 
             this.score = sum / denom;  
             update(); 
         } catch(SQLException e) {
@@ -82,8 +85,8 @@ public class Application {
             }
 
             try {
-                for(Criteria c : Criteria.getByListingId(listingId)) {
-                    Score.create(applicationId, c.getCriteriaTypeId());
+                for(Map.Entry<CriteriaType, Integer> entry : Criteria.getByListingId(listingId).entrySet()) {
+                    Score.create(applicationId, entry.getKey().getId());
                 }
 
                 return applicationId;
@@ -169,13 +172,13 @@ public class Application {
         }
     }
 
-    public static Application getById(int id) {
+    public static Application getById(int application_id) {
         String sql = "SELECT * FROM Applications WHERE application_id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setInt(1, application_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -189,7 +192,7 @@ public class Application {
                             rs.getString("cover_letter")
                     );
                 } else {
-                    throw new SQLException("No listing found with id: " + id);
+                    throw new SQLException("No listing found with id: " + application_id);
                 }
             }
         } catch (SQLException e) {
@@ -229,22 +232,7 @@ public class Application {
         }
 
     }
- 
-    public void score(int criteriaId, int score) throws SQLException {
-        ArrayList<Criteria> criteria = Criteria.getByListingId(getListingId());
-        for(Criteria c : criteria) {
-            if(c.getCriteriaTypeId() == criteriaId) {
-                try {
-                    Score.setScore(getApplicationId(), criteriaId, score);
-                    return;
-                } catch(SQLException e) {
-                    throw new SQLException("Error scoring criteria: \n\t"+e.getMessage());
-                }
-            }
-        }
-        throw new SQLException("Criteria Type Id "+criteriaId+" not found for listing " + getListingId());
-    }
-
+  
     public static void delete(int applicationId) throws SQLException{
         String sql = "DELETE FROM Applications WHERE application_id = ?";
 
@@ -263,6 +251,6 @@ public class Application {
 
     @Override 
     public String toString() {
-        return String.format("Status: %s\nListing ID: %d\nAuditionee ID:%d\nResume:\n%s\nCoverLetter:\n%s\n", getStatus(), getListingId(), getAuditioneeId(), getResume(), getCoverLetter());
+        return String.format("Status: %s\nFinal Score: %s\nListing ID: %d\nAuditionee ID:%d\nResume:\n%s\nCoverLetter:\n%s\n", getStatus(), getFinalScore() == 0 ? "Not yet evaluated" : getFinalScore(), getListingId(), getAuditioneeId(), getResume(), getCoverLetter());
     }
 }

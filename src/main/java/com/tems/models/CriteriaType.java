@@ -86,6 +86,23 @@ public enum CriteriaType {
         }
     }
 
+    public static ArrayList<CriteriaType> getAll() throws SQLException {
+        String sql = "SELECT * FROM Criteria";
+        ArrayList<CriteriaType> criteria = new ArrayList<>();
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) { 
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                criteria.add(CriteriaType.getById(rs.getInt("criteria_id")));
+            } 
+            return criteria;
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching criteria: \n\t" + e.getMessage());
+        }
+    }
+
     public int getId() {
         String sql = "SELECT * FROM Criteria WHERE criteria_name = ?";
         try (Connection conn = ConnectionManager.getConnection();
