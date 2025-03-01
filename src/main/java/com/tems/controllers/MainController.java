@@ -3,9 +3,7 @@ package com.tems.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
 
-import com.sun.jna.platform.linux.ErrNo;
 import com.tems.models.User;
 
 import javafx.fxml.FXML;
@@ -23,9 +21,7 @@ public class MainController implements BaseController {
 
     @FXML private BorderPane mainPane;  
     @FXML private MainController mainController;
-    @FXML private ImageView imageView;
-
-    
+    @FXML private ImageView imageView; 
 
     @FXML 
     public void logoClicked() {
@@ -76,6 +72,7 @@ public class MainController implements BaseController {
             }
             return controller;
         } catch (IOException e) { 
+            e.printStackTrace();
             showErrorAlert("Error", "An error occurred while loading the view.\n" + e.getMessage());
             return mainController; 
         }
@@ -85,12 +82,6 @@ public class MainController implements BaseController {
         return mainPane;
     }
  
-    void loadAudListingView(int id) {
-        String fxmlPath = "/views/AuditioneeListingView.fxml";
-        ListingController controller = (ListingController) loadView(fxmlPath);
-        controller.setUserData(id); 
-    }
- 
     void loadApplicationView(int uId, int lId) {
         String fxmlPath = "/views/ApplicationView.fxml";
         ApplicationController controller = (ApplicationController) loadView(fxmlPath);
@@ -98,11 +89,23 @@ public class MainController implements BaseController {
     }
  
     void loadApplicationsView(int uId) {
-        String fxmlPath = "/views/ApplicationsView.fxml";
+        String fxmlPath = "/views/AudAppsView.fxml";
         ApplicationsController controller = (ApplicationsController) loadView(fxmlPath);
         controller.setUserData(uId);
     }
 
+    void loadApplicationsView(int uId, int lId) {
+        String fxmlPath = "/views/TRAppsView.fxml";
+        ApplicationsController controller = (ApplicationsController) loadView(fxmlPath);
+        controller.setUserData(uId, lId);
+    }
+
+    void loadScoreView(int id) {
+        String fxmlPath = "/views/ScoreView.fxml";
+        ScoreController controller = (ScoreController) loadView(fxmlPath);
+        controller.setUserData(id);
+    }
+  
     void loadNotificationsView(int id) {
         String fxmlPath = "/views/NotificationsView.fxml";
         NotificationsController controller = (NotificationsController) loadView(fxmlPath);
@@ -122,27 +125,49 @@ public class MainController implements BaseController {
         }
     } 
 
+    void loadEditListingView(int lId) {
+        String fxmlPath = "/views/EditListingView.fxml";
+        EditListingController controller = (EditListingController) loadView(fxmlPath);
+        controller.setUserData(lId); 
+    } 
+
     void loadHomeView(int id) {
         try{
             String fxmlPath;
-            if(User.getById(id).getRole().equals("auditionee")) {
-                fxmlPath = "/views/AuditioneeHomeView.fxml";
-                AuditioneeHomeController controller = (AuditioneeHomeController) loadView(fxmlPath);
-                controller.setUserData(id);
-            }
-            else {
-                fxmlPath = "/views/TalentRecruiterHomeView.fxml";
-                TalentRecruiterHomeController controller = (TalentRecruiterHomeController) loadView(fxmlPath);
-                controller.setUserData(id);
-            }
-            //EditProfileController controller = (EditProfileController) loadView(fxmlPath); TODO implement it like other pages??
-            //controller.setUserData(id);
+            if(User.getById(id).getRole().equals("auditionee")) fxmlPath = "/views/AudHomeView.fxml"; 
+            else fxmlPath = "/views/TRHomeView.fxml"; 
+            HomeController controller = (HomeController) loadView(fxmlPath);
+            controller.setUserData(id);
         }
         catch(SQLException e) {
             showErrorAlert("Error", "Error going to edit profile view: \n\t"+e.getMessage());
         }
     }
 
+    void loadListingView(int id) {
+        String fxmlPath = "/views/ListingView.fxml";
+        ListingController controller = (ListingController) loadView(fxmlPath);
+        controller.setUserData(id);
+    }
+
+    void loadListingsView(int id) {
+        try {
+            String fxmlPath;
+            if(User.getById(id).getRole().equals("auditionee")) fxmlPath = "/views/AudListingsView.fxml";
+            else fxmlPath = "/views/TRListingsView.fxml";
+            ListingsController controller = (ListingsController) loadView(fxmlPath);
+            controller.setUserData(id); 
+        } catch(SQLException e) {
+            showErrorAlert("Error", "Error loading listings view");
+        } 
+    } 
+
+    void loadAuditioneesView(int id) {
+        String fxmlPath = "/views/AuditioneesView.fxml"; 
+        AuditioneesController controller = (AuditioneesController) loadView(fxmlPath); 
+        controller.setUserData(id);
+    }
+    
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = this;

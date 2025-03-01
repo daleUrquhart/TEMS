@@ -1,10 +1,11 @@
 package com.tems.controllers;
 
 import java.sql.SQLException; 
-import javafx.fxml.FXML;
-import javafx.scene.control.*; 
 
 import com.tems.models.Application; 
+
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField; 
 
 @SuppressWarnings("unused") 
 public class ApplicationController implements BaseController {
@@ -15,6 +16,8 @@ public class ApplicationController implements BaseController {
     @FXML private TextField resumeField;
     @FXML private TextField coverLetterField;
 
+    @FXML public void backToListingss() { mainController.loadListingsView(aId); }
+    
     public void submit() {
         String resume = resumeField.getText();
         String coverLetter = coverLetterField.getText();

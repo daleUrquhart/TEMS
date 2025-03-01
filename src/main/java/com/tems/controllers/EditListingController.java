@@ -1,4 +1,4 @@
-package com.tems.controllers;
+package com.tems.controllers; 
 
 
 import java.sql.SQLException;
@@ -23,9 +23,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class ListingController implements BaseController{
+public class EditListingController implements BaseController{
     private MainController mainController;
-    private int id;
+    private int uId; 
+    private Listing listing;
+
     @FXML TextField titleField;
     @FXML TextField descriptionField;
     @FXML CheckComboBox<Genre> genreComboBox;
@@ -34,12 +36,11 @@ public class ListingController implements BaseController{
     @FXML private VBox weightBox;
     private final Map<CriteriaType, TextField> criteriaWeightMap = new HashMap<>();
 
-    @Override
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
+    @Override public void setMainController(MainController mainController) { this.mainController = mainController; }
+    @FXML public void handleHomeView() { mainController.loadHomeView(uId); }
+    @FXML public void backToListings() { mainController.loadListingsView(uId); }
 
-    @FXML public void create() { 
+    @FXML public void submit() { 
         try {
             String title = titleField.getText();
             String description = descriptionField.getText();
@@ -59,12 +60,17 @@ public class ListingController implements BaseController{
             }
             
             if(title.strip().isEmpty() || description.strip().isEmpty()) throw new SQLException("Cannot have blank title or description");
-            Listing.create(id, title, description, genderRoles, genres, selectedCriteria);
-            mainController.showErrorAlert("Success", "Listing created succcessfully");
-            mainController.loadHomeView(id);
+            listing.setTitle(title);
+            listing.setDescription(description);
+            listing.setCriteria(selectedCriteria);
+            listing.setGenders(genderRoles);
+            listing.setGenres(genres);
+            listing.update();
+            mainController.showErrorAlert("Success", "Listing updated succcessfully");
+            mainController.loadListingsView(uId);
         }
         catch(SQLException e) {
-            mainController.showErrorAlert("Error", "Error creating listing: "+e.getMessage());
+            mainController.showErrorAlert("Error", "Error editing listing: "+e.getMessage());
             clearFields();
         }
     }
@@ -77,28 +83,39 @@ public class ListingController implements BaseController{
         genderRoleComboBox.getCheckModel().clearChecks();
     }
 
-    public void setUserData(int id) {
-        this.id = id;
+    /**
+     * Updates the listing data
+     * @param lId Listing's ID
+     */
+    public void setUserData(int lId) { 
         try {
+            this.listing = Listing.getById(lId);
+            this.uId = listing.getRecruiterId();
+            // Load combo boxes with options and preselect current data
             ObservableList<Genre> genres = FXCollections.observableArrayList(Genre.getAll());
-            genreComboBox.getItems().setAll(genres);
             ObservableList<CriteriaType> criteria = FXCollections.observableArrayList(CriteriaType.getAll());
-            criteriaComboBox.getItems().setAll(criteria);
             ObservableList<Gender> genders = FXCollections.observableArrayList(Gender.getAll());
+            
+            titleField.setText(listing.getTitle());
+            descriptionField.setText(listing.getDescription());
+
+            genreComboBox.getItems().setAll(genres); 
+            criteriaComboBox.getItems().setAll(criteria); 
             genderRoleComboBox.getItems().setAll(genders);
+
+            for(Gender g : listing.getGenderRoles()) {genderRoleComboBox.getCheckModel().check(g); }
+            for(Genre g : listing.getGenres()) {genreComboBox.getCheckModel().check(g); }
+            for(Map.Entry<CriteriaType, Integer> entry : listing.getCriteria().entrySet()) {criteriaComboBox.getCheckModel().check(entry.getKey()); }
         }
         catch(SQLException e) {
-            mainController.showErrorAlert("Error", "Error setting up create listing view.");
+            mainController.showErrorAlert("Error", "Error setting up edit listing view.\n\t"+e.getMessage());
         }
     }
 
-    @FXML
-    public void initialize() {
-        criteriaComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<CriteriaType>) change -> updateWeightFields());
-    }
+    @FXML public void initialize() { criteriaComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<CriteriaType>) change -> updateWeightFields()); }
 
     private void updateWeightFields() {
-        weightBox.getChildren().clear();  // Clear previous fields
+        weightBox.getChildren().clear();  // Clear previous fields 
         criteriaWeightMap.clear();
 
         for (CriteriaType criteria : criteriaComboBox.getCheckModel().getCheckedItems()) {
@@ -113,9 +130,7 @@ public class ListingController implements BaseController{
             criteriaWeightMap.put(criteria, weightField);
         }
     }
-
-    @FXML
-    public void handleHomeView() {
-        mainController.loadHomeView(id);
-    }
 }
+
+
+
