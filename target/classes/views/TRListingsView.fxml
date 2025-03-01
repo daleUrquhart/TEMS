@@ -10,15 +10,15 @@
     spacing="15" 
     alignment="TOP_LEFT" 
     styleClass="aud-listing-box" 
-    fx:controller="com.tems.controllers.ApplicationsController" 
+    fx:controller="com.tems.controllers.ListingsController" 
     xmlns="http://javafx.com/javafx"
     xmlns:jfx="http://javafx.com/javafx/8.0.0"
     xmlns:fx="http://javafx.com/fxml" 
     fx:id="mainBox"
     stylesheets="@/styles/styles.css"> 
   
-    <!-- Applications -->
-    <VBox fx:id="applicationsBox" spacing="10" alignment="TOP_LEFT" styleClass="aud-listing-box">
+    <!-- Listings -->
+    <VBox fx:id="listingBox" spacing="10" alignment="TOP_LEFT" styleClass="aud-listing-box">
     
     </VBox> 
     <JFXButton text="Return To Home Page" onAction="#handleHomeView" styleClass="toggle-button"/>

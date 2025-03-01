@@ -22,4 +22,5 @@
     <JFXTextField promptText="Cover Letter" fx:id="coverLetterField" styleClass="input-field"/>
     
     <JFXButton text="Create" onAction="#submit" styleClass="toggle-button"/>
+    <JFXButton text="Back to Listings" onAction="#backToListings" styleClass="toggle-button"/>
 </VBox> 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Pos?>
+<?import com.jfoenix.controls.*?>
+<?import org.controlsfx.control.CheckComboBox?>
+ 
+<VBox 
+    spacing="15" 
+    alignment="CENTER" 
+    styleClass="sign-in-box" 
+    fx:controller="com.tems.controllers.ListingController" 
+    xmlns="http://javafx.com/javafx"
+    xmlns:jfx="http://javafx.com/javafx/8.0.0"
+    xmlns:fx="http://javafx.com/fxml" 
+    fx:id="mainBox"
+    stylesheets="@/styles/styles.css">
+    <Label text="Create Listing" styleClass="sub-header"/>
+    
+    <JFXTextField promptText="Title" fx:id="titleField" styleClass="input-field"/>
+    <JFXTextField promptText="Description" fx:id="descriptionField" styleClass="input-field"/>
+    <CheckComboBox fx:id="genreComboBox"/>
+    <CheckComboBox fx:id="genderRoleComboBox"/>
+    <CheckComboBox fx:id="criteriaComboBox"/>
+    <VBox fx:id="weightBox" spacing="5" alignment="CENTER" />
+    
+    <JFXButton text="Create" onAction="#create" styleClass="toggle-button"/>
+    <JFXButton text="Return To Home Page" onAction="#handleHomeView" styleClass="toggle-button"/>
+</VBox> 

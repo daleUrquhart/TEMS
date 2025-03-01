@@ -10,12 +10,13 @@
     spacing="15" 
     alignment="TOP_LEFT" 
     styleClass="aud-home-box" 
-    fx:controller="com.tems.controllers.AuditioneeHomeController" 
+    fx:controller="com.tems.controllers.HomeController" 
     xmlns="http://javafx.com/javafx"
     xmlns:jfx="http://javafx.com/javafx/8.0.0"
     xmlns:fx="http://javafx.com/fxml" 
     fx:id="mainBox"
     stylesheets="@/styles/styles.css">  
+    <Label text="Welcome, " fx:id="infoLabel" styleClass="label"/>
     <JFXButton text="View Listings" onAction="#viewListings" styleClass="toggle-button"/>
     <JFXButton text="View Applications" onAction="#viewApplications" styleClass="toggle-button"/>
     <JFXButton text="View Notifications" onAction="#viewNotifications" styleClass="toggle-button"/> 
