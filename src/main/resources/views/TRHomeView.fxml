@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Pos?>
+<?import com.jfoenix.controls.*?>
+ 
+<VBox 
+    spacing="15" 
+    alignment="CENTER" 
+    styleClass="tr-home-box" 
+    fx:controller="com.tems.controllers.HomeController" 
+    xmlns="http://javafx.com/javafx"
+    xmlns:jfx="http://javafx.com/javafx/8.0.0"
+    xmlns:fx="http://javafx.com/fxml" 
+    fx:id="mainBox"
+    stylesheets="@/styles/styles.css">
+    <Label text="Talent Recruiter Home" styleClass="sub-header"/>
+    
+    <Label text="Welcome, " fx:id="infoLabel" styleClass="label"/>
+    
+    <JFXButton text="Create Listing" onAction="#createListing" styleClass="toggle-button"/>
+    <JFXButton text="View Managing Listings" onAction="#viewListings" styleClass="toggle-button"/>
+    <JFXButton text="View Auditionees" onAction="#viewAuditionees" styleClass="toggle-button"/>
+    <JFXButton text="Edit Profile" onAction="#editProfile" styleClass="toggle-button"/>
+    
+</VBox> 

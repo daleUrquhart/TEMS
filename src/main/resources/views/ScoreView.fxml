@@ -9,16 +9,18 @@
 <VBox 
     spacing="15" 
     alignment="CENTER" 
-    styleClass="tr-home-box" 
-    fx:controller="com.tems.controllers.SignUpController" 
+    styleClass="sign-in-box" 
+    fx:controller="com.tems.controllers.ScoreController" 
     xmlns="http://javafx.com/javafx"
     xmlns:jfx="http://javafx.com/javafx/8.0.0"
     xmlns:fx="http://javafx.com/fxml" 
     fx:id="mainBox"
     stylesheets="@/styles/styles.css">
-    <Label text="Sign Up" styleClass="sub-header"/>
+    <Label text="Score Application" styleClass="sub-header"/>
+    <!-- Score labels / prompts -->
+    <VBox fx:id="scoreBox" spacing="10" alignment="TOP_LEFT" styleClass="aud-listing-box">
     
-    <JFXLabel text="" fx:id="infoLabel" styleClass="label"/>
-    
-    <JFXButton text="Sign Up" onAction="#handleSignUp" styleClass="sign-in-button"/>
+    </VBox> 
+    <JFXButton text="Back to Application" onAction="#backToApp" styleClass="toggle-button"/>
+    <JFXButton text="Submit" onAction="#submit" styleClass="toggle-button"/>
 </VBox> 
