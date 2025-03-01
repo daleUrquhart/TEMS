@@ -2,6 +2,8 @@ package com.tems;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,17 +35,23 @@ public class ApplicationTest {
     public void createTest() {
         // Create sample auditionee, talent recruiter, and listing
         try {
-            int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
+            // Define gender roles
+            ArrayList<Gender> genderRoles = new ArrayList<>();
+            genderRoles.add(Gender.MALE);
+            genderRoles.add(Gender.FEMALE);
+
+            // Define Criteria and Weights
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+
+            int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1, genderRoles);
             int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
             ArrayList<Gender> genders = new ArrayList<>();
             genders.add(Gender.MALE);
             ArrayList<Genre> genres = new ArrayList<>();
-            genres.add(Genre.ACTION);  
-            ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-            int[] weights = new int[]{1};
-            criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
+            genres.add(Genre.ACTION);    
             // Valid Listing
-            int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
+            int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
             
             assertNotEquals(-1, aId);
             assertNotEquals(-1, trId);
@@ -60,38 +68,39 @@ public class ApplicationTest {
 
     @Test 
     public void getByAudTest() {
-        // Create sample auditionee, talent recruiter, and listing
-        int aId = -1, trId = -1;
+        // Create sample auditionee, talent recruiter, and listing 
         try {
-            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-        } catch(SQLException e) {
-            System.out.println("Error creating test user data" + e.getMessage());
-            fail();
-        }
-        ArrayList<Gender> genders = new ArrayList<>();
-        genders.add(Gender.MALE);
-        ArrayList<Genre> genres = new ArrayList<>();
-        genres.add(Genre.ACTION);  
-        ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-        int[] weights = new int[]{1};
-        criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
-        // Valid Listing
-        int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
-        
-        assertNotEquals(-1, aId);
-        assertNotEquals(-1, trId);
-        assertNotEquals(-1, lId);
+            // Define gender roles
+            ArrayList<Gender> genderRoles = new ArrayList<>();
+            genderRoles.add(Gender.MALE);
+            genderRoles.add(Gender.FEMALE);
 
-        String resume = "My Resume";
-        String coverLetter = "My Cover Letter";
-        try {
+            // Define Criteria and Weights
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+
+            int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1, genderRoles);
+            int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+            
+            ArrayList<Gender> genders = new ArrayList<>();
+            genders.add(Gender.MALE);
+            ArrayList<Genre> genres = new ArrayList<>();
+            genres.add(Genre.ACTION);   
+            // Valid Listing
+            int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
+            
+            assertNotEquals(-1, aId);
+            assertNotEquals(-1, trId);
+            assertNotEquals(-1, lId);
+
+            String resume = "My Resume";
+            String coverLetter = "My Cover Letter";
             int appId = Application.create(aId, lId, resume, coverLetter);
             assertNotEquals(-1, appId);
             ArrayList<Application> listingApps = new ArrayList<>(Application.getByListingId(lId));
-            assertEquals(Application.getById(appId).toString(), listingApps.get(0).toString());
+            assertEquals(Application.getById(appId).toString(), listingApps.get(0).toString()); 
         } catch(SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error creating test user data" + e.getMessage());
             fail();
         }
         
@@ -99,32 +108,33 @@ public class ApplicationTest {
 
     @Test 
     public void declineAndAcceptTest() {
-        // Create sample auditionee, talent recruiter, and listing
-        int aId = -1, trId = -1;
+        // Create sample auditionee, talent recruiter, and listing 
         try {
-            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-        } catch(SQLException e) {
-            System.out.println("Error creating test user data" + e.getMessage());
-            fail();
-        }
-        ArrayList<Gender> genders = new ArrayList<>();
-        genders.add(Gender.MALE);
-        ArrayList<Genre> genres = new ArrayList<>();
-        genres.add(Genre.ACTION);  
-        ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-        int[] weights = new int[]{1};
-        criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
-        // Valid Listing
-        int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
-        
-        assertNotEquals(-1, aId);
-        assertNotEquals(-1, trId);
-        assertNotEquals(-1, lId);
+            // Define gender roles
+            ArrayList<Gender> genderRoles = new ArrayList<>();
+            genderRoles.add(Gender.MALE);
+            genderRoles.add(Gender.FEMALE);
 
-        String resume = "My Resume";
-        String coverLetter = "My Cover Letter";
-        try {
+            // Define Criteria and Weights
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+
+            int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1, genderRoles);
+            int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
+            
+            ArrayList<Gender> genders = new ArrayList<>();
+            genders.add(Gender.MALE);
+            ArrayList<Genre> genres = new ArrayList<>();
+            genres.add(Genre.ACTION);   
+            // Valid Listing
+            int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
+            
+            assertNotEquals(-1, aId);
+            assertNotEquals(-1, trId);
+            assertNotEquals(-1, lId);
+
+            String resume = "My Resume";
+            String coverLetter = "My Cover Letter";
             int appId = Application.create(aId, lId, resume, coverLetter);
             assertNotEquals(-1, appId);
             Application.decline(aId, lId);
@@ -142,38 +152,37 @@ public class ApplicationTest {
 
     @Test
     public void scoreTest() {
-        // Create sample auditionee, talent recruiter, and listing
-        int aId = -1, trId = -1;
+        // Create sample auditionee, talent recruiter, and listing 
         try {
-            aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1);
-            trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
-        } catch(SQLException e) {
-            System.out.println("Error creating test user data" + e.getMessage());
-            fail();
-        }
-        ArrayList<Gender> genders = new ArrayList<>();
-        genders.add(Gender.MALE);
-        ArrayList<Genre> genres = new ArrayList<>();
-        genres.add(Genre.ACTION);  
-        ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-        int[] weights = new int[]{1};
-        criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
-        // Valid Listing
-        int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
+            ArrayList<Gender> genderRoles = new ArrayList<>();
+            genderRoles.add(Gender.MALE);
+            genderRoles.add(Gender.FEMALE);
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+            int aId = Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1, genderRoles);
+            int trId = TalentRecruiter.create("John", "john@company.ca", "Password", "Company 1");
         
-        assertNotEquals(-1, aId);
-        assertNotEquals(-1, trId);
-        assertNotEquals(-1, lId);
+            ArrayList<Gender> genders = new ArrayList<>();
+            genders.add(Gender.MALE);
+            ArrayList<Genre> genres = new ArrayList<>();
+            genres.add(Genre.ACTION);   
+            // Valid Listing
 
-        String resume = "My Resume";
-        String coverLetter = "My Cover Letter";
-        try {
+            int lId = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
+            
+            assertNotEquals(-1, aId);
+            assertNotEquals(-1, trId);
+            assertNotEquals(-1, lId);
+
+            String resume = "My Resume";
+            String coverLetter = "My Cover Letter";
             int appId = Application.create(aId, lId, resume, coverLetter);
             assertNotEquals(-1, appId); 
             Application app = Application.getById(appId);
-            app.score(CriteriaType.getId(CriteriaType.PHYSICAL_APPEARANCE.getName()), 50);
-            app.setFinalScore();
-            assertEquals(50, app.getFinalScore());
+            //Map<CriteriaType, Integer> c = Criteria.getByListingId(lId);
+            //int[] s = new int[]{99};
+            //app.setFinalScore(c.keySet(), s);
+            assertEquals(99, app.getFinalScore());
         } catch(SQLException e) {
             System.out.println(e.getMessage());
             fail();

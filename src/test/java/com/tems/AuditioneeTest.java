@@ -1,6 +1,7 @@
 package com.tems;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -24,6 +25,12 @@ public class AuditioneeTest {
 
     @Test 
     public void createAuditioneeTest() {
-        assertDoesNotThrow(() -> Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1));
+        // Define gender roles
+        ArrayList<Gender> genderRoles = new ArrayList<>();
+        genderRoles.add(Gender.MALE);
+        genderRoles.add(Gender.FEMALE);
+
+        // Define Criteria and Weights  
+        assertDoesNotThrow(() -> Auditionee.create("John", "John@applicant.ca", "Password", Gender.MALE, 1, genderRoles));
     }
 }

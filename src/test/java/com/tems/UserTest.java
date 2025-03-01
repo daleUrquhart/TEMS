@@ -2,7 +2,6 @@ package com.tems;
 
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 import com.tems.models.User;
+import com.tems.util.PasswordManager;
 import com.tems.util.SampleData;
 
 public class UserTest {
@@ -34,9 +34,10 @@ public class UserTest {
     public void createTest() {
         // Test creating a valid user, invalid role, 
         try{
-            User.create("John Doe", "doe@example.ca", "MyPassword", "auditionee");
-            User.create("John Doe", "doe@example.ca", "MyPassword", "invalid role"); 
-            User.create("Alice Winston", "doe@example.ca", "MyPassword", "recruiter");
+            String hash = PasswordManager.hashPassword("a");
+            User.create("John Doe", "doe@example.ca", hash, "auditionee");
+            User.create("John Doe", "doe@example.ca", hash, "invalid role"); 
+            User.create("Alice Winston", "doe@example.ca", hash, "recruiter");
         }catch(SQLException e) {
             System.out.println("Error creating test user data" + e.getMessage());
             fail();

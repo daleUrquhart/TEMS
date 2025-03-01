@@ -2,6 +2,8 @@ package com.tems;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals; 
@@ -30,48 +32,53 @@ public class ListingTest {
 
     @Test 
     public void createTest() {
-        // Load test data
-        int trId = -1;
-        try { 
-            trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        // Load test data 
+        try {  
+
+            // Define Criteria and Weights
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+
+            int trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
+        
+            ArrayList<Gender> genders = new ArrayList<>();
+            genders.add(Gender.MALE);
+            ArrayList<Genre> genres = new ArrayList<>();
+            genres.add(Genre.ACTION); 
+            genres.add(Genre.DRAMA);
+            genres.add(Genre.ROMANCE);  
+
+            // Valid Listing
+            int id = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
+            assertNotEquals(-1, id);  
+
+            // Invalid empty genres
+            ArrayList<Genre> emptyGenres = new ArrayList<>();
+            id = Listing.create(trId, "Alice Bond", "Alice Bond role for the new Alice Bond movie by Movie Co.", genders, emptyGenres, selectedCriteria);
+            assertEquals(-1, id);
+
+            // Invalid empty genders
+            ArrayList<Gender> emptyGenders = new ArrayList<>();
+            id = Listing.create(trId, "Kevin Bond", "Kevin Bond role for the new Kevin Bond movie by Movie Co.", emptyGenders, genres, selectedCriteria);
+            assertEquals(-1, id);  
+
+            // Invalid empty criteria 
+            id = Listing.create(trId, "Extra 7", "Extra for train chase scene in Trains 4", genders, genres, new HashMap<CriteriaType, Integer>());
+            assertEquals(-1, id);
         } catch(SQLException e) {
             System.out.println("Error creating test user data" + e.getMessage());
             fail();
         }
-        ArrayList<Gender> genders = new ArrayList<>();
-        genders.add(Gender.MALE);
-        ArrayList<Genre> genres = new ArrayList<>();
-        genres.add(Genre.ACTION); 
-        genres.add(Genre.DRAMA);
-        genres.add(Genre.ROMANCE); 
-        ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-        int[] weights = new int[]{2};
-        criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
-
-        // Valid Listing
-        int id = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
-        assertNotEquals(-1, id);  
-
-        // Invalid empty genres
-        ArrayList<Genre> emptyGenres = new ArrayList<>();
-        id = Listing.create(trId, "Alice Bond", "Alice Bond role for the new Alice Bond movie by Movie Co.", genders, emptyGenres, criteriaTypes, weights);
-        assertEquals(-1, id);
-
-        // Invalid empty genders
-        ArrayList<Gender> emptyGenders = new ArrayList<>();
-        id = Listing.create(trId, "Kevin Bond", "Kevin Bond role for the new Kevin Bond movie by Movie Co.", emptyGenders, genres, criteriaTypes, weights);
-        assertEquals(-1, id);  
-
-        // Invalid empty criteria
-        ArrayList<CriteriaType> emptyCriteria = new ArrayList<>();
-        int[] emptyWeights = new int[0];
-        id = Listing.create(trId, "Extra 7", "Extra for train chase scene in Trains 4", genders, genres, emptyCriteria, emptyWeights);
-        assertEquals(-1, id);
     }
 
     @Test
     public void updateTest() {
         try { 
+            // Define gender roles 
+            // Define Criteria and Weights
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+
             int trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
         
             assertNotEquals(-1, trId);
@@ -81,12 +88,9 @@ public class ListingTest {
             ArrayList<Genre> genres = new ArrayList<>();
             genres.add(Genre.ACTION); 
             genres.add(Genre.DRAMA);
-            genres.add(Genre.ROMANCE); 
-            ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-            int[] weights = new int[]{2};
-            criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
+            genres.add(Genre.ROMANCE);  
             // Valid Listing
-            int id = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
+            int id = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
             assertNotEquals(id, -1); 
             
             Listing listing = Listing.getById(id);
@@ -105,7 +109,11 @@ public class ListingTest {
     @Test
     public void getByTRIdTest() {
         // Build data
-        try { 
+        try {  
+            // Define Criteria and Weights
+            Map<CriteriaType, Integer> selectedCriteria = new HashMap<>();
+            selectedCriteria.put(CriteriaType.PHYSICAL_APPEARANCE, 1);
+
             int trId = TalentRecruiter.create("Bob", "bob@recruiter.ca", "Pass", "Talent Co.");
         
             assertNotEquals(-1, trId);
@@ -118,13 +126,10 @@ public class ListingTest {
             ArrayList<Genre> genres = new ArrayList<>();
             genres.add(Genre.ACTION); 
             genres.add(Genre.DRAMA);
-            genres.add(Genre.ROMANCE); 
-            ArrayList<CriteriaType> criteriaTypes = new ArrayList<>();
-            int[] weights = new int[]{2};
-            criteriaTypes.add(CriteriaType.PHYSICAL_APPEARANCE);
+            genres.add(Genre.ROMANCE);  
             // Valid Listings
-            int id = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, criteriaTypes, weights);
-            int id2 = Listing.create(trId, "Alice Bond", "Alice Bond role for the new James Bond movie by Movie Co.", genders2, genres, criteriaTypes, weights);
+            int id = Listing.create(trId, "James Bond", "James Bond role for the new James Bond movie by Movie Co.", genders, genres, selectedCriteria);
+            int id2 = Listing.create(trId, "Alice Bond", "Alice Bond role for the new James Bond movie by Movie Co.", genders2, genres, selectedCriteria);
             assertNotEquals(id, -1); 
             assertNotEquals(id2, -1); 
             ArrayList<Listing> trListings = Listing.getByTRId(trId);
