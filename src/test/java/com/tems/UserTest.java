@@ -2,6 +2,7 @@ package com.tems;
 
 import java.sql.SQLException;
 
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,8 +14,6 @@ import com.tems.util.PasswordManager;
 import com.tems.util.SampleData;
 
 public class UserTest {
-    
-    /*
     @AfterEach
     public void removeUsersCreated() { 
         try{User.deleteAllUsers();}
@@ -22,8 +21,7 @@ public class UserTest {
             System.out.println("Error deleting test user data" + e.getMessage());
             fail();
         }
-    } 
-     */
+    }
 
     @Test
     public void loadData() {
@@ -36,8 +34,9 @@ public class UserTest {
         try{
             String hash = PasswordManager.hashPassword("a");
             User.create("John Doe", "doe@example.ca", hash, "auditionee");
-            User.create("John Doe", "doe@example.ca", hash, "invalid role"); 
-            User.create("Alice Winston", "doe@example.ca", hash, "recruiter");
+            SQLException e = assertThrows(SQLException.class, () -> User.create("John Doe", "doe@example.ca", hash, "invalid role"));
+            assertEquals(e.getMessage().substring(0, 21), "Error creating user: ");
+            User.create("Alice Winston", "alice@example.ca", hash, "recruiter");
         }catch(SQLException e) {
             System.out.println("Error creating test user data" + e.getMessage());
             fail();

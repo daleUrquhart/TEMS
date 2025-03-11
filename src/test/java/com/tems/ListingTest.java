@@ -2,6 +2,7 @@ package com.tems;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +64,7 @@ public class ListingTest {
             assertEquals(-1, id);  
 
             // Invalid empty criteria 
-            id = Listing.create(trId, "Extra 7", "Extra for train chase scene in Trains 4", genders, genres, new HashMap<CriteriaType, Integer>());
+            id = Listing.create(trId, "Extra 7", "Extra for train chase scene in Trains 4", genders, genres, new EnumMap<>(CriteriaType.class));
             assertEquals(-1, id);
         } catch(SQLException e) {
             System.out.println("Error creating test user data" + e.getMessage());
@@ -96,7 +97,6 @@ public class ListingTest {
             Listing listing = Listing.getById(id);
             listing.setDescription("Updated Description");
             listing.setTitle("Updated Title");
-            System.out.println(listing.toString());
             
             listing.update();
             assertEquals(listing.toString(), Listing.getById(listing.getListingId()).toString());
@@ -133,10 +133,7 @@ public class ListingTest {
             assertNotEquals(id, -1); 
             assertNotEquals(id2, -1); 
             ArrayList<Listing> trListings = Listing.getByTRId(trId);
-            assertNotNull(trListings);
-            for(Listing l : trListings) {
-                System.out.println(l);
-            }
+            assertNotNull(trListings); 
         } catch(SQLException e) {
             System.out.println("Error in test:" + e.getMessage());
             fail();

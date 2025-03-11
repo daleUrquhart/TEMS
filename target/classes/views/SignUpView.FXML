@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Pos?>
 <?import com.jfoenix.controls.*?>
- <?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.CheckComboBox?>
  
 <VBox 
     spacing="15" 

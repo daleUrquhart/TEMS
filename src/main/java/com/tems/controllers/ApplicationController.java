@@ -16,7 +16,7 @@ public class ApplicationController implements BaseController {
     @FXML private TextField resumeField;
     @FXML private TextField coverLetterField;
 
-    @FXML public void backToListingss() { mainController.loadListingsView(aId); }
+    @FXML public void backToListings() { mainController.loadListingsView(aId); }
     
     public void submit() {
         String resume = resumeField.getText();

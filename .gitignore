@@ -4,6 +4,9 @@
 # Enviorment variables
 .env
 
+# Ignore installer file
+*.exe
+
 # Compiled class files
 *.class
 

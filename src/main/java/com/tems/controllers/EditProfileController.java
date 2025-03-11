@@ -23,8 +23,8 @@ import javafx.scene.layout.VBox;
 @SuppressWarnings("unused")
 public class EditProfileController implements BaseController{
     
-    private int id;
-    private int TRId;
+    private int aId = 0;
+    private int TRId = 0;
     private MainController mainController; 
     @FXML private VBox mainBox;
     @FXML private TextField nameField;
@@ -41,6 +41,7 @@ public class EditProfileController implements BaseController{
             String email = emailField.getText();
             String password = passwordField.getText();
             
+            // General data validation
             if (email.strip().isEmpty() || name.strip().isEmpty()){
                 mainController.showErrorAlert("Invalid Input", "Cannot have empty fields.");
                 clearFields();
@@ -52,9 +53,12 @@ public class EditProfileController implements BaseController{
                 return; 
             }
 
-            if(User.getById(id).getRole().equals("auditionee")) {
+            if(aId != 0) {
                 // Aud 
-                Auditionee auditionee = Auditionee.getById(id); 
+                Auditionee auditionee = Auditionee.getById(aId); 
+                auditionee.setName(name);
+                auditionee.setEmail(email);
+                if(!password.strip().isEmpty()) auditionee.setPasswordHash(PasswordManager.hashPassword(password));
                 List<Gender> genderRoles  = genderRoleComboBox.getCheckModel().getCheckedItems();
                 Gender gender = genderComboBox.getValue();
                 int yoe;
@@ -70,7 +74,11 @@ public class EditProfileController implements BaseController{
                 auditionee.update();
             } else {
                 // TR
-                TalentRecruiter tr = TalentRecruiter.getById(id);
+                TalentRecruiter tr = TalentRecruiter.getById(TRId);
+                tr.setName(name);
+                tr.setEmail(email);
+                if(!password.strip().isEmpty()) tr.setPasswordHash(PasswordManager.hashPassword(password));
+
                 String company = companyField.getText();
                 if(company.strip().isEmpty()) {
                     mainController.showErrorAlert("Error", "Must enter a value for comapny.");
@@ -81,7 +89,7 @@ public class EditProfileController implements BaseController{
                 tr.update();
             }
             mainController.showErrorAlert("Success", "Account updated successfully");
-            mainController.loadHomeView(TRId == 0 ? id : TRId);
+            mainController.loadHomeView(TRId == 0 ? aId : TRId);
         } catch(SQLException e) {
             mainController.showErrorAlert("Error", "Error loading user.\n\t"+e.getMessage());
         }
@@ -92,17 +100,18 @@ public class EditProfileController implements BaseController{
      * @param id User ID
      */
     public void setUserData(int id) {
-        this.id = id;
         try {
             User u = User.getById(id);
             nameField.setText(u.getName());
             emailField.setText(u.getEmail());
     
             if (u.getRole().equals("auditionee")) {
+                this.aId = id;
                 loadAuditioneeComponents(id);
     
             } else {
                 // Talent Recruiter-specific data
+                this.TRId = id;
                 TalentRecruiter tr = TalentRecruiter.getById(id);
                 companyField.setText(tr.getCompany());
             }
@@ -116,7 +125,11 @@ public class EditProfileController implements BaseController{
      * @param TRId TR ID
      * @param aId Auditionee ID
      */
-    public void setUserData(int TRId, int aId) { this.TRId = TRId; try{loadAuditioneeComponents(aId);} catch(SQLException e) {mainController.showErrorAlert("Error", "Error loading auditionee edit components: "+e.getMessage());}}
+    public void setUserData(int TRId, int aId) { 
+        this.aId = aId;
+        this.TRId = TRId; 
+        try{loadAuditioneeComponents(aId);} 
+        catch(SQLException e) {mainController.showErrorAlert("Error", "Error loading auditionee edit components: "+e.getMessage());}}
 
     public void loadAuditioneeComponents(int id) throws SQLException {
         // Auditionee-specific data
@@ -144,9 +157,7 @@ public class EditProfileController implements BaseController{
     }
 
     @Override
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
+    public void setMainController(MainController mainController) { this.mainController = mainController; }
 
     private void clearFields() {
         emailField.clear();
@@ -157,7 +168,5 @@ public class EditProfileController implements BaseController{
     }
 
     @FXML 
-    public void handleHomeView() {
-        mainController.loadHomeView(id);
-    }
+    public void handleHomeView() { mainController.loadHomeView(TRId == 0 ? aId : TRId); }
 }

@@ -54,7 +54,13 @@ public class User {
     }
 
     /**
-     * Inserts a new user into the database.
+     * Inserts a new user to the database and returns the new user's ID
+     * @param name
+     * @param email
+     * @param passwordHash
+     * @param role
+     * @return
+     * @throws SQLException
      */
     public static int create(String name, String email, String passwordHash, String role) throws SQLException{
         String sql = "INSERT INTO Users (name, email, password_hash, role) VALUES (?, ?, ?, ?)";

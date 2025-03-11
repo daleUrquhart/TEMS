@@ -3,11 +3,14 @@ com\tems\controllers\MainController.class
 com\tems\controllers\NotificationsController.class
 com\tems\util\PasswordManager.class
 com\tems\controllers\EditProfileController.class
+com\tems\controllers\ScoreController.class
 com\tems\controllers\AuditioneesController.class
 com\tems\models\Notification.class
 com\tems\models\User.class
 com\tems\models\Genre.class
 com\tems\util\SampleData.class
+com\tems\controllers\EditListingController.class
+com\tems\controllers\HomeController.class
 com\tems\models\Auditionee.class
 com\tems\controllers\ApplicationController.class
 com\tems\models\Application.class
@@ -15,6 +18,7 @@ com\tems\models\CriteriaType.class
 com\tems\controllers\SignInController.class
 com\tems\models\Score.class
 com\tems\util\Env.class
+com\tems\controllers\ListingsController.class
 com\tems\Main.class
 com\tems\models\Criteria.class
 com\tems\models\TalentRecruiter.class

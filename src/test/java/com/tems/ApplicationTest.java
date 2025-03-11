@@ -3,6 +3,7 @@ package com.tems;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.tems.models.Application;
 import com.tems.models.Auditionee;
+import com.tems.models.Criteria;
 import com.tems.models.CriteriaType;
 import com.tems.models.Gender;
 import com.tems.models.Genre;
@@ -179,9 +181,10 @@ public class ApplicationTest {
             int appId = Application.create(aId, lId, resume, coverLetter);
             assertNotEquals(-1, appId); 
             Application app = Application.getById(appId);
-            //Map<CriteriaType, Integer> c = Criteria.getByListingId(lId);
-            //int[] s = new int[]{99};
-            //app.setFinalScore(c.keySet(), s);
+            List<Criteria> c = new ArrayList<>();
+            c.add(Criteria.getByListingAndTypeId(lId, ((CriteriaType)selectedCriteria.keySet().toArray()[0]).getId()));
+            int[] s = new int[]{99};
+            app.setFinalScore(c, s);
             assertEquals(99, app.getFinalScore());
         } catch(SQLException e) {
             System.out.println(e.getMessage());

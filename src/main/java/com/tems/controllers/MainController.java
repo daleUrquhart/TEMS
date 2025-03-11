@@ -125,6 +125,11 @@ public class MainController implements BaseController {
         }
     } 
 
+    void loadEditProfileView(int TRId, int aId) {
+        String fxmlPath = "/views/EditAudProfileView.fxml";
+        EditProfileController controller = (EditProfileController) loadView(fxmlPath);
+        controller.setUserData(TRId, aId);
+    }
     void loadEditListingView(int lId) {
         String fxmlPath = "/views/EditListingView.fxml";
         EditListingController controller = (EditListingController) loadView(fxmlPath);

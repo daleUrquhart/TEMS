@@ -1,7 +1,5 @@
 package com.tems;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,10 +23,9 @@ public class Main extends Application {
 
             // Show
             primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("Error in main entry point: "); 
+        } catch (Exception e) { 
+            System.err.println("An error occurred during startup:");
             e.printStackTrace();
-            System.out.println("End of main entry point stack trace.\n");
             System.exit(1); 
         }
     }

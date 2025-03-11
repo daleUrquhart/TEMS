@@ -22,8 +22,8 @@ public class AuditioneesController implements BaseController {
     @FXML private void handleHomeView() { mainController.loadHomeView(id); } 
 
     // General
-    public void setUserData(int id) { 
-        this.id = id;
+    public void setUserData(int TRId) { 
+        this.id = TRId;
         try {
             HBox aBox;
             Label info;
@@ -34,7 +34,7 @@ public class AuditioneesController implements BaseController {
                 aBox = new HBox();
                 info = new Label(auditionee.toString());
                 update = new JFXButton("Update");
-                update.onMouseClickedProperty().set(eh -> mainController.loadEditProfileView(auditionee.getUserId()));
+                update.onMouseClickedProperty().set(eh -> mainController.loadEditProfileView(id, auditionee.getUserId()));
                 delete = new JFXButton("Delete");
                 delete.onMouseClickedProperty().set(eh -> {
                     try{
