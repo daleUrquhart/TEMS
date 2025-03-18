@@ -20,7 +20,7 @@ CREATE TABLE Users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    role ENUM('auditionee', 'recruiter') NOT NULL
+    role ENUM('auditionee', 'recruiter', 'admin') NOT NULL
 );
 
 CREATE TABLE Auditionees (

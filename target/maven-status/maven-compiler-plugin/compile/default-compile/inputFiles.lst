@@ -1,5 +1,4 @@
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\controllers\ApplicationController.java
-C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\controllers\AuditioneesController.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\controllers\HomeController.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\models\Notification.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\models\TalentRecruiter.java
@@ -26,5 +25,6 @@ C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\controllers\SignInCon
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\models\Auditionee.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\models\Score.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\util\PasswordManager.java
+C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\controllers\ProfilesController.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\models\Criteria.java
 C:\Users\jacks\OneDrive\GitHub\TEMS\src\main\java\com\tems\controllers\BaseController.java

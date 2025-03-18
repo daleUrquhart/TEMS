@@ -4,7 +4,6 @@ com\tems\controllers\NotificationsController.class
 com\tems\util\PasswordManager.class
 com\tems\controllers\EditProfileController.class
 com\tems\controllers\ScoreController.class
-com\tems\controllers\AuditioneesController.class
 com\tems\models\Notification.class
 com\tems\models\User.class
 com\tems\models\Genre.class
