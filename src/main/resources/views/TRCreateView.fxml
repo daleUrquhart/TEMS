@@ -20,12 +20,10 @@
     <Label text="Sign Up" styleClass="sub-header"/>
     
     <JFXTextField promptText="Name" fx:id="nameField" styleClass="input-field"/>
-    <JFXTextField promptText="Email" fx:id="emailField" styleClass="input-field"/>
-    <ComboBox promptText="Select Gender" fx:id="genderComboBox" styleClass="input-field" />
-    <CheckComboBox fx:id="genderRoleComboBox"/>
-    <JFXTextField promptText="Years of Experience" fx:id="yoeField" styleClass="input-field"/>
+    <JFXTextField promptText="Email" fx:id="emailField" styleClass="input-field"/> 
+    <JFXTextField promptText="Company" fx:id="companyField" styleClass="input-field"/> 
     <JFXPasswordField promptText="Password" fx:id="passwordField" styleClass="input-field"/>
     
-    <JFXButton text="Sign Up" onAction="#handleAudSignUp" styleClass="sign-in-button"/>
-    <JFXButton text="Return To Main Page" onAction="#handleHomeView" styleClass="toggle-button"/>
-</VBox> 
+    <JFXButton text="Create" onAction="#handleTRSignUp" styleClass="sign-in-button"/>
+    <JFXButton text="Return To Home Page" onAction="#handleHomeView" styleClass="toggle-button"/>
+</VBox>

@@ -37,19 +37,20 @@ public class Notification {
     // CRUD Operations
     public static void create(int userId, String message) throws SQLException { 
         String sql = "INSERT INTO Notifications (user_id, message) VALUES (?, ?)";
-
+    
         try (Connection conn = ConnectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement stmt = conn.prepareStatement(sql)) { 
+    
             stmt.setInt(1, userId);
-            stmt.setString(2, message); 
-
-            if(stmt.executeUpdate() == 0) throw new SQLException ("Creating notification failed, no rows affected.");
-
+            stmt.setString(2, message);
+    
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) throw new SQLException("Creating notification failed, no rows affected.");
+    
         } catch (SQLException e) {
             throw new SQLException("Error creating notification: \n\t" + e.getMessage());
         }
-    }
+    }    
 
     public static ArrayList<Notification> getByUserId(int id) throws SQLException{
         String sql = "SELECT * FROM Notifications WHERE user_id = ?";
@@ -70,14 +71,18 @@ public class Notification {
             throw new SQLException("Error fetching gender by name: " + e.getMessage());
         }
     }
- 
-    public static void delete(int notificationId) throws SQLException{
-        String sql = "DELETE FROM Notifications WHERE notification_id = ?";
 
+    /**
+     * Deletes a notification
+     * @throws SQLException
+     */
+    public void delete() throws SQLException{
+        String sql = "DELETE FROM Notifications WHERE notification_id = ?";
+        
         try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, notificationId);
+            stmt.setInt(1, this.NOTIFICATION_ID);
 
             int affectedRows = stmt.executeUpdate();
             if(affectedRows == 0) throw new SQLException("Deleting notification failed, no rows affected.");

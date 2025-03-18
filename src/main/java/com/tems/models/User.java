@@ -166,7 +166,7 @@ public class User {
                             rs.getString("role")
                         );
                     } else {
-                        throw new SQLException("Incorrect password for user with email: \n" + email + "(passsword hash = " + passwordHash + ")");
+                        throw new SQLException("Incorrect password for user with email: \n" + email + "(passsword = " + PasswordManager.hashPassword(passwordHash) + ")");
                     } 
                 } else {
                     throw new SQLException("No user found with email: \n" + email);

@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 
 import com.tems.models.User;
+import com.tems.util.Env;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader; 
@@ -34,9 +35,21 @@ public class MainController implements BaseController {
         loadView("/views/MainView.fxml");
     } 
 
+    // Load request TR account view
+    @FXML
+    public void loadRequestView() { 
+        loadView("/views/RequestView.fxml");
+    } 
+
     @FXML
     private void loadSignUpView() {
-        loadView("/views/SignUpView.fxml");
+        SignUpController controller = (SignUpController) loadView("/views/SignUpView.fxml");
+        controller.initializeAudView();
+    }
+
+    @FXML
+    void loadTRCreateView() {
+        loadView("/views/TRCreateView.fxml");
     }
 
     @FXML
@@ -125,11 +138,14 @@ public class MainController implements BaseController {
         }
     } 
 
-    void loadEditProfileView(int TRId, int aId) {
-        String fxmlPath = "/views/EditAudProfileView.fxml";
+    void loadEditProfileView(int editorId, int editeeId) {
+        String fxmlPath;
+        if(editorId == Env.ADMIN_ID) fxmlPath = "/views/EditTRProfileView.fxml";
+        else fxmlPath = "/views/EditAudProfileView.fxml";
         EditProfileController controller = (EditProfileController) loadView(fxmlPath);
-        controller.setUserData(TRId, aId);
+        controller.setUserData(editorId, editeeId);
     }
+
     void loadEditListingView(int lId) {
         String fxmlPath = "/views/EditListingView.fxml";
         EditListingController controller = (EditListingController) loadView(fxmlPath);
@@ -139,7 +155,8 @@ public class MainController implements BaseController {
     void loadHomeView(int id) {
         try{
             String fxmlPath;
-            if(User.getById(id).getRole().equals("auditionee")) fxmlPath = "/views/AudHomeView.fxml"; 
+            if(User.getById(id).getRole().equals("admin")) fxmlPath = "/views/AdminHomeView.fxml";
+            else if(User.getById(id).getRole().equals("auditionee")) fxmlPath = "/views/AudHomeView.fxml"; 
             else fxmlPath = "/views/TRHomeView.fxml"; 
             HomeController controller = (HomeController) loadView(fxmlPath);
             controller.setUserData(id);
@@ -167,12 +184,12 @@ public class MainController implements BaseController {
         } 
     } 
 
-    void loadAuditioneesView(int id) {
-        String fxmlPath = "/views/AuditioneesView.fxml"; 
-        AuditioneesController controller = (AuditioneesController) loadView(fxmlPath); 
-        controller.setUserData(id);
-    }
-    
+    void loadProfilesView(int id, char type) {
+        String fxmlPath = "/views/ProfilesView.fxml"; 
+        ProfilesController controller = (ProfilesController) loadView(fxmlPath); 
+        controller.setUserData(id, type);
+    } 
+
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = this;

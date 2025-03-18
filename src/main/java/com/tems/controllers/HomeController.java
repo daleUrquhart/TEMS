@@ -14,17 +14,23 @@ public class HomeController implements BaseController{
 
     @FXML private Label infoLabel;
 
+    //Admin
+    @FXML private void viewRecruiters() { mainController.loadProfilesView(id, 'T'); }
+    
+    @FXML private void handleCreateTR() { mainController.loadTRCreateView(); }
+
     // Aud   
     @FXML private void viewApplications() { mainController.loadApplicationsView(id); } 
 
-    @FXML private void viewNotifications() { mainController.loadNotificationsView(id); }
     // TR
     @FXML public void createListing() { mainController.loadListingView(id); }
 
-    @FXML public void viewAuditionees() { mainController.loadAuditioneesView(id); }
+    @FXML public void viewAuditionees() { mainController.loadProfilesView(id, 'A'); }
     
     // General
     @FXML public void viewListings() { mainController.loadListingsView(id); }
+
+    @FXML private void viewNotifications() { mainController.loadNotificationsView(id); }
 
     @FXML public void editProfile() { mainController.loadEditProfileView(id); }
 

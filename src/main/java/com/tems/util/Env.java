@@ -25,4 +25,5 @@ public class Env {
     public static final String CRITERIA_TYPE = dotenv.get("CRITERIA_TYPE");
     public static final String WEIGHT = dotenv.get("WEIGHT");
     public static final String SCORE = dotenv.get("SCORE");
+    public static final int ADMIN_ID = Integer.parseInt(dotenv.get("ADMIN_ID"));
 }

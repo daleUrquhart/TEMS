@@ -17,7 +17,7 @@
     fx:id="mainBox"
     stylesheets="@/styles/styles.css">  
 
-    <!-- Listings -->
+    <!-- Notificatinos -->
     <VBox fx:id="notificationsBox" spacing="10" alignment="TOP_LEFT" styleClass="aud-listing-box">
 
     </VBox> 

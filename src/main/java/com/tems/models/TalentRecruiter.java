@@ -3,7 +3,8 @@ package com.tems.models;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException; 
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.tems.util.ConnectionManager;
 
@@ -46,6 +47,23 @@ public class TalentRecruiter extends User{
         } 
     }
  
+    public static ArrayList<TalentRecruiter> getAll() throws SQLException {
+        String sql = "SELECT * FROM TalentRecruiters";
+
+        try (Connection conn = ConnectionManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ArrayList<TalentRecruiter> recruiters = new ArrayList<>();
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                recruiters.add(TalentRecruiter.getById(rs.getInt("recruiter_id")));
+            } 
+            return recruiters; 
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching recruiters: \n\t" + e.getMessage()); 
+        } 
+    }
+
     public static int create(String name, String email, String passwordHash, String company) throws SQLException {
         try {
             int userCreated = User.create(name, email, passwordHash, "recruiter");

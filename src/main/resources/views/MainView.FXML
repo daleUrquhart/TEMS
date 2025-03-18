@@ -25,6 +25,7 @@
         <VBox spacing="10" alignment="CENTER">
             <JFXButton text="Sign Up" onAction="#loadSignUpView" styleClass="toggle-button"/>
             <JFXButton text="Sign In" onAction="#loadSignInView" styleClass="toggle-button"/>
+            <JFXButton text="Request a Talent Recruiter Account" onAction="#loadRequestView" styleClass="toggle-button"/>
         </VBox>
     </center> 
 
