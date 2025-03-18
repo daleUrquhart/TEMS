@@ -3,6 +3,7 @@
 
 # Enviorment variables
 .env
+.env_sample
 
 # Ignore installer file
 *.exe
