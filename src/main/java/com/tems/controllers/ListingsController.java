@@ -1,6 +1,8 @@
 package com.tems.controllers;
 
-import java.sql.SQLException;
+import java.sql.SQLException; 
+import java.util.ArrayList;
+import java.util.List;
 
 import org.controlsfx.control.CheckComboBox; 
 
@@ -30,22 +32,28 @@ public class ListingsController implements BaseController {
     private int id;
 
     private MainController mainController;
+    private List<Genre> filters;
 
     @FXML
     private CheckComboBox<Genre> genreComboBox;
  
-    @FXML
-    private VBox listingBox; 
+    @FXML private VBox listingBox; 
 
-    @FXML  private void handleHomeView() { mainController.loadHomeView(id); } 
+    @FXML private void handleHomeView() { mainController.loadHomeView(id); } 
 
-    @FXML
-    private void updateFilters() {
-        
-    } 
-    
-    public void setUserData(int id) { 
+    /**
+     * Update filters and reload listings
+     */
+    @FXML private void updateFilters() { 
+        ObservableList<Genre> checked = genreComboBox.getCheckModel().getCheckedItems();
+        filters = checked.subList(0, checked.size()-1 < 0 ? 0 : checked.size()); 
+        mainController.loadListingsView(id, filters);
+    }  
+
+    public void setUserData(int id, List<Genre> f) { 
         this.id = id;
+        this.filters = f;
+        if(this.filters == null) this.filters = new ArrayList<>();
         try {
             HBox lBox;
             Label info;
@@ -53,22 +61,29 @@ public class ListingsController implements BaseController {
                 // Aud
                 this.auditionee = Auditionee.getById(id);
 
-                // Load genres into genre filter
+                // Load genres into genre filter options
                 ObservableList<Genre> genres = FXCollections.observableArrayList(Genre.getAll());
                 genreComboBox.getItems().setAll(genres);
-
-                // Load roles compatable with auditionee's preferred gender roles 
+                // Load roles compatable with auditionee's preferred gender roles and Apply filters
                 JFXButton apply;
-                boolean offerSent = false;
+                boolean offerSent = false, filteredOut = false;
                 for(Listing listing : Listing.getByGenders(auditionee.getGenderRoles())) {
                     for(Application a : Application.getByListingId(listing.getListingId())) {
-                        if(a.getStatus().equals("accepted")) {
-                            offerSent = true;
-                        }
-                    } if(offerSent) {
+                        if(a.getStatus().equals("accepted")) offerSent = true; 
+                    } if(offerSent) { 
                         offerSent = false;
                         continue;
+                    } 
+                    for(Genre g : filters) {
+                        if(listing.getGenres().contains(g)) {
+                            filteredOut = true;
+                            break;
+                        } 
+                    } if(filteredOut) {
+                        filteredOut = false;
+                        continue;
                     }
+
                     lBox = new HBox();
                     info = new Label(listing.toString());
                     apply = new JFXButton("Apply");
@@ -103,7 +118,7 @@ public class ListingsController implements BaseController {
                     delete.onMouseClickedProperty().set(eh -> {
                         try{
                             Listing.delete(listing.getListingId());
-                            mainController.loadListingsView(id);
+                            mainController.loadListingsView(id, filters);
                         } catch(SQLException e) {
                             mainController.showErrorAlert("Errror", "Error deleting listing: \n\t"+e.getMessage());
                         }

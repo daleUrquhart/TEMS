@@ -24,5 +24,6 @@
     <JFXButton text="View Managing Listings" onAction="#viewListings" styleClass="toggle-button"/>
     <JFXButton text="View Auditionees" onAction="#viewAuditionees" styleClass="toggle-button"/>
     <JFXButton text="Edit Profile" onAction="#editProfile" styleClass="toggle-button"/>
+    <JFXButton text="View Notifications" onAction="#viewNotifications" styleClass="toggle-button"/>
     
 </VBox> 

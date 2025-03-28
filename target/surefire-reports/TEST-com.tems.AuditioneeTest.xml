@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.tems.AuditioneeTest" time="0.009" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.tems.AuditioneeTest" time="0.012" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CA"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\jacks\AppData\Local\Temp\surefire7919330773939828918\surefirebooter-20250310221742271_3.jar C:\Users\jacks\AppData\Local\Temp\surefire7919330773939828918 2025-03-10T22-17-42_088-jvmRun1 surefire-20250310221742271_1tmp surefire_0-20250310221742271_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\jacks\AppData\Local\Temp\surefire8332399382593229722\surefirebooter-20250328112623262_3.jar C:\Users\jacks\AppData\Local\Temp\surefire8332399382593229722 2025-03-28T11-26-23_027-jvmRun1 surefire-20250328112623262_1tmp surefire_0-20250328112623262_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\jacks\OneDrive\GitHub\TEMS\target\test-classes;C:\Users\jacks\OneDrive\GitHub\TEMS\target\classes;C:\Users\jacks\.m2\repository\org\controlsfx\controlsfx\11.2.0\controlsfx-11.2.0.jar;C:\Users\jacks\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.7.0\junit-jupiter-api-5.7.0.jar;C:\Users\jacks\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\jacks\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\jacks\.m2\repository\org\junit\platform\junit-platform-commons\1.7.0\junit-platform-commons-1.7.0.jar;C:\Users\jacks\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.7.0\junit-jupiter-engine-5.7.0.jar;C:\Users\jacks\.m2\repository\org\junit\platform\junit-platform-engine\1.7.0\junit-platform-engine-1.7.0.jar;C:\Users\jacks\.m2\repository\io\github\cdimascio\dotenv-java\3.0.2\dotenv-java-3.0.2.jar;C:\Users\jacks\.m2\repository\org\mindrot\jbcrypt\0.4\jbcrypt-0.4.jar;C:\Users\jacks\.m2\repository\org\slf4j\slf4j-api\1.7.32\slf4j-api-1.7.32.jar;C:\Users\jacks\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\jacks\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\jacks\.m2\repository\org\springframework\spring-core\6.2.2\spring-core-6.2.2.jar;C:\Users\jacks\.m2\repository\org\springframework\spring-jcl\6.2.2\spring-jcl-6.2.2.jar;C:\Users\jacks\.m2\repository\org\mariadb\jdbc\mariadb-java-client\3.5.0\mariadb-java-client-3.5.0.jar;C:\Users\jacks\.m2\repository\com\github\waffle\waffle-jna\3.3.0\waffle-jna-3.3.0.jar;C:\Users\jacks\.m2\repository\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar;C:\Users\jacks\.m2\repository\net\java\dev\jna\jna-platform\5.13.0\jna-platform-5.13.0.jar;C:\Users\jacks\.m2\repository\org\slf4j\jcl-over-slf4j\2.0.7\jcl-over-slf4j-2.0.7.jar;C:\Users\jacks\.m2\repository\com\github\ben-manes\caffeine\caffeine\2.9.3\caffeine-2.9.3.jar;C:\Users\jacks\.m2\repository\com\google\errorprone\error_prone_annotations\2.10.0\error_prone_annotations-2.10.0.jar;C:\Users\jacks\.m2\repository\org\checkerframework\checker-qual\3.32.0\checker-qual-3.32.0.jar;C:\Users\jacks\.m2\repository\com\zaxxer\HikariCP\6.2.1\HikariCP-6.2.1.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\21.0.6\javafx-controls-21.0.6-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\21.0.6\javafx-graphics-21.0.6.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-graphics\21.0.6\javafx-graphics-21.0.6-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-fxml\21.0.6\javafx-fxml-21.0.6-win.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-controls\21.0.6\javafx-controls-21.0.6.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\21.0.6\javafx-base-21.0.6.jar;C:\Users\jacks\.m2\repository\org\openjfx\javafx-base\21.0.6\javafx-base-21.0.6-win.jar;C:\Users\jacks\.m2\repository\com\jfoenix\jfoenix\9.0.1\jfoenix-9.0.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\jacks\AppData\Local\Temp\surefire7919330773939828918\surefirebooter-20250310221742271_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\jacks\AppData\Local\Temp\surefire8332399382593229722\surefirebooter-20250328112623262_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23+37-2369"/>
@@ -59,5 +59,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="createAuditioneeTest" classname="com.tems.AuditioneeTest" time="0.007"/>
+  <testcase name="createAuditioneeTest" classname="com.tems.AuditioneeTest" time="0.012"/>
 </testsuite>

@@ -19,6 +19,7 @@
  
     <!-- Filter options -->
     <HBox> 
+        <Label text = "Select all genres you do not want to see required in listings -> "/>
         <CheckComboBox fx:id="genreComboBox"/>
         <JFXButton text="Update Filters" onAction="#updateFilters" styleClass="toggle-button"/>
     </HBox>

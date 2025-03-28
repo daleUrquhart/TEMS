@@ -36,13 +36,15 @@ public class ScoreController implements BaseController {
                 scores[i] = Integer.parseInt(entries.get(i).getText());
             } catch (NumberFormatException e) {
                 mainController.showErrorAlert("Error", "Scores must be valid integers.");
+                return;
             } 
+        }  
         try {
             app.setFinalScore(criteria, scores);   
         } catch (SQLException e) {
             mainController.showErrorAlert("Error", "Error assigning scores: \n\t"+e.getMessage());
+            return;
         }
-        }  
         mainController.showErrorAlert("Success", "Successfull scored application.");
         backToApp();
     }
@@ -59,6 +61,7 @@ public class ScoreController implements BaseController {
             for(Map.Entry<CriteriaType, Integer> entry : Criteria.getByListingId(lId).entrySet()) {
                 cBox = new HBox();
                 Label l = new Label(entry.getKey().getName());
+                criteria.add(Criteria.getByListingAndTypeId(lId, entry.getKey().getId()));
                 TextField tf = new TextField();
                 tf.setPromptText("Enter score");
                 cBox.getChildren().addAll(l, tf);

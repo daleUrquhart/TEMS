@@ -2,6 +2,9 @@ package com.tems.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -9,47 +12,61 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionManager {
+    private static final Logger LOGGER = Logger.getLogger(ConnectionManager.class.getName());
     private static HikariDataSource dataSource;
 
     static {
         try {
-            // Load environment variables from the .env file
+            // Load environment variables
             Dotenv dotenv = Dotenv.load();
+            
+            // Retrieve and validate environment variables
+            String host = Objects.requireNonNull(dotenv.get("DB_HOST"), "DB_HOST is missing");
+            String port = Objects.requireNonNull(dotenv.get("DB_PORT"), "DB_PORT is missing");
+            String dbName = Objects.requireNonNull(dotenv.get("DB_NAME"), "DB_NAME is missing");
+            String user = Objects.requireNonNull(dotenv.get("DB_USER"), "DB_USER is missing");
+            String password = Objects.requireNonNull(dotenv.get("DB_PASSWORD"), "DB_PASSWORD is missing");
 
-            // Retrieve environment variables for configuration
-            String host = dotenv.get("DB_HOST");
-            String port = dotenv.get("DB_PORT");
-            String dbName = dotenv.get("DB_NAME");
-            String user = dotenv.get("DB_USER");
-            String password = dotenv.get("DB_PASSWORD");
-
-            // Configure HikariCP
+            // Configure HikariCP for a remote connection
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl(String.format("jdbc:mariadb://%s:%s/%s", host, port, dbName));
             config.setUsername(user);
             config.setPassword(password);
-            config.setMaximumPoolSize(10);  // Set maximum pool size (can adjust as needed)
-            config.setIdleTimeout(30000);  // 30 seconds
-            config.setConnectionTimeout(30000);  // 30 seconds
-            config.setMaxLifetime(600000);  // 10 minutes
+            config.setMaximumPoolSize(10);
+            config.setIdleTimeout(30000);
+            config.setConnectionTimeout(30000);
+            config.setMaxLifetime(600000);
 
-            // Initialize HikariCP DataSource
+            // Add some network-specific settings for better handling
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "250");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+            config.addDataSourceProperty("useServerPrepStmts", "true");
+            
+            // Initialize DataSource
             dataSource = new HikariDataSource(config);
+            LOGGER.info("Database connection pool initialized successfully.");
         } catch (Exception e) {
-            // Handle initialization failure
+            LOGGER.log(Level.SEVERE, "Failed to initialize database connection pool.", e);
             throw new ExceptionInInitializerError("Database connection pool initialization failed: " + e.getMessage());
         }
     }
 
-    // Retrieve a connection from the pool
+    // Get a connection from the pool
     public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Failed to get database connection.", e);
+            throw e;
+        }
     }
 
-    // Close the connection pool (should be used during application shutdown)
+    // Close the connection pool during shutdown
     public static void closePool() {
         if (dataSource != null) {
             dataSource.close();
+            LOGGER.info("Database connection pool closed.");
         }
     }
 }

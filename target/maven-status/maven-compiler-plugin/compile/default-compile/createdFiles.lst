@@ -13,6 +13,7 @@ com\tems\controllers\HomeController.class
 com\tems\models\Auditionee.class
 com\tems\controllers\ApplicationController.class
 com\tems\models\Application.class
+com\tems\controllers\ProfilesController.class
 com\tems\models\CriteriaType.class
 com\tems\controllers\SignInController.class
 com\tems\models\Score.class

@@ -28,7 +28,7 @@ public class HomeController implements BaseController{
     @FXML public void viewAuditionees() { mainController.loadProfilesView(id, 'A'); }
     
     // General
-    @FXML public void viewListings() { mainController.loadListingsView(id); }
+    @FXML public void viewListings() { mainController.loadListingsView(id, null); }
 
     @FXML private void viewNotifications() { mainController.loadNotificationsView(id); }
 

@@ -8,6 +8,12 @@
 # Ignore installer file
 *.exe
 
+# Ignore .docx files 
+*.docx
+
+# Ignore PDFs
+*.pdf
+
 # Compiled class files
 *.class
 

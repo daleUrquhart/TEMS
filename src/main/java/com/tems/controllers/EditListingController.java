@@ -38,7 +38,7 @@ public class EditListingController implements BaseController{
 
     @Override public void setMainController(MainController mainController) { this.mainController = mainController; }
     @FXML public void handleHomeView() { mainController.loadHomeView(uId); }
-    @FXML public void backToListings() { mainController.loadListingsView(uId); }
+    @FXML public void backToListings() { mainController.loadListingsView(uId, null); }
 
     @FXML public void submit() { 
         try {
@@ -67,7 +67,7 @@ public class EditListingController implements BaseController{
             listing.setGenres(genres);
             listing.update();
             mainController.showErrorAlert("Success", "Listing updated succcessfully");
-            mainController.loadListingsView(uId);
+            mainController.loadListingsView(uId, null);
         }
         catch(SQLException e) {
             mainController.showErrorAlert("Error", "Error editing listing: "+e.getMessage());

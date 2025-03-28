@@ -18,7 +18,7 @@ public class ApplicationsController implements BaseController {
  
     @FXML private VBox applicationsBox; 
  
-    @FXML public void backToListings() { mainController.loadListingsView(uId); }
+    @FXML public void backToListings() { mainController.loadListingsView(uId, null); }
     @FXML public void handleHomeView() { mainController.loadHomeView(uId); }
      
     /**
@@ -48,6 +48,7 @@ public class ApplicationsController implements BaseController {
         JFXButton score;
         JFXButton accept;
         JFXButton decline; 
+        int avgScore = 0, scoreCount = 0;
         for(Application application : Application.getByListingId(lId)) {
             
             lBox = new HBox();
@@ -76,8 +77,13 @@ public class ApplicationsController implements BaseController {
             });
             lBox.getChildren().addAll(info, score, accept, decline); 
             applicationsBox.getChildren().add(lBox);
-            if(applicationsBox.getChildren().isEmpty()) {applicationsBox.getChildren().add(new Label("No applicaitons to display")); }
+            if(application.getFinalScore() != 0) { avgScore += application.getFinalScore(); scoreCount++; }
         }  
+        if(applicationsBox.getChildren().isEmpty()) {applicationsBox.getChildren().add(new Label("No applicaitons to display")); }
+        else {
+            Label avgLabel = new Label("Average score: "+(scoreCount==0 ? 0 : avgScore / scoreCount));
+            applicationsBox.getChildren().add(avgLabel);
+        }
     }
 
     @Override

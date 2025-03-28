@@ -52,7 +52,7 @@ public class EditProfileController implements BaseController{
                 return; 
             }
 
-            if(editeeRole.equals("Admin")) {
+            if(editeeRole.equals("auditionee")) {
                 // Aud 
                 Auditionee auditionee = Auditionee.getById(editeeId); 
                 auditionee.setName(name);
@@ -107,8 +107,7 @@ public class EditProfileController implements BaseController{
             emailField.setText(u.getEmail());
             
             if (u.getRole().equals("auditionee")) {
-                loadAuditioneeComponents(id);
-    
+                loadAuditioneeComponents(id); 
             } else {
                 // Talent Recruiter-specific data
                 TalentRecruiter tr = TalentRecruiter.getById(id);

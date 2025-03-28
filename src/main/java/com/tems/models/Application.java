@@ -26,7 +26,7 @@ public class Application {
     private final String COVER_LETTER;
     private int score;
 
-    public Application(int applicationId, int auditionee_id, int listing_id, Timestamp submission_date, String status, String resume, String cover_letter) {
+    public Application(int applicationId, int auditionee_id, int listing_id, Timestamp submission_date, String status, String resume, String cover_letter, int score) {
         this.APPLICATION_ID = applicationId;
         this.AUDITIONEE_ID = auditionee_id;
         this.LISTING_ID = listing_id;
@@ -34,6 +34,7 @@ public class Application {
         this.status = status;
         this.RESUME = resume;
         this.COVER_LETTER = cover_letter;
+        this.score = score;
     }
 
     // Getters and setters
@@ -146,9 +147,11 @@ public class Application {
             stmt.setInt(1, auditioneeId);
             
             try(ResultSet rs = stmt.executeQuery()) {
-                while(rs.next()) applications.add( new Application(rs.getInt(Env.APPLICATION_ID), 
-                auditioneeId, rs.getInt(Env.LISTING_ID), rs.getTimestamp(Env.CREATED_AT), 
-                rs.getString(Env.STATUS), rs.getString(Env.RESUME), rs.getString(Env.COVER_LETTER)));
+                while(rs.next()) applications.add( 
+                    new Application(rs.getInt(Env.APPLICATION_ID), 
+                        auditioneeId, rs.getInt(Env.LISTING_ID), rs.getTimestamp(Env.CREATED_AT), 
+                        rs.getString(Env.STATUS), rs.getString(Env.RESUME), rs.getString(Env.COVER_LETTER), rs.getInt("final_score")
+                    ));
             }
         } catch(SQLException e) {
             System.err.println("Error searching applicaiton by auditionee id: "+e.getMessage());
@@ -171,7 +174,7 @@ public class Application {
             try(ResultSet rs = stmt.executeQuery()) {
                 while(rs.next()) applications.add( new Application(rs.getInt(Env.APPLICATION_ID), 
                 rs.getInt(Env.AUDITIONEE_ID), rs.getInt(Env.LISTING_ID), rs.getTimestamp(Env.CREATED_AT), 
-                rs.getString(Env.STATUS), rs.getString(Env.RESUME), rs.getString(Env.COVER_LETTER)));
+                rs.getString(Env.STATUS), rs.getString(Env.RESUME), rs.getString(Env.COVER_LETTER), rs.getInt("final_score")));
             }
         } catch(SQLException e) {
             System.err.println("Error searching applicaiton by listing id: "+e.getMessage());
@@ -236,7 +239,8 @@ public class Application {
                             rs.getTimestamp("created_at"),
                             rs.getString("status"),
                             rs.getString("resume"),
-                            rs.getString("cover_letter")
+                            rs.getString("cover_letter"),
+                            rs.getInt("final_score")
                     );
                 } else {
                     throw new SQLException("No listing found with id: " + application_id);
@@ -273,7 +277,8 @@ public class Application {
                             rs.getTimestamp("created_at"),
                             rs.getString("status"),
                             rs.getString("resume"),
-                            rs.getString("cover_letter")
+                            rs.getString("cover_letter"),
+                            rs.getInt("final_score")
                     );
                 } else {
                     throw new SQLException("No listing found with listing id: " + listingId + ", and auditionee id: " + auditioneeId);
@@ -312,6 +317,6 @@ public class Application {
      */
     @Override 
     public String toString() {
-        return String.format("Status: %s\nFinal Score: %s\nListing ID: %d\nAuditionee ID:%d\nResume:\n%s\nCoverLetter:\n%s\n", getStatus(), getFinalScore() == 0 ? "Not yet evaluated" : getFinalScore(), getListingId(), getAuditioneeId(), getResume(), getCoverLetter());
+        return String.format("Status: %s\nFinal Score: %s\nListing ID: %d\nAuditionee ID:%d\nResume:\n%s\nCoverLetter:\n%s", getStatus(), getFinalScore() == 0 ? "Not yet evaluated" : getFinalScore(), getListingId(), getAuditioneeId(), getResume(), getCoverLetter());
     }
 }

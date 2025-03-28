@@ -3,7 +3,9 @@ package com.tems.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 
+import com.tems.models.Genre;
 import com.tems.models.User;
 import com.tems.util.Env;
 
@@ -166,19 +168,27 @@ public class MainController implements BaseController {
         }
     }
 
+    /**
+     * Create listing view loader
+     * @param id Id of the current user
+     */
     void loadListingView(int id) {
         String fxmlPath = "/views/ListingView.fxml";
         ListingController controller = (ListingController) loadView(fxmlPath);
         controller.setUserData(id);
     }
 
-    void loadListingsView(int id) {
+    /**
+     * View listings view loader
+     * @param id Id of the current user
+     */
+    void loadListingsView(int id, List<Genre> filters) {
         try {
             String fxmlPath;
             if(User.getById(id).getRole().equals("auditionee")) fxmlPath = "/views/AudListingsView.fxml";
             else fxmlPath = "/views/TRListingsView.fxml";
             ListingsController controller = (ListingsController) loadView(fxmlPath);
-            controller.setUserData(id); 
+            controller.setUserData(id, filters); 
         } catch(SQLException e) {
             showErrorAlert("Error", "Error loading listings view");
         } 

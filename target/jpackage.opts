@@ -1,0 +1,15 @@
+# jpackage
+--dest C:\Users\jacks\OneDrive\GitHub\TEMS\$‍{project.build.directory}\jpackage
+--type app-image
+--app-version '1.0'
+--copyright 'Copyright'
+--description 'Description'
+--name 'appname'
+--vendor 'Vendor'
+--icon C:\Users\jacks\OneDrive\GitHub\TEMS\$‍{project.basedir}\config\jpackage\resources\appname.ico
+--runtime-image C:\Users\jacks\OneDrive\GitHub\TEMS\$‍{project.build.directory}\jlink\runtime-image
+--module appModuleName/appClassName
+--arguments '--opt'
+--java-options '-Dfile.encoding=UTF-8 -Xms256m -Xmx512m'
+--add-launcher appname-cli=C:\Users\jacks\OneDrive\GitHub\TEMS\target\launcher.8331705590887840798.properties
+--resource-dir C:\Users\jacks\OneDrive\GitHub\TEMS\$‍{project.basedir}\config\jpackage\resources
